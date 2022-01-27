@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>2022.0126.15.11</Version>
+		<Authors>Unimake Software</Authors>
+		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
+		<PackageProjectUrl>https://ebank.solutions/swagger/</PackageProjectUrl>
+		<Deterministic>False</Deterministic>
+		<RepositoryUrl>https://github.com/Unimake/EBank</RepositoryUrl>
+		<PackageTags>unimake;banco;pix;Billet;conciliação;extrato;cobrança;pagamento</PackageTags>
+		<Copyright>Unimake Software</Copyright>
+		<RepositoryType>git</RepositoryType>
+		<PackageIconUrl>https://unimake-cdn.s3.sa-east-1.amazonaws.com/e-bank/bank-icon.png</PackageIconUrl>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
+		<FileVersion>$(PackageVersion)</FileVersion>
+		<PackageVersion>$(AssemblyVersion)</PackageVersion>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<PackageIcon>bank-icon.png</PackageIcon>
+		<PackageReleaseNotes>Emissão de boletos.</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Unimake.EBank.Solutions\**" />
+	  <EmbeddedResource Remove="Unimake.EBank.Solutions\**" />
+	  <None Remove="Unimake.EBank.Solutions\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="bank-icon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="bank-icon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.Runtime" Version="4.3.1" />
+		<PackageReference Include="Unimake.AuthServer" Version="2022.126.14.47" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="2022.118.1743" />
+	</ItemGroup>
+</Project>

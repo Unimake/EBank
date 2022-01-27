@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions", "Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj", "{006EEC71-4E9E-4571-A76A-B0076283DA17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{C8C46F2B-435E-4A41-9DE7-072FB0CCAC1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{82CCFFAC-417A-460B-BD6C-6AF6B3369C14}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions.Tests", "Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj", "{8AFC6213-5C82-460E-8064-F0CFC40DC76F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{006EEC71-4E9E-4571-A76A-B0076283DA17} = {C8C46F2B-435E-4A41-9DE7-072FB0CCAC1C}
+		{8AFC6213-5C82-460E-8064-F0CFC40DC76F} = {82CCFFAC-417A-460B-BD6C-6AF6B3369C14}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0A7375E-E5BB-4B51-A92C-4853A9FC7CF8}
+	EndGlobalSection
+EndGlobal

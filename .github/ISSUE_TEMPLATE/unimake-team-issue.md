@@ -24,10 +24,15 @@ Como ..., eu (quero/preciso) ..., para ...
 
 - <<DESCREVA COMO TESTAR>>
 
+# Aceite (Revisão)
+
+1. - [ ] O código atende o padrão Coding Standard/ Conventions? (NÃO => Reprovar)
+2. - [ ] Existe informações sensíveis? (SIM => Reprovar)
+
 # Aceite (Test)
 
-1. - [ ] O "Como testar" é satisfatório?
-2. - [ ] A funcionalidade satisfaz critério de aceitação?
+1. - [ ] O "Como testar" é satisfatório?  (NÃO => Reprovar)
+2. - [ ] A funcionalidade satisfaz critério de aceitação? (SIM => Aprovar)
 
  << COLOQUE O RESULTADO DOS TESTES >>
 

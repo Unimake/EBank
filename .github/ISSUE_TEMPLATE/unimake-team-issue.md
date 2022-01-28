@@ -31,7 +31,7 @@ Como ..., eu (quero/preciso) ..., para ...
 
 # Aceite (Test)
 
-1. - [ ] O "Como testar" é satisfatório?  (NÃO => Reprovar)
+1. - [ ] O "Como testar" é satisfatório? (NÃO => Reprovar)
 2. - [ ] A funcionalidade satisfaz critério de aceitação? (SIM => Aprovar)
 
  << COLOQUE O RESULTADO DOS TESTES >>

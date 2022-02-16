@@ -1,4 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Exceptions.Response.Billet;
+using System.Linq;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.EBank.Solutions.Client;
@@ -41,7 +42,8 @@ namespace Unimake.EBank.Solutions.Services.Billet
                 }
 
                 var errors = DeserializeObject<RegisterErrorResponse>(json);
-                throw new RegisterResponseException(errors.Errors);
+                System.Diagnostics.Debug.WriteLine(errors.Errors);
+                throw new RegisterResponseException(errors.Errors.FirstOrDefault().Value?.FirstOrDefault() ?? "", errors.Errors);
             }
         }
 

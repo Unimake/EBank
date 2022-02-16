@@ -16,7 +16,6 @@ namespace Unimake.EBank.Solutions.Client
         #endregion Private Fields
 
         #region Private Methods
-
         private string PrepareURI() =>
 #if DEBUG
             $"https://localhost:44382/api/v1/{Action}";
@@ -52,10 +51,8 @@ namespace Unimake.EBank.Solutions.Client
 
         public async Task<HttpResponseMessage> PostAsync(string json)
         {
-            {
-                client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
-                return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
-            }
+            client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
+            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
         }
 
         #endregion Public Methods

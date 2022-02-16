@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Unimake.EBank.Solutions.Converters.Json
 {
     /// <summary>
     /// O E-bank retorna os erros em um formato de lista, pois a validação do Billet, valida todos os campos e retorna quais estão com problemas.
-    /// <para>este conversor, tranforma em uma string com o nome do campo e a mensagem do erro.</para>
+    /// <para>este conversor, transforma em uma string com o nome do campo e a mensagem do erro.</para>
     /// </summary>
     public class ErrorsResponseConverter : JsonConverter
     {
@@ -33,15 +34,15 @@ namespace Unimake.EBank.Solutions.Converters.Json
         /// <returns></returns>
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var sb = new StringBuilder();
+            var result = new Dictionary<string, List<string>>();
             var jObject = JObject.Load(reader);
 
             foreach(var item in jObject)
             {
-                sb.AppendLine($"{item.Key}: {item.Value.Last}");
+                result.Add(item.Key, item.Value.Select(s => s.ToString()).ToList());
             }
 
-            return sb.ToString();
+            return result;
         }
 
         /// <summary>

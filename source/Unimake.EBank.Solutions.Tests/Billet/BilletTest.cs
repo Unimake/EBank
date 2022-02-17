@@ -1,5 +1,6 @@
 using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Enumerations.Billet;
+using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Exceptions.Security;
@@ -74,9 +75,17 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 }
             };
 
-            var service = new BilletService();
-            var response = await service.RegisterAsync(request);
-            DumpAsJson(response);
+            try
+            {
+                var service = new BilletService();
+                var response = await service.RegisterAsync(request);
+                DumpAsJson(response);
+            }
+            catch(RegisterResponseException registerEx)
+            {
+                DumpAsJson(registerEx.Errors);
+                throw;//forward
+            }
         }
 
         [Fact]

@@ -34,7 +34,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstract
         #region Public Methods
 
         public void DumpAsJson(object value) =>
-            output.WriteLine(SerializeObject(value), JsonSettings);
+            output.WriteLine(SerializeObject(value, JsonSettings));
 
         #endregion Public Methods
     }

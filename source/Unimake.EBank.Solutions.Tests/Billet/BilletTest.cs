@@ -40,7 +40,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 Billet = new Boleto
                 {
                     Especie = EspecieTitulo.Outros,
-                    ValorNominal = 45.88f,
+                    ValorNominal = 45.88m,
                     Vencimento = DateTime.Today.AddDays(15),
                     NumeroNaEmpresa = "12345",
                     NumeroNoBanco = "12345",

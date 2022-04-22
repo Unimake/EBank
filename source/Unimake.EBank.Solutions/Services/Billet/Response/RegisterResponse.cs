@@ -1,4 +1,4 @@
-﻿namespace Unimake.EBank.Solutions.Services.Billet
+﻿namespace Unimake.EBank.Solutions.Services.Billet.Response
 {
     /// <summary>
     /// Resposta do serviço de registro de Billets.

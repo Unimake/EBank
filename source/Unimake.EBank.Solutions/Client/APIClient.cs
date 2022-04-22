@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Unimake.EBank.Solutions.Debug;
 using Unimake.EBank.Solutions.Scopes.Security;
 
 namespace Unimake.EBank.Solutions.Client
@@ -16,13 +17,9 @@ namespace Unimake.EBank.Solutions.Client
         #endregion Private Fields
 
         #region Private Methods
-        private string PrepareURI() =>
-#if DEBUG
-            $"https://localhost:44382/api/v1/{Action}";
 
-#else
-            $"https://ebank.solutions/api/v1/{Action}";
-#endif
+        private string PrepareURI() => 
+            $"{(DebugScope.IsDefined() ? DebugScope.Instance.RequestURIEBank : $"https://ebank.solutions/api/v1/")}{Action}";
 
         #endregion Private Methods
 
@@ -44,10 +41,7 @@ namespace Unimake.EBank.Solutions.Client
 
         #region Public Methods
 
-        public void Dispose()
-        {
-            client.Dispose();
-        }
+        public void Dispose() => client.Dispose();
 
         public async Task<HttpResponseMessage> PostAsync(string json)
         {

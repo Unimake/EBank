@@ -7,7 +7,11 @@ using Unimake.EBank.Solutions.Scopes.Contract;
 
 namespace Unimake.EBank.Solutions.Scopes.Security
 {
-    internal class AuthenticatedScope : IScope
+    /// <summary>
+    /// Escopo de autenticação.
+    /// <para>Utilizado para realizar as ações dentro do E-Bank, e garantir que o escopo está autenticado</para>
+    /// </summary>
+    public sealed class AuthenticatedScope : IScope
     {
         #region Private Fields
 
@@ -18,6 +22,9 @@ namespace Unimake.EBank.Solutions.Scopes.Security
 
         #region Private Destructors
 
+        /// <summary>
+        /// Destruir :)
+        /// </summary>
         ~AuthenticatedScope() => Dispose(false);
 
         #endregion Private Destructors
@@ -31,41 +38,7 @@ namespace Unimake.EBank.Solutions.Scopes.Security
             return response;
         }
 
-        #endregion Private Methods
-
-        #region Public Properties
-
-        public bool Disposed { get; private set; }
-        public string Token { get; private set; }
-        public string Type { get; private set; }
-
-        #endregion Public Properties
-
-        #region Public Constructors
-
-        public AuthenticatedScope(AuthenticationRequest authRequest)
-        {
-            this.authRequest = authRequest;
-
-            // É para dar erro mesmo. Não é para criar o escopo se não autenticar
-            var auth = AsyncHelper.RunSync(Authenticate);
-            Type = auth.Type;
-            Token = auth.Token;
-
-            // Se o escopo já existir, é para dar erro também.
-            contexts.AddOrUpdate(authRequest.AppId, this, (key, value) => throw new InvalidOperationException("Scope already defined."));
-        }
-
-        #endregion Public Constructors
-
-        #region Public Methods
-
-        public void Complete()
-        {
-            Dispose(false);
-        }
-
-        public void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(Disposed)
             {
@@ -81,7 +54,7 @@ namespace Unimake.EBank.Solutions.Scopes.Security
 
             try
             {
-                contexts.TryRemove(authRequest.AppId, out _);
+                _ = contexts.TryRemove(authRequest.AppId, out _);
             }
             catch
             {
@@ -89,10 +62,72 @@ namespace Unimake.EBank.Solutions.Scopes.Security
             }
         }
 
+        #endregion Private Methods
+
+        #region Public Properties
+
+        /// <summary>
+        /// Se verdadeiro, este objeto foi descartado
+        /// </summary>
+        public bool Disposed { get; private set; }
+
+        /// <summary>
+        /// Token de autenticação
+        /// </summary>
+        public string Token { get; private set; }
+
+        /// <summary>
+        /// Tipo do token de autenticação
+        /// </summary>
+        public string Type { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Constructors
+
+        /// <summary>
+        /// Inicia o escopo de autenticação
+        /// </summary>
+        /// <param name="authRequest">Dados para autenticação</param>
+        /// <exception cref="InvalidOperationException">Quando um escopo autenticado já existir</exception>
+        public AuthenticatedScope(AuthenticationRequest authRequest)
+        {
+            this.authRequest = authRequest;
+
+            // É para dar erro mesmo. Não é para criar o escopo se não autenticar
+            var auth = AsyncHelper.RunSync(Authenticate);
+            Type = auth.Type;
+            Token = auth.Token;
+
+            // Se o escopo já existir, é para dar erro também.
+            _ = contexts.AddOrUpdate(authRequest.AppId, this, (key, value) => throw new InvalidOperationException("Scope already defined."));
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        /// <summary>
+        /// Diz que este escopo está completo.
+        /// <para>Usar sempre que o escopo for concluído ou fora da declaração using</para>
+        /// </summary>
+        public void Complete()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        /// Descarta este objeto
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);  
+            GC.SuppressFinalize(this);
+        }
+
+        void IScope.Dispose(bool disposing)
+        {
+            Dispose(disposing);
         }
 
         #endregion Public Methods

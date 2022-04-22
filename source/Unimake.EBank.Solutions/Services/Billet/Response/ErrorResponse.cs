@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Unimake.EBank.Solutions.Converters.Json;
 
-namespace Unimake.EBank.Solutions.Services.Billet
+namespace Unimake.EBank.Solutions.Services.Billet.Response
 {
     /// <summary>
-    /// Erros que foram lançados ao emitir o Billet
+    /// Erros que foram lançados ao realizar ações ou emissão do boleto
     /// </summary>
-    public class RegisterErrorResponse
+    public class ErrorResponse
     {
         #region Private Fields
 

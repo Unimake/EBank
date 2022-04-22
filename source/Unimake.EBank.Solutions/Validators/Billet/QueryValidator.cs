@@ -1,10 +1,11 @@
 ﻿using System;
+using Unimake.EBank.Solutions.Services.Billet.Abstract;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 
 /// <summary>
-/// Validador para o registro dos Billets
+/// Realiza a validação dos dados da requisição de consulta do boleto
 /// </summary>
-public static class RegisterValidator
+public static class QueryValidator
 {
     #region Public Methods
 
@@ -12,13 +13,15 @@ public static class RegisterValidator
     /// Realiza a validação do Billet antes de enviar.
     /// </summary>
     /// <param name="request"></param>
-    /// <exception cref="ArgumentNullException">Lançada se o <see cref="RegisterRequest"/> for nulo.</exception>
-    public static void Validate(this RegisterRequest request)
+    /// <exception cref="ArgumentNullException">Lançada se o <see cref="QueryRequest"/> for nulo.</exception>
+    public static void Validate(this QueryRequest request)
     {
         if(request is null)
         {
             throw new ArgumentNullException(nameof(request));
         }
+
+        (request as RequestBase).Validate();
     }
 
     #endregion Public Methods

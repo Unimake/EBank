@@ -8,14 +8,9 @@
         #region Public Properties
 
         /// <summary>
-        /// Identificador da aplicação
+        /// Se verdadeiro, será utilizado um servidor de testes
         /// </summary>
-        string AppId { get; set; }
-
-        /// <summary>
-        /// Segredo gerado no momento da criação da aplicação
-        /// </summary>
-        string Secret { get; set; }
+        bool Testing { get; set; }
 
         #endregion Public Properties
     }

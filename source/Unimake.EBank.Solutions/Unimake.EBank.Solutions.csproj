@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>2022.04.06.2301</Version>
+		<Version>20220421.0208.24</Version>
 		<Authors>Unimake Software</Authors>
 		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
 		<PackageProjectUrl>https://ebank.solutions/swagger/</PackageProjectUrl>
@@ -14,9 +14,8 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageIconUrl>https://unimake-cdn.s3.sa-east-1.amazonaws.com/e-bank/bank-icon.png</PackageIconUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<AssemblyVersion>$(PackageVersion)</AssemblyVersion>
-		<FileVersion>$(PackageVersion)</FileVersion>
-		<PackageVersion>$(AssemblyVersion)</PackageVersion>
+		<AssemblyVersion>2022.04.21.0208</AssemblyVersion>
+		<FileVersion>$(AssemblyVersion)</FileVersion>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<AnalysisLevel>latest</AnalysisLevel>
@@ -48,6 +47,7 @@
 
 	<ItemGroup>
 	  <None Remove="bank-icon.png" />
+	  <None Remove="Services\Billet\BilletService.cs~RF6329160.TMP" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -60,7 +60,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
-		<PackageReference Include="Unimake.AuthServer" Version="2022.3.22.32" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="2022.3.22.32" />
+		<PackageReference Include="Unimake.AuthServer" Version="20220421.113.55" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20220418.1155.56" />
 	</ItemGroup>
 </Project>

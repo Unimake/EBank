@@ -1,4 +1,6 @@
 ﻿using EBank.Solutions.Primitives.Exceptions.Response.Billet;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
@@ -23,7 +25,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
         /// <param name="authenticatedScope">Escopo de autenticação válido</param>
         /// <returns></returns>
         /// <exception cref="QueryInformationResponseException">Lançada quando ocorrer erros na validação ou consulta dos boletos</exception>
-        public async Task<QueryResponse> QueryAsync(QueryRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<List<QueryResponse>> QueryAsync(QueryRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
 
@@ -33,12 +35,15 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
             if(response.IsSuccessStatusCode)
             {
-                return DeserializeObject<QueryResponse>(json);
+                return DeserializeObject<List<QueryResponse>>(json, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
             }
 
             var errors = DeserializeObject<ErrorResponse>(json);
             System.Diagnostics.Debug.WriteLine(errors.Errors);
-            throw new QueryInformationResponseException(errors.Errors.FirstOrDefault().Value?.FirstOrDefault() ?? "");
+            throw new QueryInformationResponseException(errors.Errors.FirstOrDefault().Value?.FirstOrDefault() ?? "", (int)response.StatusCode);
         }
 
         /// <summary>

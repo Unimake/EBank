@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32414.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unimake.EBank.Solutions.QueryExample", "Unimake.EBank.Solutions.QueryExample\Unimake.EBank.Solutions.QueryExample.csproj", "{15334964-23CA-40A2-9931-639E04815A86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{7F8E6769-30E2-4785-8272-C4E408C8B231}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions", "..\..\source\Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj", "{67EF1C17-F44E-41A5-86C4-7DD7489E2998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{87F2B822-E8CE-42C1-BD9C-835ED63C4155}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15334964-23CA-40A2-9931-639E04815A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15334964-23CA-40A2-9931-639E04815A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15334964-23CA-40A2-9931-639E04815A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15334964-23CA-40A2-9931-639E04815A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67EF1C17-F44E-41A5-86C4-7DD7489E2998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EF1C17-F44E-41A5-86C4-7DD7489E2998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EF1C17-F44E-41A5-86C4-7DD7489E2998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EF1C17-F44E-41A5-86C4-7DD7489E2998}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15334964-23CA-40A2-9931-639E04815A86} = {7F8E6769-30E2-4785-8272-C4E408C8B231}
+		{67EF1C17-F44E-41A5-86C4-7DD7489E2998} = {87F2B822-E8CE-42C1-BD9C-835ED63C4155}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2AF00ED4-339C-4D1E-9C81-6783177270E3}
+	EndGlobalSection
+EndGlobal

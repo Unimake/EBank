@@ -115,7 +115,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                         Rua = "Rua Fictícia",
                         Numero = "11",
                         Bairro = "Bairro",
-                        Cep = "11111111",
+                        CEP = "11111111",
                         Cidade = "Brasília",
                         UF = "DF",
                     },

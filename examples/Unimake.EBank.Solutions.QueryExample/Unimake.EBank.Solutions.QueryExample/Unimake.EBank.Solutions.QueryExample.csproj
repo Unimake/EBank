@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+		<Authors>Unimake Software</Authors>
+		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
+		<RepositoryUrl>https://github.com/Unimake/EBank</RepositoryUrl>
+		<PackageTags>unimake;banco;pix;Billet;conciliação;extrato;cobrança;pagamento</PackageTags>
+		<Copyright>Unimake Software</Copyright>
+		<RepositoryType>git</RepositoryType>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<PackageIcon>bank-icon.png</PackageIcon>
+	</PropertyGroup>	
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Unimake.AuthServer" Version="20220421.113.55" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20220418.1155.56" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\source\Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,10 +1,12 @@
 using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.Debug;
 using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Exceptions.Security;
+using Unimake.Debug;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Tests.Abstract;
@@ -29,7 +31,11 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         [Fact]
         public async Task JustASimpleDebugScopeTest()
         {
-            using(new Debug.DebugScope("invalid e-bank uri", "invalid authserver uri"))
+            using(new DebugScope<DebugStateObject>(new DebugStateObject
+            {
+                AuthServerUrl = "invalid e-bank uri",
+                EBankServerUrl = "invalid authserver uri"
+            }))
             {
                 var service = new BilletService();
                 var response = await service.RegisterAsync(new RegisterRequest(), null);

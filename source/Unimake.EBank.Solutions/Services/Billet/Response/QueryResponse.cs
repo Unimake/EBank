@@ -1,4 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.Enumerations.Billet;
 using Newtonsoft.Json;
 using System;
 
@@ -14,87 +15,68 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
         /// <summary>
         /// Data de emissão do boleto
         /// </summary>
-        [JsonProperty("dataEmissao")]
-        public DateTime DataEmissao { get; set; }
+        public DateTime? DataEmissao { get; set; }
 
         /// <summary>
-        /// Data da liquidação do boleto, se liquidado
+        /// Data em que o boleto foi liquidado
         /// </summary>
-        [JsonProperty("dataLiquidacao")]
-        public DateTime DataLiquidacao { get; set; }
+        public DateTime? DataLiquidacao { get; set; }
 
         /// <summary>
-        /// Data do vencimento do boleto
+        /// Date de vencimento do boleto
         /// </summary>
-        [JsonProperty("dataVencimento")]
-        public DateTime DataVencimento { get; set; }
+        public DateTime? DataVencimento { get; set; }
 
         /// <summary>
         /// Linha digitável do boleto
         /// </summary>
-        [JsonProperty("linhaDigitavel")]
         public string LinhaDigitavel { get; set; }
 
         /// <summary>
-        /// Número do boleto gerado pela empresa no momento da emissão (SeuNumero)
+        /// Identificação do Título na Empresa (seu número).
         /// </summary>
-        [JsonProperty("numeroNaEmpresa")]
         public string NumeroNaEmpresa { get; set; }
 
         /// <summary>
-        /// Número do boleto gerado pelo banco (NossoNumero)
+        /// Número do documento no banco (nosso número).
+        /// <para>Regras para validação:</para>
         /// </summary>
-        [JsonProperty("numeroNoBanco")]
         public string NumeroNoBanco { get; set; }
 
         /// <summary>
         /// Dados do pagador do boleto
         /// </summary>
-        [JsonProperty("pagador")]
         public Pagador Pagador { get; set; }
 
         /// <summary>
-        /// Conteúdo em PDF no formato Base64. Pode ser nulo ou vazio
+        /// Arquivo PDF do boleto em base 64.
         /// </summary>
-        [JsonProperty("pdfContent")]
         public string PdfContent { get; set; }
 
         /// <summary>
-        /// Situação do boleto
-        /// <para>Consultar o manual de cada banco para entender a situação retornada aqui</para>
+        /// Situação do boleto no momento da pesquisa. <see cref="SituacaoBoleto"/>
         /// </summary>
-        [JsonProperty("situacao")]
-        public string Situacao { get; set; }
-
-        /// <summary>
-        /// Código do estado da requisição
-        /// </summary>
-        [JsonProperty("statusCode")]
-        public long StatusCode { get; set; }
+        public SituacaoBoleto Situacao { get; set; }
 
         /// <summary>
         /// Valor do boleto
         /// </summary>
-        [JsonProperty("valor")]
-        public long Valor { get; set; }
+        public decimal Valor { get; set; }
 
         /// <summary>
-        /// Valor de desconto do boleto
+        /// Valor do desconto aplicado no momento do pagamento do boleto.
         /// </summary>
-        [JsonProperty("valorDesconto")]
-        public long ValorDesconto { get; set; }
+        public decimal ValorDesconto { get; set; }
 
         /// <summary>
-        /// Valor dos juros do boleto
+        /// Valor dos juros aplicados no momento do pagamento do boleto
         /// </summary>
-        [JsonProperty("valorJuros")]
-        public long ValorJuros { get; set; }
+        public decimal ValorJuros { get; set; }
 
         /// <summary>
-        /// Valor que foi liquidado no boleto
+        /// Valor real pago do boleto
         /// </summary>
-        [JsonProperty("valorLiquidado")]
-        public long ValorLiquidado { get; set; }
+        public decimal ValorLiquidado { get; set; }
 
         #endregion Public Properties
     }

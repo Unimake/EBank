@@ -15,8 +15,7 @@ Friend Module Program
     Public Sub Main()
         Console.Title = "Registrar boleto"
         MessageCenter.Log("Iniciando registros de boletos")
-        Dim queryService = New BilletService()
-        Dim took = New TimeSpan()
+        Dim billetService = New BilletService()
 
         ' Boleto mínimo para gravação
         ' CPF e CNPJ foram gerados no site https://www.4devs.com.br

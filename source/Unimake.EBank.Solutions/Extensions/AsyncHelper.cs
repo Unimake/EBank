@@ -1,11 +1,12 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace System.Threading.Tasks
-{
-    /// <summary>
-    /// Helper para chamadas de tarefas síncronas
-    /// </summary>
-    public static class AsyncHelper
+/// <summary>
+/// Helper para chamadas de tarefas síncronas
+/// </summary>
+public static class AsyncHelper
     {
         #region Private Fields
 
@@ -59,4 +60,3 @@ namespace System.Threading.Tasks
 
         #endregion Public Methods
     }
-}

@@ -2,12 +2,12 @@
 using Newtonsoft.Json;
 using Unimake.EBank.Solutions.Services.Billet.Contract;
 
-namespace Unimake.EBank.Solutions.Services.Billet.Abstract
+namespace Unimake.EBank.Solutions.Services.Billet.Abstractions.Request
 {
     /// <summary>
     /// <inheritdoc cref="IRequest"/>
     /// </summary>
-    public abstract class RequestBase : IRequest
+    public abstract class RequestBase : Services.Abstractions.Request.RequestBase, IRequest
     {
         #region Public Properties
 
@@ -16,12 +16,6 @@ namespace Unimake.EBank.Solutions.Services.Billet.Abstract
         /// </summary>
         [JsonProperty("beneficiario")]
         public Beneficiario Beneficiario { get; set; }
-
-        /// <summary>
-        /// <inheritdoc cref="Services.Contract.IRequest.Testing"/>
-        /// </summary>
-        [JsonProperty("testing")]
-        public bool Testing { get; set; }
 
         #endregion Public Properties
     }

@@ -1,9 +1,11 @@
-﻿namespace Unimake.EBank.Solutions.Services.Billet.Response
+﻿using Unimake.EBank.Solutions.Services.Abstractions.Response;
+
+namespace Unimake.EBank.Solutions.Services.Billet.Response
 {
     /// <summary>
     /// Resposta do serviço de registro de Billets.
     /// </summary>
-    public class RegisterResponse
+    public class RegisterResponse : ResponseBase
     {
         #region Public Properties
 

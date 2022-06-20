@@ -1,5 +1,6 @@
 using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Debug;
+using EBank.Solutions.Primitives.Enumerations;
 using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
@@ -9,7 +10,7 @@ using Unimake.AuthServer.Exceptions.Security;
 using Unimake.Debug;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
-using Unimake.EBank.Solutions.Tests.Abstract;
+using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
 using AuthenticationService = Unimake.EBank.Solutions.Services.Security.AuthenticationService;
@@ -20,13 +21,38 @@ namespace Unimake.EBank.Solutions.Tests.Billet
     {
         #region Public Constructors
 
-        public BilletTest(ITestOutputHelper output) : base(output)
+        public BilletTest(ITestOutputHelper output)
+            : base(output)
         {
         }
 
         #endregion Public Constructors
 
         #region Public Methods
+
+        [Fact]
+        public async Task InformarPagamentoAsync()
+        {
+            using var scope = await CreateAuthenticatedScopeAsync();
+            var billetService = new BilletService();
+            var response = await billetService.InformPaymentAsync(new InformPaymentRequest
+            {
+                Beneficiario = new Beneficiario
+                {
+                    Codigo = "1234",
+                    Nome = "Unimake Software",
+                    Inscricao = "71444314000121",
+                    Conta = new ContaCorrente
+                    {
+                        Banco = Banco.Itau,
+                        Agencia = "0246",
+                        Numero = "0246"
+                    }
+                },
+                NumeroNoBanco = "00000033",
+                Testing = true
+            }, scope);
+        }
 
         [Fact]
         public async Task JustASimpleDebugScopeTest()
@@ -48,31 +74,24 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         {
             var request = new QueryRequest
             {
-                NumeroNoBanco = "12345",
+                NumeroNoBanco = "222145568",
                 Beneficiario = new Beneficiario
                 {
-                    Codigo = "1234",
-                    Nome = "Unimake Software",
-                    Inscricao = "71444314000121",
+                    Nome = "UNIMAKE SOLUCOES CORPORATIVAS LTDA",
+                    Codigo = "94914",
+                    Inscricao = "06117473000150",
                     Conta = new ContaCorrente
                     {
-                        Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Itau,
-                        Agencia = "0246",
-                        Numero = "0246"
+                        Banco = Banco.Sicredi,
+                        Agencia = "0718",
+                        Numero = "94914"
                     }
-                },
+                }
             };
 
             try
             {
-                using var scope = await new AuthenticationService().AuthenticateAsync(new AuthenticationRequest
-                {
-                    // Você consegue realizar os testes de emissão de seus Billets com estas informações.
-                    // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
-                    // Este AppId e Secret foram criados apenas para testes.
-                    AppId = "61a73f4735ad4993959e28e2b0e4552a",
-                    Secret = "35955532e0c54517bc9d7e900b61b8d3",
-                });
+                using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new BilletService();
                 var response = await service.QueryAsync(request, scope);
                 DumpAsJson(response);
@@ -105,7 +124,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                     Inscricao = "71444314000121",
                     Conta = new ContaCorrente
                     {
-                        Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Itau,
+                        Banco = Banco.Itau,
                         Agencia = "0246",
                         Numero = "0246"
                     }
@@ -130,14 +149,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
             try
             {
-                using var scope = await new AuthenticationService().AuthenticateAsync(new AuthenticationRequest
-                {
-                    // Você consegue realizar os testes de emissão de seus Billets com estas informações.
-                    // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
-                    // Este AppId e Secret foram criados apenas para testes.
-                    AppId = "61a73f4735ad4993959e28e2b0e4552a",
-                    Secret = "35955532e0c54517bc9d7e900b61b8d3",
-                });
+                using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new BilletService();
                 var response = await service.RegisterAsync(request, scope);
                 DumpAsJson(response);

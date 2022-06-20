@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2022.05.24.1615</AssemblyVersion>
-		<Version>20220524.1615.17</Version>
+		<AssemblyVersion>2022.06.20.0927</AssemblyVersion>
+		<Version>20220620.0927.12</Version>
 		<Authors>Unimake Software</Authors>
 		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
 		<PackageProjectUrl>https://ebank.solutions/swagger/</PackageProjectUrl>
@@ -21,46 +21,82 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageIcon>bank-icon.png</PackageIcon>
 		<PackageReleaseNotes>Padronização dos erros retornados no padrão Problem Details.</PackageReleaseNotes>
+		<RootNamespace>Unimake.EBank.Solutions</RootNamespace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+
+
 	<ItemGroup>
-	  <Compile Remove="Unimake.EBank.Solutions\**" />
-	  <EmbeddedResource Remove="Unimake.EBank.Solutions\**" />
-	  <None Remove="Unimake.EBank.Solutions\**" />
+		<Compile Remove="Services\Cobranca\**" />
+		<Compile Remove="Services\BankPayment\**" />
+		<Compile Remove="Services\BankStatement\**" />
+		<Compile Remove="Unimake.EBank.Solutions\**" />
+		<EmbeddedResource Remove="Services\Cobranca\**" />
+		<EmbeddedResource Remove="Services\BankPayment\**" />
+		<EmbeddedResource Remove="Services\BankStatement\**" />
+		<EmbeddedResource Remove="Unimake.EBank.Solutions\**" />
+		<None Remove="Services\Cobranca\**" />
+		<None Remove="Services\BankPayment\**" />
+		<None Remove="Services\BankStatement\**" />
+		<None Remove="Unimake.EBank.Solutions\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="bank-icon.png" />
-	  <None Remove="Services\Billet\BilletService.cs~RF6329160.TMP" />
+		<None Remove="bank-icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="bank-icon.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </Content>
+		<Compile Include="Services\Cobranca\CobrancaService.cs" />
+		<Compile Include="Services\Cobranca\Request\CobrancaRequest.cs" />
+		<Compile Include="Services\Cobranca\Response\ArquivoCobrancaResponse.cs" />
+		<Compile Include="Services\Cobranca\Response\CobrancaResponse.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="bank-icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
-		<PackageReference Include="Unimake.AuthServer" Version="20220513.1447.7" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20220524.1615.17" />
+		<PackageReference Include="Unimake.AuthServer" Version="20220620.927.12" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20220620.927.12" />
 	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Services\Extrato\Request\" />
+		<Folder Include="Services\Extrato\Response\" />
+		<Folder Include="Services\FileServer\Abstractions\" />
+		<Folder Include="Services\FileServer\Contract\" />
+		<Folder Include="Services\FileServer\Request\" />
+		<Folder Include="Services\FileServer\Response\" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<Exec Command="call $(SolutionDir)build.bat $(TargetPath) $(OutDir) " />
+	</Target>
 </Project>

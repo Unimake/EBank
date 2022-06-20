@@ -1,5 +1,5 @@
 ﻿using System;
-using Unimake.EBank.Solutions.Services.Billet.Abstract;
+using Unimake.EBank.Solutions.Services.Billet.Abstractions.Request;
 
 /// <summary>
 /// Validador dos dados principais da requisição

@@ -6,7 +6,7 @@ namespace Unimake.EBank.Solutions.Services.Billet.Request
     /// <summary>
     /// Requisição do serviço de registro do Billet
     /// </summary>
-    public class RegisterRequest : Boleto, IRequest
+    public class RegisterRequest : Boleto, Contract.IRequest
     {
         #region Public Constructors
 

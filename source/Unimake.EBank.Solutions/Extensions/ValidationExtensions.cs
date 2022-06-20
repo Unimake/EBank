@@ -1,9 +1,9 @@
-﻿namespace System
-{
-    /// <summary>
-    /// Extensões de validação de valores
-    /// </summary>
-    public static class ValidationExtensions
+﻿
+using System;
+/// <summary>
+/// Extensões de validação de valores
+/// </summary>
+public static class ValidationExtensions
     {
         #region Public Methods
 
@@ -97,4 +97,3 @@
 
         #endregion Public Methods
     }
-}

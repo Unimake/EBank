@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using Unimake.EBank.Solutions.Services.Billet.Abstract;
+using Unimake.EBank.Solutions.Services.Billet.Abstractions.Request;
 
 namespace Unimake.EBank.Solutions.Services.Billet.Request
 {

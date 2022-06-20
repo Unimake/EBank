@@ -13,7 +13,7 @@ public static class RegisterValidator
     /// </summary>
     /// <param name="request"></param>
     /// <exception cref="ArgumentNullException">Lançada se o <see cref="RegisterRequest"/> for nulo.</exception>
-    public static void Validate(this RegisterRequest request)
+    public static void Validate(this Unimake.EBank.Solutions.Services.Billet.Contract.IRequest request)
     {
         if(request is null)
         {

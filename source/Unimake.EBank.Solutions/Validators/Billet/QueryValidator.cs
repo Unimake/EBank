@@ -1,5 +1,5 @@
 ﻿using System;
-using Unimake.EBank.Solutions.Services.Billet.Abstract;
+using Unimake.EBank.Solutions.Services.Billet.Abstractions.Request;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 
 /// <summary>

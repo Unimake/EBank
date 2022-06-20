@@ -9,7 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dll", "dll", "{C8C46F2B-435
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{82CCFFAC-417A-460B-BD6C-6AF6B3369C14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions.Tests", "Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj", "{8AFC6213-5C82-460E-8064-F0CFC40DC76F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F70B2EAC-DAC7-44B3-87AE-3DDD82E48E6A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Build.bat = Build.bat
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions.Tests", "..\test\Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj", "{775AB0A8-509E-4EC9-B05C-64948960C25A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interop", "Interop", "{20555691-EB10-4875-ABA5-370D5338FF91}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VBScript", "..\test\Interop\VBScript\VBScript.vbproj", "{1D1BE477-AA75-4089-9A43-178240A5EEED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,17 +31,21 @@ Global
 		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{006EEC71-4E9E-4571-A76A-B0076283DA17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AFC6213-5C82-460E-8064-F0CFC40DC76F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{775AB0A8-509E-4EC9-B05C-64948960C25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{775AB0A8-509E-4EC9-B05C-64948960C25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{775AB0A8-509E-4EC9-B05C-64948960C25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{775AB0A8-509E-4EC9-B05C-64948960C25A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D1BE477-AA75-4089-9A43-178240A5EEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D1BE477-AA75-4089-9A43-178240A5EEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{006EEC71-4E9E-4571-A76A-B0076283DA17} = {C8C46F2B-435E-4A41-9DE7-072FB0CCAC1C}
-		{8AFC6213-5C82-460E-8064-F0CFC40DC76F} = {82CCFFAC-417A-460B-BD6C-6AF6B3369C14}
+		{775AB0A8-509E-4EC9-B05C-64948960C25A} = {82CCFFAC-417A-460B-BD6C-6AF6B3369C14}
+		{20555691-EB10-4875-ABA5-370D5338FF91} = {82CCFFAC-417A-460B-BD6C-6AF6B3369C14}
+		{1D1BE477-AA75-4089-9A43-178240A5EEED} = {20555691-EB10-4875-ABA5-370D5338FF91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0A7375E-E5BB-4B51-A92C-4853A9FC7CF8}

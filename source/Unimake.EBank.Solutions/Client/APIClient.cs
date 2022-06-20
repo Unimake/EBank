@@ -19,15 +19,15 @@ namespace Unimake.EBank.Solutions.Client
 
         #region Private Properties
 
-        private DebugStateObject debugStateObject => DebugScope<DebugStateObject>.Instance?.ObjectState;
+        private static DebugStateObject debugStateObject => DebugScope<DebugStateObject>.Instance?.ObjectState;
 
         #endregion Private Properties
 
         #region Private Methods
 
-        private string PrepareURI()
+        private string PrepareURI(string queryString = "")
         {
-            return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}";
+            return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}?{queryString}";
         }
 
         #endregion Private Methods
@@ -42,7 +42,7 @@ namespace Unimake.EBank.Solutions.Client
 
         public APIClient(AuthenticatedScope scope, string action)
         {
-            authenticatedScope = scope;
+            authenticatedScope = scope ?? throw new ArgumentNullException(nameof(scope));
             Action = action;
         }
 
@@ -53,6 +53,12 @@ namespace Unimake.EBank.Solutions.Client
         public void Dispose()
         {
             client.Dispose();
+        }
+
+        public async Task<HttpResponseMessage> GetAsync(string queryString)
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
+            return await client.GetAsync(PrepareURI(queryString));
         }
 
         public async Task<HttpResponseMessage> PostAsync(string json)

@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Unimake.EBank.Solutions": {
+      "commandName": "Project"
+    },
+    "VBScript": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Windows\\System32\\cscript.exe",
+      "commandLineArgs": "//nologo //X G:\\EBank\\test\\Interop\\VBScript\\RegistrarBoleto.vbs",
+      "nativeDebugging": false
+    }
+  }
+}

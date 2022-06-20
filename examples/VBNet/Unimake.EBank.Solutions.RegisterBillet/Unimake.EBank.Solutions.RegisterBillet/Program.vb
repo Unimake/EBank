@@ -9,7 +9,7 @@ Imports Unimake.EBank.Solutions.Services.Billet.Request
 Friend Module Program
 
     Public Sub DumpAsJson(value As Object)
-        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(value))
+        Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(value, Newtonsoft.Json.Formatting.Indented))
     End Sub
 
     Public Sub Main()
@@ -22,6 +22,7 @@ Friend Module Program
 
         Dim request = New RegisterRequest With
         {
+            .Testing = True,
             .Especie = EspecieTitulo.Outros,
             .ValorNominal = 45.88D,
             .Vencimento = Date.Today.AddDays(15),
@@ -34,7 +35,7 @@ Friend Module Program
                 .Inscricao = "71444314000121",
                 .Conta = New ContaCorrente With
                 {
-                    .Banco = Banco.BancoDoBrasil,
+                    .Banco = Banco.Itau,
                     .Agencia = "0246",
                     .Numero = "0246"
                 }

@@ -48,6 +48,18 @@ namespace Unimake.EBank.Solutions.Services.Billet
                 throw new ResponseException(errorMessage, (int)response.StatusCode);
             }
 
+            var exType = typeof(TException);
+            var constructor = (from ctor in exType.GetConstructors()
+                               let ctorParams = ctor.GetParameters()
+                               where ctorParams.Length > 1 &&
+                                     ctorParams[1].ParameterType == typeof(int)
+                               select ctor).FirstOrDefault();
+
+            if(constructor != null)
+            {
+                throw Activator.CreateInstance(exType, new object[] { errorMessage, (int)response.StatusCode }) as EBankException;
+            }
+
             throw Activator.CreateInstance(typeof(TException), new[] { errorMessage }) as EBankException;
         }
 

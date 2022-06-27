@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Authentication.Models;
 using Unimake.EBank.Solutions.Scopes.Contract;
+using Unimake.Threading;
 
 namespace Unimake.EBank.Solutions.Scopes.Security
 {

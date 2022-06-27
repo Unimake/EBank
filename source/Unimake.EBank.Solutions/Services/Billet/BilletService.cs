@@ -6,6 +6,7 @@ using Unimake.EBank.Solutions.Resolver;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Services.Billet.Response;
+using Unimake.Threading;
 
 namespace Unimake.EBank.Solutions.Services.Billet
 {
@@ -73,7 +74,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
         /// <exception cref="QueryInformationResponseException">Lançada quando ocorrer erros na validação ou consulta dos boletos</exception>
         public async Task<List<QueryResponse>> QueryAsync(QueryRequest request, AuthenticatedScope authenticatedScope)
         {
-            return await BilletServiceClient<QueryRequest, List<QueryResponse>, CancelResponseException>.RequestAsync(request, authenticatedScope, "consultar");
+            return await BilletServiceClient<QueryRequest, List<QueryResponse>, QueryInformationResponseException>.RequestAsync(request, authenticatedScope, "consultar");
         }
 
         /// <summary>

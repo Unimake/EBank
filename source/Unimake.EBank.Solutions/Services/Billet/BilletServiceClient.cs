@@ -38,14 +38,12 @@ namespace Unimake.EBank.Solutions.Services.Billet
                 return DeserializeObject<TResponse>(json);
             }
 
-            var errors = DeserializeObject<ErrorResponse>(json);
-            System.Diagnostics.Debug.WriteLine(errors.Errors);
-
-            var errorMessage = errors.Errors.FirstOrDefault().Value?.FirstOrDefault() ?? "";
+            var errors = DeserializeObject<ExceptionObject>(json);
+            System.Diagnostics.Debug.WriteLine(errors.Message);
 
             if(typeof(TException) == typeof(ResponseException))
             {
-                throw new ResponseException(errorMessage, (int)response.StatusCode);
+                throw new ResponseException(errors.Message, (int)response.StatusCode);
             }
 
             var exType = typeof(TException);
@@ -57,10 +55,10 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
             if(constructor != null)
             {
-                throw Activator.CreateInstance(exType, new object[] { errorMessage, (int)response.StatusCode }) as EBankException;
+                throw Activator.CreateInstance(exType, new object[] { errors.Message, (int)response.StatusCode }) as EBankException;
             }
 
-            throw Activator.CreateInstance(typeof(TException), new[] { errorMessage }) as EBankException;
+            throw Activator.CreateInstance(typeof(TException), new[] { errors.Message }) as EBankException;
         }
 
         #endregion Public Methods

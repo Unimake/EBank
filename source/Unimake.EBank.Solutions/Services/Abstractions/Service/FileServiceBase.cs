@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using EBank.Solutions.Primitives.Exceptions;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Exceptions;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Request;
-using Unimake.EBank.Solutions.Services.Cobranca.Request;
 using static Newtonsoft.Json.JsonConvert;
 
 namespace Unimake.EBank.Solutions.Services.Abstractions.Service
@@ -13,9 +13,9 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
     /// <summary>
     /// Serviço de consulta por arquivo
     /// </summary>
-    public abstract class FileServiceBase<TRequest, TGetResponse, TFileResponse>
+    public abstract class FileServiceBase<TRequest, TItem, TFileResponse>
         where TRequest : FileRequestBase
-        where TGetResponse : class, new()
+        where TItem : class, new()
         where TFileResponse : class, new()
     {
         #region Protected Properties
@@ -27,6 +27,34 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
 
         #endregion Protected Properties
 
+        #region Protected Methods
+
+        /// <summary>
+        /// Prepara a resposta e retorna.
+        /// </summary>
+        /// <typeparam name="T">Tipo de resultado</typeparam>
+        /// <param name="response">Resposta recebida do servidor</param>
+        /// <returns></returns>
+        /// <exception cref="ResponseException">Exceção lançada caso ocorra erro no servidor</exception>
+        protected static async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+
+            if(response.IsSuccessStatusCode)
+            {
+                return DeserializeObject<T>(json, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+            }
+
+            var errors = DeserializeObject<ExceptionObject>(json);
+            System.Diagnostics.Debug.WriteLine(errors.Message);
+            throw new ResponseException(errors.Message, (int)response.StatusCode);
+        }
+
+        #endregion Protected Methods
+
         #region Public Methods
 
         /// <summary>
@@ -35,20 +63,11 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com os dados para pesquisa</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<List<TGetResponse>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<List<TItem>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
-
             var apiClient = new APIClient(authenticatedScope, Path);
-            var response = await apiClient.GetAsync(request.ToQueryString());
-            var json = await response.Content.ReadAsStringAsync();
-
-            return response.IsSuccessStatusCode
-                ? DeserializeObject<List<TGetResponse>>(json, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                })
-                : throw new ResponseException(json, (int)response.StatusCode);
+            return await PrepareResponseAsync<List<TItem>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -62,15 +81,7 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab");
-            var response = await apiClient.GetAsync(request.ToQueryString());
-            var json = await response.Content.ReadAsStringAsync();
-
-            return response.IsSuccessStatusCode
-                ? DeserializeObject<List<TFileResponse>>(json, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                })
-                : throw new ResponseException(json, (int)response.StatusCode);
+            return await PrepareResponseAsync<List<TFileResponse>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -84,15 +95,7 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson");
-            var response = await apiClient.GetAsync(request.ToQueryString());
-            var json = await response.Content.ReadAsStringAsync();
-
-            return response.IsSuccessStatusCode
-                ? DeserializeObject<List<TFileResponse>>(json, new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore
-                })
-                : throw new ResponseException(json, (int)response.StatusCode);
+            return await PrepareResponseAsync<List<TFileResponse>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         #endregion Public Methods

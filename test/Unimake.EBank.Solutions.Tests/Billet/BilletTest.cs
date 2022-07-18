@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Exceptions.Security;
 using Unimake.Debug;
+using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
@@ -162,22 +163,84 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         }
 
         [Fact]
+        public async Task InvalidRegister()
+        {
+            // Billet mínimo para gravação
+            // CPF e CNPJ foram gerados no site
+            // https://www.4devs.com.br
+
+            var request = new RegisterRequest
+            {
+                Especie = EspecieTitulo.Outros,
+                ValorNominal = 45.88m,
+                Vencimento = DateTime.Today.AddDays(15),
+                NumeroNaEmpresa = "12345",
+                NumeroNoBanco = "12345",
+                Beneficiario = new Beneficiario
+                {
+                    Conta = new ContaCorrente()
+                },
+                Pagador = new Pagador
+                {
+                    Nome = "Marcelo de Souza",
+                    Email = "pagador@exemplo.com.br",
+                    TipoInscricao = TipoInscricao.CPF,
+                    Inscricao = "38640211035",
+                    Endereco = new Endereco
+                    {
+                        Rua = "Rua Fictícia",
+                        Numero = "11",
+                        Bairro = "Bairro",
+                        CEP = "11111111",
+                        Cidade = "Brasília",
+                        UF = "DF",
+                    },
+                },
+            };
+
+            try
+            {
+                using var scope = await CreateAuthenticatedScopeAsync();
+                var service = new BilletService();
+                var response = await service.RegisterAsync(request, scope);
+                DumpAsJson(response);
+            }
+            catch(RegisterResponseException registerEx)
+            {
+                DumpAsJson(registerEx.Errors);
+                throw;//forward
+            }
+        }
+
+        [Fact]
         public async Task RegisterInvalidAppIdOrSecret() =>
             await Assert.ThrowsAsync<AuthenticationServiceException>(async () =>
         {
             using var scope = await new AuthenticationService().AuthenticateAsync(new AuthenticationRequest
             {
-                // Você consegue realizar os testes de emissão de seus Billets com estas informações.
-                // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
-                // Este AppId e Secret foram criados apenas para testes.
                 AppId = "invalid appId",
                 Secret = "invalid secret",
             });
+
             var service = new BilletService();
             var response = await service.RegisterAsync(new RegisterRequest(), scope);
             DumpAsJson(response);
         });
 
-        #endregion Public Methods
+        [Fact]
+        public void WrongKey()
+        {
+            Assert.Throws<AuthenticationServiceException>(() =>
+            {
+                var x = new AuthenticationRequest
+                {
+                    AppId = "61a73f4735ad4993959e28e2692ge455",
+                    Secret = "35955532e0c54517bc9d7e900f531b8"
+                };
+                _ = new AuthenticatedScope(x);
+            });
+
+            #endregion Public Methods
+        }
     }
 }

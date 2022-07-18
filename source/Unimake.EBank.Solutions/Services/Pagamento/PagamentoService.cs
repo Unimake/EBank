@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
-using Unimake.EBank.Solutions.Exceptions;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Pagamento.Request;
@@ -42,9 +41,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/autorizar");
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-            var response = await apiClient.PostAsync(json);
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            return response.IsSuccessStatusCode ? new AutorizarPagamentoResponse() : throw new ResponseException(jsonResponse, (int)response.StatusCode);
+            return await PrepareResponseAsync<AutorizarPagamentoResponse>(await apiClient.PostAsync(json));
         }
 
         #endregion Public Methods

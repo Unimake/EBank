@@ -1,17 +1,16 @@
-﻿using EBank.Solutions.Primitives.CNAB;
+﻿using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
+using EBank.Solutions.Primitives.CNAB;
 using EBank.Solutions.Primitives.CNAB.CNAB240;
-using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
 using EBank.Solutions.Primitives.Enumerations;
 using Newtonsoft.Json;
 using System;
 
-
-namespace Unimake.EBank.Solutions.Services.Pagamento.Response
+namespace Unimake.EBank.Solutions.Model.Pagamento
 {
     /// <summary>
-    /// Resposta do serviço de pagamento
+    /// Retorno do pagamento
     /// </summary>
-    public class PagamentoResponse
+    public class ItemPagamento
     {
         #region Public Properties
 
@@ -25,6 +24,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento.Response
         /// Banco do favorecido
         /// </summary>
         public Banco Banco { get; set; }
+
         /// <summary>
         /// A câmara pela qual transitará a transferência. A critério de cada banco
         /// </summary>
@@ -72,7 +72,6 @@ namespace Unimake.EBank.Solutions.Services.Pagamento.Response
         /// </summary>
         public DateTime DataPagamento { get; set; }
 
-
         /// <summary>
         /// Quando informada constará em todos os avisos e/ou documentos originados dos detalhes desse lote.
         /// </summary>
@@ -104,7 +103,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento.Response
         public string SeuNumero { get; set; }
 
         /// <summary>
-        /// Identifica o tipo de movimento 
+        /// Identifica o tipo de movimento
         /// </summary>
         [JsonProperty("TipoDeMovimento")]
         public TipoDeMovimento TipoDeMovimento { get; set; }

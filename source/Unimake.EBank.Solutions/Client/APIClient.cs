@@ -25,6 +25,12 @@ namespace Unimake.EBank.Solutions.Client
 
         #region Private Methods
 
+        private void EnsureAuthorization()
+        {
+            client.DefaultRequestHeaders.Remove("Authorization");
+            client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
+        }
+
         private string PrepareURI(string queryString = "")
         {
             return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}?{queryString}";
@@ -57,13 +63,13 @@ namespace Unimake.EBank.Solutions.Client
 
         public async Task<HttpResponseMessage> GetAsync(string queryString)
         {
-            client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
+            EnsureAuthorization();
             return await client.GetAsync(PrepareURI(queryString));
         }
 
         public async Task<HttpResponseMessage> PostAsync(string json)
         {
-            client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
+            EnsureAuthorization();
             return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
         }
 

@@ -5,12 +5,12 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Unimake.EBank.Solutions.Services.Cobranca.Response
+namespace Unimake.EBank.Solutions.Model.Cobranca
 {
     /// <summary>
-    /// Resposta do serviço de cobrança
+    /// Retorno de cobrança
     /// </summary>
-    public class CobrancaResponse
+    public class ItemCobranca
     {
         #region Public Properties
 

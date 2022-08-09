@@ -1,19 +1,19 @@
-﻿using Unimake.EBank.Solutions.Services.Abstractions.Service;
+﻿using Unimake.EBank.Solutions.Model.Cobranca;
+using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Cobranca.Request;
-using Unimake.EBank.Solutions.Services.Cobranca.Response;
 
 namespace Unimake.EBank.Solutions.Services.Cobranca
 {
     /// <summary>
     /// Serviço de cobrança
-    /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}"/>
+    /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}"/>
     /// </summary>
-    public class CobrancaService : FileServiceBase<CobrancaRequest, CobrancaResponse, ArquivoCobrancaResponse>
+    public class CobrancaService : FileServiceBase<CobrancaRequest, ItemCobranca, ItemCobrancaJson, ItemCobrancaCNAB>
     {
         #region Protected Properties
 
         /// <summary>
-        /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}.Path"/>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.Path"/>
         /// </summary>
         protected override string Path => "Cobranca";
 

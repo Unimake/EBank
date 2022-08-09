@@ -38,7 +38,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
                 return DeserializeObject<TResponse>(json);
             }
 
-            var errors = DeserializeObject<ExceptionObject>(json);
+            var errors = ExceptionObject.FromJson(json);
             System.Diagnostics.Debug.WriteLine(errors.Message);
 
             if(typeof(TException) == typeof(ResponseException))

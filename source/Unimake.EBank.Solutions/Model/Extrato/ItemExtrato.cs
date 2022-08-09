@@ -3,12 +3,12 @@ using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
 using Newtonsoft.Json;
 using System;
 
-namespace Unimake.EBank.Solutions.Services.Extrato.Response
+namespace Unimake.EBank.Solutions.Model.Extrato
 {
     /// <summary>
-    /// Resposta do serviço de cobrança
+    /// Define um item de extrato de resposta
     /// </summary>
-    public class ExtratoResponse
+    public sealed class ItemExtrato
     {
         #region Public Properties
 

@@ -1,4 +1,5 @@
-﻿using EBank.Solutions.Primitives.Enumerations;
+﻿using EBank.Solutions.Primitives.Abstractions.Paged;
+using EBank.Solutions.Primitives.Enumerations;
 using System;
 using System.Text;
 
@@ -7,7 +8,7 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Request
     /// <summary>
     /// Requisição para os tipos baseados em arquivos, como extrato, cobrança e pagamentos.
     /// </summary>
-    public abstract class FileRequestBase
+    public abstract class FileRequestBase : PagedRequestBase
     {
         #region Public Properties
 
@@ -59,7 +60,9 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Request
             var sb = new StringBuilder()
                .Append($"{nameof(Bank)}={(int)Bank}&")
                .Append($"{nameof(StartDate)}={StartDate:yyyy-MM-dd}&")
-               .Append($"{nameof(EndDate)}={EndDate:yyyy-MM-dd}&");
+               .Append($"{nameof(EndDate)}={EndDate:yyyy-MM-dd}&")
+               .Append($"{nameof(PageNumber)}={PageNumber}&")
+               .Append($"{nameof(PageSize)}={PageSize}&");
 
             if(!string.IsNullOrWhiteSpace(AccountNumber))
             {

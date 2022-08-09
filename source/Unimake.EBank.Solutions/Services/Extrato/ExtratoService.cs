@@ -1,19 +1,19 @@
-﻿using Unimake.EBank.Solutions.Services.Abstractions.Service;
+﻿using Unimake.EBank.Solutions.Model.Extrato;
+using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Extrato.Request;
-using Unimake.EBank.Solutions.Services.Extrato.Response;
 
 namespace Unimake.EBank.Solutions.Services.Extrato
 {
     /// <summary>
     /// Serviço de cobrança
-    /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}"/>
+    /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}"/>
     /// </summary>
-    public class ExtratoService : FileServiceBase<ExtratoRequest, ExtratoResponse, ArquivoExtratoResponse>
+    public class ExtratoService : FileServiceBase<ExtratoRequest, ItemExtrato, ItemExtratoJson, ItemExtratoCNAB>
     {
         #region Protected Properties
 
         /// <summary>
-        /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}.Path"/>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.Path"/>
         /// </summary>
         protected override string Path => "Extrato";
 

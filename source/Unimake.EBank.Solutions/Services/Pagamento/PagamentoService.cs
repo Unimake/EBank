@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
+using Unimake.EBank.Solutions.Model.Pagamento;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Pagamento.Request;
@@ -11,14 +12,14 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
 {
     /// <summary>
     /// Serviço de cobrança
-    /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}"/>
+    /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}"/>
     /// </summary>
-    public class PagamentoService : FileServiceBase<PagamentoRequest, PagamentoResponse, ArquivoPagamentoResponse>
+    public class PagamentoService : FileServiceBase<PagamentoRequest, ItemPagamento, ItemPagamentoJson, ItemPagamentoCNAB>
     {
         #region Protected Properties
 
         /// <summary>
-        /// <inheritdoc cref="FileServiceBase{TRequest, TGetResponse, TFileResponse}.Path"/>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.Path"/>
         /// </summary>
         protected override string Path => "Pagamento";
 

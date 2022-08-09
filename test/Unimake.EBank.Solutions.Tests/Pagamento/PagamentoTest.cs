@@ -124,8 +124,8 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsCnabAsync(new PagamentoRequest
                 {
-                    AccountNumber = "007145",
-                    StartDate = DateTime.Parse("24/07/2020"),
+                    AccountNumber = "007137",
+                    StartDate = DateTime.Parse("04/03/2022"),
                     Bank = Banco.Itau
                 }, scope);
 
@@ -147,8 +147,8 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsJsonAsync(new PagamentoRequest
                 {
-                    AccountNumber = "007145",
-                    StartDate = DateTime.Parse("24/07/2020"),
+                    AccountNumber = "007137",
+                    StartDate = DateTime.Parse("04/03/2022"),
                     Bank = Banco.Itau
                 }, scope);
 

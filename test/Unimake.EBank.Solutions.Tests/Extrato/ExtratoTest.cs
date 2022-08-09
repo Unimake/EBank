@@ -16,8 +16,9 @@ namespace Unimake.EBank.Solutions.Tests.Extrato
         private static ExtratoRequest GetRequest() => new()
         {
             AccountNumber = "82406",
-            StartDate = new DateTime(2022, 06, 16),
-            Bank = Banco.Sicoob
+            StartDate = DateTime.Parse("2022-08-06"),
+            EndDate = DateTime.Parse("2022-08-06"),
+            Bank = Banco.Sicoob,
         };
 
         #endregion Private Methods
@@ -77,7 +78,6 @@ namespace Unimake.EBank.Solutions.Tests.Extrato
                 var service = new ExtratoService();
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsJsonAsync(GetRequest(), scope);
-
                 DumpAsJson(response);
             }
             catch(Exception ex)

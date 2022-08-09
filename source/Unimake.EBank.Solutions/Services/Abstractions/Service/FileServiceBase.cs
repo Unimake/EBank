@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
+using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Exceptions;
+using Unimake.EBank.Solutions.Model.Paged;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Request;
 using static Newtonsoft.Json.JsonConvert;
@@ -13,10 +15,12 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
     /// <summary>
     /// Serviço de consulta por arquivo
     /// </summary>
-    public abstract class FileServiceBase<TRequest, TItem, TFileResponse>
+    /// <typeparam name="TRequest">Requisição do serviço</typeparam>
+    /// <typeparam name="TCNAB">Retorno para as requisições do tipo CNAB, <see cref="ListAsCnabAsync(TRequest, AuthenticatedScope)"/> </typeparam>
+    /// <typeparam name="TGet">Retorno para as requisições do tipo Get, <see cref="GetAsync(TRequest, AuthenticatedScope)"/></typeparam>
+    /// <typeparam name="TJson">Retorno para as requisições do tipo Json, <see cref="ListAsJsonAsync(TRequest, AuthenticatedScope)"/></typeparam>
+    public abstract class FileServiceBase<TRequest, TGet, TJson, TCNAB>
         where TRequest : FileRequestBase
-        where TItem : class, new()
-        where TFileResponse : class, new()
     {
         #region Protected Properties
 
@@ -44,11 +48,16 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
             {
                 return DeserializeObject<T>(json, new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new List<JsonConverter>
+                    {
+                        new ObjectConverter(),
+                        new CharConverter()
+                    }
                 });
             }
 
-            var errors = DeserializeObject<ExceptionObject>(json);
+            var errors = ExceptionObject.FromJson(json);
             System.Diagnostics.Debug.WriteLine(errors.Message);
             throw new ResponseException(errors.Message, (int)response.StatusCode);
         }
@@ -63,11 +72,11 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com os dados para pesquisa</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<List<TItem>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedResponse<TGet>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
             var apiClient = new APIClient(authenticatedScope, Path);
-            return await PrepareResponseAsync<List<TItem>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedResponse<TGet>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -76,12 +85,12 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com os dados para pesquisa</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<List<TFileResponse>> ListAsCnabAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedResponse<TCNAB>> ListAsCnabAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab");
-            return await PrepareResponseAsync<List<TFileResponse>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedResponse<TCNAB>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -90,12 +99,12 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com as definições de filtragem do resultado da listagem</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<List<TFileResponse>> ListAsJsonAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedResponse<TJson>> ListAsJsonAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson");
-            return await PrepareResponseAsync<List<TFileResponse>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedResponse<TJson>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         #endregion Public Methods

@@ -1,7 +1,6 @@
 using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Debug;
 using EBank.Solutions.Primitives.Enumerations;
-using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.Threading.Tasks;
@@ -134,7 +133,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Nome = "Marcelo de Souza",
                     Email = "pagador@exemplo.com.br",
-                    TipoInscricao = TipoInscricao.CPF,
+                    TipoInscricao = TipoDeInscricao.CPF,
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {
@@ -184,7 +183,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Nome = "Marcelo de Souza",
                     Email = "pagador@exemplo.com.br",
-                    TipoInscricao = TipoInscricao.CPF,
+                    TipoInscricao = TipoDeInscricao.CPF,
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {

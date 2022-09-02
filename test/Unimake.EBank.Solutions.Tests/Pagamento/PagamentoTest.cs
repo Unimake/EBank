@@ -1,7 +1,6 @@
 ﻿using EBank.Solutions.Primitives.CNAB;
 using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
 using EBank.Solutions.Primitives.Enumerations;
-using EBank.Solutions.Primitives.Enumerations.Billet;
 using System;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.Pagamento;
@@ -59,7 +58,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                         },
                         Favorecido = new Favorecido
                         {
-                            TipoInscricao = TipoInscricao.CPF,
+                            TipoInscricao = TipoDeInscricao.CPF,
                             Inscricao = "12345678911",
                             Banco = Banco.Banrisul,
                             Bairro = "Lorem",

@@ -1,4 +1,4 @@
-﻿using EBank.Solutions.Primitives.CNAB.CNAB400.Enumerations;
+﻿using EBank.Solutions.Primitives.CNAB.CNAB400;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

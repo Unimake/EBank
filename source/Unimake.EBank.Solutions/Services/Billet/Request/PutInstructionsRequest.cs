@@ -1,5 +1,4 @@
-﻿using EBank.Solutions.Primitives.Enumerations.Billet;
-using EBank.Solutions.Primitives.Enumerations.Instructions;
+﻿using EBank.Solutions.Primitives.Enumerations;
 using System;
 using Unimake.EBank.Solutions.Services.Billet.Abstractions.Request;
 

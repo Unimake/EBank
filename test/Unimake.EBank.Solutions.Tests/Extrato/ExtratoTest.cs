@@ -16,8 +16,8 @@ namespace Unimake.EBank.Solutions.Tests.Extrato
         private static ExtratoRequest GetRequest() => new()
         {
             AccountNumber = "82406",
-            StartDate = DateTime.Parse("2022-08-06"),
-            EndDate = DateTime.Parse("2022-08-06"),
+            StartDate = DateTime.Parse("2022-09-01"),
+            EndDate = DateTime.Parse("2022-09-08"),
             Bank = Banco.Sicoob,
         };
 

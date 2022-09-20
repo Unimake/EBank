@@ -8,7 +8,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento.Response
     /// <summary>
     /// Retorno da autorização de pagamento
     /// </summary>
-    public class AutorizarPagamentoResponse:ResponseBase
+    public class AutorizarPagamentoResponse : ResponseBase
     {
         /// <summary>
         /// Retorna verdadeiro, se ocorreu tudo OK e está aguardando a autorização ser efetivada pelo banco

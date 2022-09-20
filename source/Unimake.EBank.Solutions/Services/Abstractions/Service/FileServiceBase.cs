@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Model.Paged;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Request;
+using Unimake.Primitives.Collections.Page;
 using static Newtonsoft.Json.JsonConvert;
 
 namespace Unimake.EBank.Solutions.Services.Abstractions.Service
@@ -72,11 +72,11 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com os dados para pesquisa</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<PagedResponse<TGet>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedList<TGet>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
             var apiClient = new APIClient(authenticatedScope, Path);
-            return await PrepareResponseAsync<PagedResponse<TGet>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedList<TGet>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -85,12 +85,12 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com os dados para pesquisa</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<PagedResponse<TCNAB>> ListAsCnabAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedList<TCNAB>> ListAsCnabAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab");
-            return await PrepareResponseAsync<PagedResponse<TCNAB>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedList<TCNAB>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <param name="request">Requisição com as definições de filtragem do resultado da listagem</param>
         /// <param name="authenticatedScope">Escopo autenticado para uso no serviço</param>
         /// <returns></returns>
-        public async Task<PagedResponse<TJson>> ListAsJsonAsync(TRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedList<TJson>> ListAsJsonAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson");
-            return await PrepareResponseAsync<PagedResponse<TJson>>(await apiClient.GetAsync(request.ToQueryString()));
+            return await PrepareResponseAsync<PagedList<TJson>>(await apiClient.GetAsync(request.ToQueryString()));
         }
 
         #endregion Public Methods

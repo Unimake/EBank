@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Resolver;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Services.Billet.Response;

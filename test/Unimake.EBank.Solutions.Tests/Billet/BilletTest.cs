@@ -1,6 +1,7 @@
 using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Debug;
 using EBank.Solutions.Primitives.Enumerations;
+using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.Threading.Tasks;

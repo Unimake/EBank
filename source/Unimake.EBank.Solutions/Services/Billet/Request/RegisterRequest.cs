@@ -1,5 +1,4 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
-using Unimake.EBank.Solutions.Services.Contract;
 
 namespace Unimake.EBank.Solutions.Services.Billet.Request
 {

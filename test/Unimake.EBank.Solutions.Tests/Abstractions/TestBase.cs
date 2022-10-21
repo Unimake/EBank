@@ -15,9 +15,9 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
     {
         #region Private Fields
 
-        private readonly DebugScope<DebugStateObject> debugScope;
         private readonly ITestOutputHelper output;
         private JsonSerializerSettings _jsonSettings;
+        private DebugScope<DebugStateObject> debugScope;
 
         #endregion Private Fields
 
@@ -44,19 +44,17 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             Secret = "35955532e0c54517bc9d7e900b61b8d3",
         });
 
+        protected void StartServerDebugMode() => debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
+        {
+            AuthServerUrl = "https://localhost:44386/api/auth/",
+            EBankServerUrl = "https://localhost:44341/api/v1/"
+        });
+
         #endregion Protected Methods
 
         #region Public Constructors
 
-        public TestBase(ITestOutputHelper output)
-        {
-            this.output = output;
-            //debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
-            //{
-            //    AuthServerUrl = "https://localhost:44386/api/auth/",
-            //    EBankServerUrl = "https://localhost:44341/api/v1/"
-            //});
-        }
+        public TestBase(ITestOutputHelper output) => this.output = output;
 
         #endregion Public Constructors
 

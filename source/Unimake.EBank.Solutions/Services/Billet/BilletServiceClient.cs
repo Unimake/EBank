@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Exceptions;
 using Unimake.EBank.Solutions.Scopes.Security;
-using Unimake.EBank.Solutions.Services.Billet.Response;
 using static Newtonsoft.Json.JsonConvert;
 
 namespace Unimake.EBank.Solutions.Services.Billet

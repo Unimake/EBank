@@ -1,6 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.Enumerations;
-using Newtonsoft.Json;
+using EBank.Solutions.Primitives.Enumerations.Billet;
 using System;
 using Unimake.EBank.Solutions.Services.Abstractions.Response;
 
@@ -9,7 +8,7 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
     /// <summary>
     /// Resposta da consulta de boletos
     /// </summary>
-    public class QueryResponse: ResponseBase
+    public class QueryResponse : ResponseBase
     {
         #region Public Properties
 

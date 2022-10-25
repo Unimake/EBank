@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
+using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Model.Pagamento;
 using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
@@ -24,6 +26,16 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
         protected override string Path => "Pagamento";
 
         #endregion Protected Properties
+
+        #region Protected Methods
+
+        /// <summary>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.GetConverter"/>
+        /// </summary>
+        /// <returns></returns>
+        protected override JsonConverter GetConverter() => new PagamentoConverter();
+
+        #endregion Protected Methods
 
         #region Public Methods
 

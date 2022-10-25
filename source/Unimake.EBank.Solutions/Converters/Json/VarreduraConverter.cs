@@ -1,5 +1,4 @@
-﻿using EBank.Solutions.Primitives.CNAB.CNAB400;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,17 @@ namespace Unimake.EBank.Solutions.Converters.Json
     /// <summary>
     /// Conversor para os tipos interface o E-Bank
     /// </summary>
-    public sealed class ObjectConverter : JsonConverter
+    public sealed class VarreduraConverter : JsonConverter
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Retorna falso, pois este conversor não é utilizado para escrita
+        /// </summary>
+        public override bool CanWrite => false;
+
+        #endregion Public Properties
+
         #region Public Methods
 
         /// <summary>
@@ -21,8 +29,9 @@ namespace Unimake.EBank.Solutions.Converters.Json
         public override bool CanConvert(Type objectType) =>
             objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.ILote) ||
             objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistroDetalhe) ||
-            objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistro) ||
-            objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Contract.IRegistro);
+            objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistroDetalheDDA) ||
+            objectType == typeof(global::EBank.Solutions.Primitives.CNAB.Contract.ICNABItem) ||
+            objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistro);
 
         /// <summary>
         ///
@@ -39,41 +48,13 @@ namespace Unimake.EBank.Solutions.Converters.Json
 
             if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.ILote))
             {
-                type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Extrato.LoteDeExtratoDeContaCorrente);
+                type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Varredura.LoteDeVarreduraDDA);
             }
-            else if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistroDetalhe))
+            else if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistroDetalhe) ||
+                    objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistroDetalheDDA) ||
+                    objectType == typeof(global::EBank.Solutions.Primitives.CNAB.Contract.ICNABItem))
             {
-                if(jObject.SelectToken("Servico.Segmento").ToString() == "E")
-                {
-                    type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Extrato.Registro.DetalheSegmentoE);
-                }
-                else
-                {
-                    type = Type.GetType($"EBank.Solutions.Primitives.CNAB.CNAB240.Pagamento.Registro.DetalheSegmento{jObject.SelectToken("Servico.Segmento")}, EBank.Solutions.Primitives");
-                }
-            }
-            else if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Contract.IRegistro))
-            {
-            }
-            else if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Contract.IRegistro))
-            {
-                switch(UConvert.ToAny<TipoDeRegistro>(jObject.GetValue("Tipo")))
-                {
-                    case TipoDeRegistro.Detalhe1OuTransacao1:
-                        type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Cobranca.Retorno.Detalhe1);
-                        break;
-
-                    case TipoDeRegistro.Detalhe4:
-                        type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Cobranca.Retorno.Detalhe4);
-                        break;
-
-                    case TipoDeRegistro.Detalhe5CobrancaEmailOuDadosSacadorAvalista:
-                    case TipoDeRegistro.Trailer:
-                    case TipoDeRegistro.Detalhe2ComplementoMulta:
-                    case TipoDeRegistro.Header:
-                    default:
-                        break;
-                }
+                type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB240.Varredura.Registro.DetalheSegmentoDDA);
             }
 
             if(type == null)
@@ -87,7 +68,7 @@ namespace Unimake.EBank.Solutions.Converters.Json
                 NullValueHandling = NullValueHandling.Ignore,
                 Converters = new List<JsonConverter>
                 {
-                    new ObjectConverter(),
+                    new VarreduraConverter(),
                     new CharConverter()
                 }
             });

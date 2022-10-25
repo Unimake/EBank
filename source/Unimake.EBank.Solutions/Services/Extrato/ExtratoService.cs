@@ -1,4 +1,6 @@
-﻿using Unimake.EBank.Solutions.Model.Extrato;
+﻿using Newtonsoft.Json;
+using Unimake.EBank.Solutions.Converters.Json;
+using Unimake.EBank.Solutions.Model.Extrato;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Extrato.Request;
 
@@ -18,5 +20,15 @@ namespace Unimake.EBank.Solutions.Services.Extrato
         protected override string Path => "Extrato";
 
         #endregion Protected Properties
+
+        #region Protected Methods
+
+        /// <summary>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.GetConverter"/>
+        /// </summary>
+        /// <returns></returns>
+        protected override JsonConverter GetConverter() => new ExtratoConverter();
+
+        #endregion Protected Methods
     }
 }

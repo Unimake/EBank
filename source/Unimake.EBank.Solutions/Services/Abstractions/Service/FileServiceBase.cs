@@ -34,13 +34,19 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         #region Protected Methods
 
         /// <summary>
+        /// Conversor para os tipos
+        /// </summary>
+        /// <returns></returns>
+        protected abstract JsonConverter GetConverter();
+
+        /// <summary>
         /// Prepara a resposta e retorna.
         /// </summary>
         /// <typeparam name="T">Tipo de resultado</typeparam>
         /// <param name="response">Resposta recebida do servidor</param>
         /// <returns></returns>
         /// <exception cref="ResponseException">Exceção lançada caso ocorra erro no servidor</exception>
-        protected static async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
+        protected async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
         {
             var json = await response.Content.ReadAsStringAsync();
 
@@ -51,8 +57,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
                     NullValueHandling = NullValueHandling.Ignore,
                     Converters = new List<JsonConverter>
                     {
-                        new ObjectConverter(),
-                        new CharConverter()
+                        new CharConverter(),
+                        GetConverter()
                     }
                 });
             }

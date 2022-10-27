@@ -29,7 +29,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"boleto/{action}");
-            var response = await apiClient.PostAsync(SerializeObject(request));
+            var response = await apiClient.PostAsync(request);
             var json = await response.Content.ReadAsStringAsync();
 
             if(response.IsSuccessStatusCode)

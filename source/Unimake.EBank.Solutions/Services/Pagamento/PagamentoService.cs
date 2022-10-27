@@ -53,8 +53,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
             }
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/autorizar");
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-            return await PrepareResponseAsync<AutorizarPagamentoResponse>(await apiClient.PostAsync(json));
+            return await PrepareResponseAsync<AutorizarPagamentoResponse>(await apiClient.PostAsync(request));
         }
 
         #endregion Public Methods

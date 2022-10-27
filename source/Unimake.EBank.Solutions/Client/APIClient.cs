@@ -31,6 +31,12 @@ namespace Unimake.EBank.Solutions.Client
             client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
         }
 
+        private async Task<HttpResponseMessage> PostAsync(string json)
+        {
+            EnsureAuthorization();
+            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
+        }
+
         private string PrepareURI(string queryString = "")
         {
             return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}?{queryString}";
@@ -67,11 +73,7 @@ namespace Unimake.EBank.Solutions.Client
             return await client.GetAsync(PrepareURI(queryString));
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string json)
-        {
-            EnsureAuthorization();
-            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
-        }
+        public async Task<HttpResponseMessage> PostAsync(object param) => await PostAsync(Newtonsoft.Json.JsonConvert.SerializeObject(param));
 
         #endregion Public Methods
     }

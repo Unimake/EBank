@@ -1,8 +1,8 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.PIX.Request;
 using System;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.PIX;
-using Unimake.EBank.Solutions.Services.PIX.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
 using Xunit.Abstractions;

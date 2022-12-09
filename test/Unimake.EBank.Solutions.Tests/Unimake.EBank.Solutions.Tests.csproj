@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="Unimake.AuthServer" Version="20221110.1610.12" />
-    <PackageReference Include="Unimake.EBank.Primitives" Version="20221123.1837.12" />
+    <PackageReference Include="Unimake.AuthServer" Version="20221209.1042.36" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20221209.1042.36" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

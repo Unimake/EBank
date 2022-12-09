@@ -1,4 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
+using EBank.Solutions.Primitives.PIX.Models.Consulta;
 using EBank.Solutions.Primitives.PIX.Request;
 using EBank.Solutions.Primitives.PIX.Response;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Exceptions;
 using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.Primitives.Collections.Page;
 
 namespace Unimake.EBank.Solutions.Services.PIX
 {
@@ -50,11 +52,11 @@ namespace Unimake.EBank.Solutions.Services.PIX
         /// <param name="request">Dados da requisição PIX</param>
         /// <param name="authenticatedScope">Escopo autenticado para requisição</param>
         /// <returns></returns>
-        public async Task<PIXGetResponse> GetAsync(PIXGetRequest request, AuthenticatedScope authenticatedScope)
+        public async Task<PagedList<PIXItem>> GetAsync(PIXGetRequest request, AuthenticatedScope authenticatedScope)
         {
             var client = new APIClient(authenticatedScope, "pix/consultar");
             var response = await client.PostAsync(request);
-            return await PrepareResponseAsync<PIXGetResponse>(response);
+            return await PrepareResponseAsync<PagedList<PIXItem>>(response);
         }
 
         #endregion Public Methods

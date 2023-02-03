@@ -1,5 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.PIX.Request;
+using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using System;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.PIX;

@@ -39,7 +39,7 @@ namespace Unimake.EBank.Solutions.Client
 
         private string PrepareURI(string queryString = "")
         {
-            return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}?{queryString}";
+            return $"{debugStateObject?.EBankServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}?{queryString}";
         }
 
         #endregion Private Methods

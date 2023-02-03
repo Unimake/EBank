@@ -1,7 +1,6 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
 using EBank.Solutions.Primitives.PIX.Models.Consulta;
-using EBank.Solutions.Primitives.PIX.Request;
-using EBank.Solutions.Primitives.PIX.Response;
+using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Client;

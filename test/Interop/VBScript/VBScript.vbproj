@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>VBScript</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
+    <Configurations>Debug;Release;Debug-Unimake</Configurations>
   </PropertyGroup>
 
 </Project>

@@ -81,8 +81,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         public async Task<PagedList<TGet>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
-            var apiClient = new APIClient(authenticatedScope, Path);
-            return await PrepareResponseAsync<PagedList<TGet>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, Path, request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TGet>>(await apiClient.GetAsync());
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         {
             request.Validate();
 
-            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab");
-            return await PrepareResponseAsync<PagedList<TCNAB>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab", request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TCNAB>>(await apiClient.GetAsync());
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         {
             request.Validate();
 
-            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson");
-            return await PrepareResponseAsync<PagedList<TJson>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson", request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TJson>>(await apiClient.GetAsync());
         }
 
         #endregion Public Methods

@@ -1,7 +1,8 @@
 ﻿using EBank.Solutions.Primitives.Abstractions.Paged;
 using EBank.Solutions.Primitives.Enumerations;
 using System;
-using System.Text;
+using System.Collections.Generic;
+using System.Http;
 
 namespace Unimake.EBank.Solutions.Services.Abstractions.Request
 {
@@ -50,36 +51,38 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Request
         /// Retorna a query string
         /// </summary>
         /// <returns></returns>
-        public string ToQueryString()
+        public QueryString ToQueryString()
         {
             if(!EndDate.IsValid())
             {
                 EndDate = StartDate;
             }
 
-            var sb = new StringBuilder()
-               .Append($"{nameof(Bank)}={(int)Bank}&")
-               .Append($"{nameof(StartDate)}={StartDate:yyyy-MM-dd}&")
-               .Append($"{nameof(EndDate)}={EndDate:yyyy-MM-dd}&")
-               .Append($"{nameof(PageNumber)}={PageNumber}&")
-               .Append($"{nameof(PageSize)}={PageSize}&");
+            var query = new QueryString
+            {
+                { nameof(Bank), (int)Bank },
+                { nameof(StartDate), $"{StartDate:yyyy-MM-dd}" },
+                { nameof(EndDate), $"{EndDate:yyyy-MM-dd}" },
+                { nameof(PageNumber), PageNumber },
+                { nameof(PageSize), PageSize }
+            };
 
             if(!string.IsNullOrWhiteSpace(AccountNumber))
             {
-                _ = sb.Append($"{nameof(AccountNumber)}={AccountNumber}&");
+                query.Add(nameof(AccountNumber), AccountNumber);
             }
 
             if(!string.IsNullOrWhiteSpace(Name))
             {
-                _ = sb.Append($"{nameof(Name)}={Name}&");
+                query.Add(nameof(Name), Name);
             }
 
             if(!string.IsNullOrWhiteSpace(Registration))
             {
-                _ = sb.Append($"{nameof(Registration)}={Registration}&");
+                query.Add(nameof(Registration), Registration);
             }
 
-            return sb.ToString();
+            return query;
         }
 
         #endregion Public Methods

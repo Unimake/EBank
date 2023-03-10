@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
     <PackageReference Include="Unimake.AuthServer" Version="20230303.1742.7" />
     <PackageReference Include="xunit" Version="2.4.2" />

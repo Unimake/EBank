@@ -36,7 +36,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
-                    Banco = beneficiario.Conta.Banco,
+                    Banco = beneficiario.Conta.Banco.GetValueOrDefault(),
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
@@ -65,7 +65,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
-                    Banco = beneficiario.Conta.Banco,
+                    Banco = beneficiario.Conta.Banco.GetValueOrDefault(),
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
@@ -135,7 +135,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 //Já fica como teste :)
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
-                    Banco = beneficiario.Conta.Banco,
+                    Banco = beneficiario.Conta.Banco.GetValueOrDefault(),
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
@@ -178,7 +178,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 //Já fica como teste :)
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
-                    Banco = beneficiario.Conta.Banco,
+                    Banco = beneficiario.Conta.Banco.GetValueOrDefault(),
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,

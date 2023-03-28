@@ -46,7 +46,7 @@ public static class ValidationExtensions
     /// <exception cref="ArgumentException">Lançada se o texto for vazio, nulo ou composto apenas de espaços em branco.</exception>
     public static void ValidateRequiredField(this string text, string fieldName)
     {
-        if(string.IsNullOrWhiteSpace(fieldName))
+        if(string.IsNullOrWhiteSpace(text))
         {
             throw new ArgumentException($"The '{fieldName}' value cannot be null or whitespace.", fieldName);
         }

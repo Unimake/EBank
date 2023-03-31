@@ -2,10 +2,10 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Request;
 using Unimake.Primitives.Collections.Page;
 using static Newtonsoft.Json.JsonConvert;

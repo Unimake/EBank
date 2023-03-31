@@ -1,8 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Resolver;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Security.Contract;
 
 namespace Unimake.EBank.Solutions.Services.Security

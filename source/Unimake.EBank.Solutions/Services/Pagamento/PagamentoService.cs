@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Model.Pagamento;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Pagamento.Request;
 using Unimake.EBank.Solutions.Services.Pagamento.Response;

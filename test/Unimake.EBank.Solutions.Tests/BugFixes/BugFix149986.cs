@@ -1,7 +1,7 @@
 ﻿using EBank.Solutions.Primitives.Enumerations;
 using System;
 using Unimake.AuthServer.Authentication;
-using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Extrato;
 using Unimake.EBank.Solutions.Services.Extrato.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;

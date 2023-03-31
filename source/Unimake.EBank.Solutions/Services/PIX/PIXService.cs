@@ -5,9 +5,9 @@ using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using EBank.Solutions.Primitives.PIX.Response;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.Primitives.Collections.Page;
 
 namespace Unimake.EBank.Solutions.Services.PIX

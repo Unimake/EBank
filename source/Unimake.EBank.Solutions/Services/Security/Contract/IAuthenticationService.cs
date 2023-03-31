@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
-using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.AuthServer.Security.Scope;
 
 namespace Unimake.EBank.Solutions.Services.Security.Contract
 {

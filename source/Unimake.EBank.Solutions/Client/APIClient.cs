@@ -4,8 +4,8 @@ using System.Http;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.Debug;
-using Unimake.EBank.Solutions.Scopes.Security;
 
 namespace Unimake.EBank.Solutions.Client
 {

@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.Debug;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Xunit.Abstractions;
 using static Newtonsoft.Json.JsonConvert;
 using AuthenticationService = Unimake.EBank.Solutions.Services.Security.AuthenticationService;
@@ -69,18 +69,20 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             EBankServerUrl = "https://localhost:44341/api/v1/"
         });
 #else
+
         protected void StartServerDebugMode() => debugScope = null;
+
 #endif
 
-#endregion Protected Methods
+        #endregion Protected Methods
 
-#region Public Constructors
+        #region Public Constructors
 
         public TestBase(ITestOutputHelper output) => this.output = output;
 
-#endregion Public Constructors
+        #endregion Public Constructors
 
-#region Public Methods
+        #region Public Methods
 
         public void Dispose()
         {
@@ -95,6 +97,6 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             System.Diagnostics.Debug.WriteLine(text, "EBankDebug");
         }
 
-#endregion Public Methods
+        #endregion Public Methods
     }
 }

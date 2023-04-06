@@ -4,7 +4,7 @@ using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.IO;
 using Unimake.AuthServer.Authentication;
-using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.Threading;
@@ -40,7 +40,6 @@ namespace Unimake.EBank.Solutions.QueryExample
                 });
 
                 MessageCenter.Log("Escopo autenticado com sucesso. Iniciando consulta...");
-
 
                 foreach(var boleto in boletos)
                 {
@@ -80,7 +79,6 @@ namespace Unimake.EBank.Solutions.QueryExample
                     catch(QueryInformationResponseException)
                     {
                         MessageCenter.Log($"O boleto '{boleto}' não foi encontrado.");
-                        
                     }
 
                     MessageCenter.Log($"{took.Seconds} segundos.");

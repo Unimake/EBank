@@ -1,11 +1,10 @@
-﻿using EBank.Solutions.Primitives.Debug;
-using System;
+﻿using System;
 using System.Http;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
-using Unimake.Debug;
+using Unimake.Primitives.UDebug;
 
 namespace Unimake.EBank.Solutions.Client
 {
@@ -41,7 +40,7 @@ namespace Unimake.EBank.Solutions.Client
 
         private string PrepareURI()
         {
-            return $"{debugStateObject?.EBankServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}{ToQueryString()}";
+            return $"{debugStateObject?.AnotherServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}{ToQueryString()}";
         }
 
         private string ToQueryString()

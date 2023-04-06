@@ -1,14 +1,12 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.Debug;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
-using Unimake.Debug;
+using Unimake.Primitives.UDebug;
 using Xunit.Abstractions;
 using static Newtonsoft.Json.JsonConvert;
-using AuthenticationService = Unimake.EBank.Solutions.Services.Security.AuthenticationService;
 
 namespace Unimake.EBank.Solutions.Tests.Abstractions
 {
@@ -53,26 +51,27 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Protected Methods
 
-        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await new AuthenticationService().AuthenticateAsync(new AuthenticationRequest
+        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await Task.FromResult(new AuthenticatedScope(new AuthenticationRequest
         {
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
             AppId = "61a73f4735ad4993959e28e2b0e4552a",
             Secret = "35955532e0c54517bc9d7e900b61b8d3"
-        });
+        }));
 
-#if DEBUG_UNIMAKE
-        protected void StartServerDebugMode() => debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
+        protected void StartServerDebugMode()
         {
-            AuthServerUrl = "https://localhost:44386/api/auth/",
-            EBankServerUrl = "https://localhost:44341/api/v1/"
-        });
+#if DEBUG_UNIMAKE
+            debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
+            {
+                AuthServerUrl = "https://localhost:44386/api/auth/",
+                AnotherServerUrl = "https://localhost:44341/api/v1/"
+            });
 #else
-
-        protected void StartServerDebugMode() => debugScope = null;
-
+            debugScope = null;
 #endif
+        }
 
         #endregion Protected Methods
 

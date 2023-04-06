@@ -1,5 +1,4 @@
 using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.Debug;
 using EBank.Solutions.Primitives.Enumerations;
 using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
@@ -8,13 +7,12 @@ using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Exceptions.Security;
 using Unimake.AuthServer.Security.Scope;
-using Unimake.Debug;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
+using Unimake.Primitives.UDebug;
 using Xunit;
 using Xunit.Abstractions;
-using AuthenticationService = Unimake.EBank.Solutions.Services.Security.AuthenticationService;
 
 namespace Unimake.EBank.Solutions.Tests.Billet
 {
@@ -56,12 +54,62 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         }
 
         [Fact]
+        public async Task InvalidRegister()
+        {
+            // Billet mínimo para gravação
+            // CPF e CNPJ foram gerados no site
+            // https://www.4devs.com.br
+
+            var request = new RegisterRequest
+            {
+                Especie = EspecieTitulo.Outros,
+                ValorNominal = 45.88m,
+                Vencimento = DateTime.Today.AddDays(15),
+                NumeroNaEmpresa = "12345",
+                NumeroNoBanco = "12345",
+                Beneficiario = new Beneficiario
+                {
+                    Conta = new ContaCorrente()
+                },
+                Pagador = new Pagador
+                {
+                    Nome = "Marcelo de Souza",
+                    Email = "pagador@exemplo.com.br",
+                    TipoInscricao = TipoDeInscricao.CPF,
+                    Inscricao = "38640211035",
+                    Endereco = new Endereco
+                    {
+                        Rua = "Rua Fictícia",
+                        Numero = "11",
+                        Bairro = "Bairro",
+                        CEP = "11111111",
+                        Cidade = "Brasília",
+                        UF = "DF",
+                    },
+                },
+            };
+
+            try
+            {
+                using var scope = await CreateAuthenticatedScopeAsync();
+                var service = new BilletService();
+                var response = await service.RegisterAsync(request, scope);
+                DumpAsJson(response);
+            }
+            catch(RegisterResponseException registerEx)
+            {
+                DumpAsJson(registerEx.Errors);
+                throw;//forward
+            }
+        }
+
+        [Fact]
         public async Task JustASimpleDebugScopeTest()
         {
             using(new DebugScope<DebugStateObject>(new DebugStateObject
             {
                 AuthServerUrl = "invalid e-bank uri",
-                EBankServerUrl = "invalid authserver uri"
+                AnotherServerUrl = "invalid authserver uri"
             }))
             {
                 var service = new BilletService();
@@ -163,60 +211,10 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         }
 
         [Fact]
-        public async Task InvalidRegister()
-        {
-            // Billet mínimo para gravação
-            // CPF e CNPJ foram gerados no site
-            // https://www.4devs.com.br
-
-            var request = new RegisterRequest
-            {
-                Especie = EspecieTitulo.Outros,
-                ValorNominal = 45.88m,
-                Vencimento = DateTime.Today.AddDays(15),
-                NumeroNaEmpresa = "12345",
-                NumeroNoBanco = "12345",
-                Beneficiario = new Beneficiario
-                {
-                    Conta = new ContaCorrente()
-                },
-                Pagador = new Pagador
-                {
-                    Nome = "Marcelo de Souza",
-                    Email = "pagador@exemplo.com.br",
-                    TipoInscricao = TipoDeInscricao.CPF,
-                    Inscricao = "38640211035",
-                    Endereco = new Endereco
-                    {
-                        Rua = "Rua Fictícia",
-                        Numero = "11",
-                        Bairro = "Bairro",
-                        CEP = "11111111",
-                        Cidade = "Brasília",
-                        UF = "DF",
-                    },
-                },
-            };
-
-            try
-            {
-                using var scope = await CreateAuthenticatedScopeAsync();
-                var service = new BilletService();
-                var response = await service.RegisterAsync(request, scope);
-                DumpAsJson(response);
-            }
-            catch(RegisterResponseException registerEx)
-            {
-                DumpAsJson(registerEx.Errors);
-                throw;//forward
-            }
-        }
-
-        [Fact]
         public async Task RegisterInvalidAppIdOrSecret() =>
             await Assert.ThrowsAsync<AuthenticationServiceException>(async () =>
         {
-            using var scope = await new AuthenticationService().AuthenticateAsync(new AuthenticationRequest
+            using var scope = new AuthenticatedScope(new AuthenticationRequest
             {
                 AppId = "invalid appId",
                 Secret = "invalid secret",
@@ -239,8 +237,8 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 };
                 _ = new AuthenticatedScope(x);
             });
-
-            #endregion Public Methods
         }
+
+        #endregion Public Methods
     }
 }

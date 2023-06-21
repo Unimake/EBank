@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2023.05.09.0903</AssemblyVersion>
-		<Version>20230509.0903.26</Version>
+		<AssemblyVersion>2023.06.13.0918</AssemblyVersion>
+		<Version>20230613.0918.02</Version>
 		<Authors>Unimake Software</Authors>
 		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
 		<PackageProjectUrl>https://unimake.app/ebank/swagger/</PackageProjectUrl>
@@ -99,9 +99,9 @@
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
-		<PackageReference Include="Unimake.AuthServer" Version="20230509.903.26" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20230509.903.26" />
-		<PackageReference Include="Unimake.Primitives" Version="20230509.903.26" />
+		<PackageReference Include="Unimake.AuthServer" Version="20230613.918.2" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20230613.918.2" />
+		<PackageReference Include="Unimake.Primitives" Version="20230613.918.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Services\Extrato\Request\" />

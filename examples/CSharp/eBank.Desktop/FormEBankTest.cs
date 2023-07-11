@@ -38,6 +38,133 @@ namespace eBankTest
         public Form1() => InitializeComponent();
 
         /// <summary>
+        /// Alterar vencimento boleto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnAlterarVencimentoBoleto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var billetService = new BilletService();
+
+                var numeroNoBanco = "00000033";
+
+                var response = await billetService.ExtendPaymentAsync(new ExtendPaymentRequest
+                {
+                    Beneficiario = new Beneficiario
+                    {
+                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
+                        Codigo = "1111/11111-1",
+                        Inscricao = "11111111111111",
+                        Conta = new ContaCorrente
+                        {
+                            Banco = Banco.Itau,
+                            Agencia = "9168",
+                            Numero = "1111"
+                        }
+                    },
+                    NumeroNoBanco = numeroNoBanco,
+                    DataVencimento = DateTime.Now.AddDays(31),
+                    Testing = true //Ambiente de homologação/teste
+                }, authScope);
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        /// <summary>
+        /// Autorizar pagamento
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnAutorizarPagamento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var pagamentoService = new PagamentoService();
+
+                pagamentoService.AutorizarPagamento(new List<AutorizarPagamentoRequest>
+                {
+                    new AutorizarPagamentoRequest
+                    {
+                        DataPagamento = new DateTime(2022,06,16),
+                        CodigoBarras = "1256465465465465465465465465465465465465445",
+                        NossoNumero = "1234567890"
+                    }
+                }, authScope);
+
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        /// <summary>
+        /// Cancelar boleto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnCancelarBoleto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var billetService = new BilletService();
+
+                var numeroNoBanco = "00000033";
+
+                var response = await billetService.CancelAsync(new CancelRequest
+                {
+                    Beneficiario = new Beneficiario
+                    {
+                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
+                        Codigo = "1111/11111-1",
+                        Inscricao = "11111111111111",
+                        Conta = new ContaCorrente
+                        {
+                            Banco = Banco.Itau,
+                            Agencia = "9168",
+                            Numero = "1111"
+                        }
+                    },
+                    NumeroNoBanco = numeroNoBanco,
+                    Testing = true //Ambiente de homologação/teste
+                }, authScope);
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        /// <summary>
         /// Consultar situação do boleto
         /// </summary>
         /// <param name="sender"></param>
@@ -85,6 +212,201 @@ namespace eBankTest
                     "Valor Juros: " + response[0].ValorJuros + "\r\n" +
                     "Valor Liquidação: " + response[0].ValorLiquidado + "\r\n" +
                     "Situação: " + response[0].Situacao.ToString();
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        /// <summary>
+        /// Consultar extrato
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnExtrato_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var extratoService = new ExtratoService();
+
+                var startDate = new DateTime(2022, 10, 10);
+                var endDate = new DateTime(2022, 10, 17);
+
+                var pageNumber = 1;
+                while (true)
+                {
+                    var response = await extratoService.GetAsync(new ExtratoRequest
+                    {
+                        AccountNumber = AccountNumber,
+                        StartDate = startDate,
+                        EndDate = endDate,
+                        Bank = Bank,
+                        PageNumber = pageNumber, //Número de página a ser consultada
+                        PageSize = 10 //Quantos itens por página
+                    }, authScope);
+
+                    if (response.PageInfo.TotalPages == 0)
+                    {
+                        TxtResposta.Text += "Não existe movimentação no período consultado. Período: " + startDate.ToString("d") + " à " + endDate.ToString("d") + "\r\n\r\n";
+                        break;
+                    }
+
+                    if (response.PageInfo.ItemsCount > 0) //Quantidade de itens retornados
+                    {
+                        TxtResposta.Text += "Page: " + response.PageInfo.CurrentPage + "/" + response.PageInfo.TotalPages + "\r\n";
+
+                        var contador = 0;
+                        foreach (var item in response.Items)
+                        {
+                            TxtResposta.Text +=
+                                "---------------------------------\r\n" +
+                                "Contador " + (++contador).ToString("00") + "\r\n" +
+                                "---------------------------------\r\n" +
+                                "Data lançamento: " + item.Lancamento.Data + "\r\n" +
+                                "Valor lançamento: " + item.Lancamento.ValorLancamento + "\r\n" +
+                                "Tipo lançamento: " + item.Lancamento.TipoLancamento + "\r\n" +
+                                "Categoria lançamento: " + item.Lancamento.CategoriaDoLancamento + "\r\n" +
+                                "Natureza: " + item.Natureza + "\r\n" +
+                                "Tipo lançamento: " + item.Lancamento.TipoLancamento + "\r\n" +
+                                "Numero documento: " + item.Lancamento.NumeroDocumento + "\r\n" +
+                                "Descrição histórico lançamento banco: " + item.Lancamento.DescricaoHistoricoLancamentoBanco + "\r\n" +
+                                "Código histórico banco: " + item.Lancamento.CodigoHistoricoBanco + "\r\n\r\n";
+                        }
+                    }
+
+                    //Pula para a próxima página
+                    pageNumber++;
+
+                    //Verifica se finalizou o numero de páginas retornadas
+                    if (!response.PageInfo.HasNext)
+                    {
+                        break;
+                    }
+                }
+
+                TxtResposta.Text += "FIM!!!";
+
+                MessageBox.Show("Consulta extrato finalizada.");
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        private async void BtnInformarPagamentoBoleto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var billetService = new BilletService();
+
+                var numeroNoBanco = "00000033";
+
+                var response = await billetService.InformPaymentAsync(new InformPaymentRequest
+                {
+                    Beneficiario = new Beneficiario
+                    {
+                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
+                        Codigo = "1111/11111-1",
+                        Inscricao = "11111111111111",
+                        Conta = new ContaCorrente
+                        {
+                            Banco = Banco.Itau,
+                            Agencia = "9168",
+                            Numero = "1111"
+                        }
+                    },
+                    NumeroNoBanco = numeroNoBanco,
+                    Testing = true //Ambiente de homologação/teste
+
+                }, authScope);
+            }
+            catch (Exception ex)
+            {
+                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
+            }
+        }
+
+        /// <summary>
+        /// Listar pagamentos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void BtnListarPagamento_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TxtResposta.Clear();
+
+                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                {
+                    AppId = AppId,
+                    Secret = Secret
+                });
+
+                var startDate = new DateTime(2022, 07, 16);
+                var endDate = new DateTime(2022, 07, 16);
+
+                var pagamentoService = new PagamentoService();
+
+                var response = await pagamentoService.GetAsync(new PagamentoRequest
+                {
+                    AccountNumber = AccountNumber,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Bank = Bank
+                }, authScope);
+
+                //if (response?.Count > 0)
+                //{
+                //    var contador = 0;
+
+                //    foreach (var item in response)
+                //    {
+                //        if (!string.IsNullOrWhiteSpace(item.NossoNumero))
+                //        {
+                //            TxtResposta.Text +=
+                //                "---------------------------------\r\n" +
+                //                "Contador " + (++contador).ToString("00") + "\r\n" +
+                //                "---------------------------------\r\n" +
+                //                (item.NossoNumero == null ? "" : "Nosso número: " + item.NossoNumero + "\r\n") +
+                //                (item.NomeFavorecido == null ? "" : "Nome favorecido: " + item.NomeFavorecido + "\r\n") +
+                //                "Valor: " + item.ValorReal + "\r\n" +
+                //                "Valor Pagamento: " + item.ValorPagamento + "\r\n" +
+                //                "Informações: " + item.Informacao2 + "\r\n" +
+                //                (item.Aviso == null ? "" : "Aviso: " + item.Aviso + "\r\n") +
+                //                "Banco do Favorecido: " + item.Banco.ToString() + "\r\n" +
+                //                "Conta Corrente - Agencia: " + item.ContaCorrente.Agencia + "\r\n" +
+                //                "Conta Corrente - Conta: " + item.ContaCorrente.Conta + "\r\n" +
+                //                "Tipo Lançamento: " + item.TipoDeMovimento.ToString() + "\r\n" +
+                //                "Código da Instrução para Movimento: " + item.CodigoDaInstrucaoParaMovimento.ToString() + "\r\n\r\n";
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    TxtResposta.Text += "Não existem pagamentos no período consultado. Período: " + startDate.ToString("d") + " à " + endDate.ToString("d") + "\r\n\r\n";
+                //}
+
+                TxtResposta.Text += "FIM!!!";
             }
             catch (Exception ex)
             {
@@ -182,327 +504,6 @@ namespace eBankTest
 
                     response.PDFContent.SaveToFile(pathBoleto);
                 }
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        /// <summary>
-        /// Consultar extrato
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void BtnExtrato_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var extratoService = new ExtratoService();
-
-                var startDate = new DateTime(2022, 10, 10);
-                var endDate = new DateTime(2022, 10, 17);
-
-                var pageNumber = 1;
-                while (true)
-                {
-                    var response = await extratoService.GetAsync(new ExtratoRequest
-                    {
-                        AccountNumber = AccountNumber,
-                        StartDate = startDate,
-                        EndDate = endDate,
-                        Bank = Bank,
-                        PageNumber = pageNumber, //Número de página a ser consultada
-                        PageSize = 10 //Quantos itens por página
-                    }, authScope);
-
-                    if (response.PageInfo.TotalPages == 0)
-                    {
-                        TxtResposta.Text += "Não existe movimentação no período consultado. Período: " + startDate.ToString("d") + " à " + endDate.ToString("d") + "\r\n\r\n";
-                        break;
-                    }
-
-                    if (response.PageInfo.ItemsCount > 0) //Quantidade de itens retornados
-                    {
-                        TxtResposta.Text += "Page: " + response.PageInfo.CurrentPage + "/" + response.PageInfo.TotalPages + "\r\n";
-
-                        var contador = 0;
-                        foreach (var item in response.Items)
-                        {
-                            TxtResposta.Text +=
-                                "---------------------------------\r\n" +
-                                "Contador " + (++contador).ToString("00") + "\r\n" +
-                                "---------------------------------\r\n" +
-                                "Data lançamento: " + item.Lancamento.Data + "\r\n" +
-                                "Valor lançamento: " + item.Lancamento.ValorLancamento + "\r\n" +
-                                "Tipo lançamento: " + item.Lancamento.TipoLancamento + "\r\n" +
-                                "Categoria lançamento: " + item.Lancamento.CategoriaDoLancamento + "\r\n" +
-                                "Natureza: " + item.Natureza + "\r\n" +
-                                "Tipo lançamento: " + item.Lancamento.TipoLancamento + "\r\n" +
-                                "Numero documento: " + item.Lancamento.NumeroDocumento + "\r\n" +
-                                "Descrição histórico lançamento banco: " + item.Lancamento.DescricaoHistoricoLancamentoBanco + "\r\n" +
-                                "Código histórico banco: " + item.Lancamento.CodigoHistoricoBanco + "\r\n\r\n";
-                        }
-                    }
-
-                    //Pula para a próxima página
-                    pageNumber++;
-
-                    //Verifica se finalizou o numero de páginas retornadas
-                    if (!response.PageInfo.HasNext)
-                    {
-                        break;
-                    }
-                }
-
-                TxtResposta.Text += "FIM!!!";
-
-                MessageBox.Show("Consulta extrato finalizada.");
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        /// <summary>
-        /// Listar pagamentos
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void BtnListarPagamento_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var startDate = new DateTime(2022, 07, 16);
-                var endDate = new DateTime(2022, 07, 16);
-
-                var pagamentoService = new PagamentoService();
-
-                var response = await pagamentoService.GetAsync(new PagamentoRequest
-                {
-                    AccountNumber = AccountNumber,
-                    StartDate = startDate,
-                    EndDate = endDate,
-                    Bank = Bank
-                }, authScope);
-
-                //if (response?.Count > 0)
-                //{
-                //    var contador = 0;
-
-                //    foreach (var item in response)
-                //    {
-                //        if (!string.IsNullOrWhiteSpace(item.NossoNumero))
-                //        {
-                //            TxtResposta.Text +=
-                //                "---------------------------------\r\n" +
-                //                "Contador " + (++contador).ToString("00") + "\r\n" +
-                //                "---------------------------------\r\n" +
-                //                (item.NossoNumero == null ? "" : "Nosso número: " + item.NossoNumero + "\r\n") +
-                //                (item.NomeFavorecido == null ? "" : "Nome favorecido: " + item.NomeFavorecido + "\r\n") +
-                //                "Valor: " + item.ValorReal + "\r\n" +
-                //                "Valor Pagamento: " + item.ValorPagamento + "\r\n" +
-                //                "Informações: " + item.Informacao2 + "\r\n" +
-                //                (item.Aviso == null ? "" : "Aviso: " + item.Aviso + "\r\n") +
-                //                "Banco do Favorecido: " + item.Banco.ToString() + "\r\n" +
-                //                "Conta Corrente - Agencia: " + item.ContaCorrente.Agencia + "\r\n" +
-                //                "Conta Corrente - Conta: " + item.ContaCorrente.Conta + "\r\n" +
-                //                "Tipo Lançamento: " + item.TipoDeMovimento.ToString() + "\r\n" +
-                //                "Código da Instrução para Movimento: " + item.CodigoDaInstrucaoParaMovimento.ToString() + "\r\n\r\n";
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    TxtResposta.Text += "Não existem pagamentos no período consultado. Período: " + startDate.ToString("d") + " à " + endDate.ToString("d") + "\r\n\r\n";
-                //}
-
-                TxtResposta.Text += "FIM!!!";
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        /// <summary>
-        /// Autorizar pagamento
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnAutorizarPagamento_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var pagamentoService = new PagamentoService();
-
-                pagamentoService.AutorizarPagamento(new List<AutorizarPagamentoRequest>
-                {
-                    new AutorizarPagamentoRequest
-                    {
-                        DataPagamento = new DateTime(2022,06,16),
-                        CodigoBarras = "1256465465465465465465465465465465465465445",
-                        NossoNumero = "1234567890"
-                    }
-                }, authScope);
-
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        /// <summary>
-        /// Cancelar boleto
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void BtnCancelarBoleto_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var billetService = new BilletService();
-
-                var numeroNoBanco = "00000033";
-
-                var response = await billetService.CancelAsync(new CancelRequest
-                {
-                    Beneficiario = new Beneficiario
-                    {
-                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
-                        Codigo = "1111/11111-1",
-                        Inscricao = "11111111111111",
-                        Conta = new ContaCorrente
-                        {
-                            Banco = Banco.Itau,
-                            Agencia = "9168",
-                            Numero = "1111"
-                        }
-                    },
-                    NumeroNoBanco = numeroNoBanco,
-                    Testing = true //Ambiente de homologação/teste
-                }, authScope);
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        /// <summary>
-        /// Alterar vencimento boleto
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void BtnAlterarVencimentoBoleto_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var billetService = new BilletService();
-
-                var numeroNoBanco = "00000033";
-
-                var response = await billetService.ExtendPaymentAsync(new ExtendPaymentRequest
-                {
-                    Beneficiario = new Beneficiario
-                    {
-                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
-                        Codigo = "1111/11111-1",
-                        Inscricao = "11111111111111",
-                        Conta = new ContaCorrente
-                        {
-                            Banco = Banco.Itau,
-                            Agencia = "9168",
-                            Numero = "1111"
-                        }
-                    },
-                    NumeroNoBanco = numeroNoBanco,
-                    DataVencimento = DateTime.Now.AddDays(31),
-                    Testing = true //Ambiente de homologação/teste
-                }, authScope);
-            }
-            catch (Exception ex)
-            {
-                TxtResposta.Text += "\r\n\r\nErro:\r\n\r\n" + ex.GetAllMessages();
-            }
-        }
-
-        private async void BtnInformarPagamentoBoleto_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                TxtResposta.Clear();
-
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
-                {
-                    AppId = AppId,
-                    Secret = Secret
-                });
-
-                var billetService = new BilletService();
-
-                var numeroNoBanco = "00000033";
-
-                var response = await billetService.InformPaymentAsync(new InformPaymentRequest
-                {
-                    Beneficiario = new Beneficiario
-                    {
-                        Nome = "EMPRESA-TESTE DE MEDICAMENTOS LTDA", //Não é obrigatório
-                        Codigo = "1111/11111-1",
-                        Inscricao = "11111111111111",
-                        Conta = new ContaCorrente
-                        {
-                            Banco = Banco.Itau,
-                            Agencia = "9168",
-                            Numero = "1111"
-                        }
-                    },
-                    NumeroNoBanco = numeroNoBanco,
-                    Testing = true //Ambiente de homologação/teste
-
-                }, authScope);
             }
             catch (Exception ex)
             {
@@ -1020,7 +1021,7 @@ namespace eBankTest
                 CompanyName = "Unimake",
                 ContactPhone = "5544111111111",
                 CustomerName = "Wandrey",
-                Description = "Melhor churrasqueiro do mundo 🍖",
+                Description = "Melhor churrasqueiro do mundo ?",
                 IssuedDate = "31/12/2050",
                 QueryString = linkSigned,
                 To = "554411111111",
@@ -1101,7 +1102,7 @@ namespace eBankTest
                 CompanyName = "Unimake",
                 ContactPhone = "554411111111",
                 CustomerName = "Wandrey",
-                Description = "Melhor churrasqueiro do mundo 🍖",
+                Description = "Melhor churrasqueiro do mundo ?",
                 DueDate = "31/12/2050",
                 QueryString = linkSigned,
                 To = "554411111111",

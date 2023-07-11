@@ -3,7 +3,6 @@ using Unimake.EBank.Solutions.Services.Abstractions.Response;
 
 namespace Unimake.EBank.Solutions.Model.Cobranca
 {
-
     /// <summary>
     /// Retorno para o tipo cobrança em formato JSON
     /// </summary>

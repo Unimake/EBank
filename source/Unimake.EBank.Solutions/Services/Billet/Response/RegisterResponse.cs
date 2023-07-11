@@ -1,4 +1,5 @@
-﻿using Unimake.EBank.Solutions.Services.Abstractions.Response;
+﻿using EBank.Solutions.Primitives.PDF.Models;
+using Unimake.EBank.Solutions.Services.Abstractions.Response;
 
 namespace Unimake.EBank.Solutions.Services.Billet.Response
 {
@@ -8,6 +9,14 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
     public class RegisterResponse : ResponseBase
     {
         #region Public Properties
+
+        /// <summary>
+        /// Representação do código de barras do boletos.
+        /// </summary>
+        /// <remarks>
+        /// Não são todos os bancos que retornam esta informação, ela pode vir nula ou vazia
+        /// </remarks>
+        public string CodigoBarraNumerico { get; set; }
 
         /// <summary>
         /// Linha digitável.
@@ -21,10 +30,15 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
         /// <example>00000603</example>
         public string NumeroNoBanco { get; set; }
 
+        ///// <summary>
+        ///// Código de barras.
+        ///// </summary>
+        //public string CodigoDeBarras { get; set; }
+
         /// <summary>
-        /// Arquivo pdf do Billet em base 64.
+        /// Arquivo pdf do boleto em base 64.
         /// </summary>
-        public string PDFContent { get; set; }
+        public PDFContent PDFContent { get; set; }
 
         #endregion Public Properties
     }

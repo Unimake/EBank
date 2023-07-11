@@ -15,13 +15,10 @@
 	</PropertyGroup>	
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Unimake.AuthServer" Version="20220421.113.55" />
-    <PackageReference Include="Unimake.EBank.Primitives" Version="20220418.1155.56" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\source\Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Unimake.AuthServer" Version="20230405.1727.35" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20230405.1727.35" />
+    <PackageReference Include="Unimake.EBank.Solutions" Version="20230405.1727.35" />
   </ItemGroup>
 
 </Project>

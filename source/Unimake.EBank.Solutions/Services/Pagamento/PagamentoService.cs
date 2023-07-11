@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
+using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Model.Pagamento;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Service;
 using Unimake.EBank.Solutions.Services.Pagamento.Request;
 using Unimake.EBank.Solutions.Services.Pagamento.Response;
@@ -25,6 +27,16 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
 
         #endregion Protected Properties
 
+        #region Protected Methods
+
+        /// <summary>
+        /// <inheritdoc cref="FileServiceBase{TRequest, TGet, TJson, TCNAB}.GetConverter"/>
+        /// </summary>
+        /// <returns></returns>
+        protected override JsonConverter GetConverter() => new PagamentoConverter();
+
+        #endregion Protected Methods
+
         #region Public Methods
 
         /// <summary>
@@ -41,8 +53,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
             }
 
             var apiClient = new APIClient(authenticatedScope, $"{Path}/autorizar");
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-            return await PrepareResponseAsync<AutorizarPagamentoResponse>(await apiClient.PostAsync(json));
+            return await PrepareResponseAsync<AutorizarPagamentoResponse>(await apiClient.PostAsync(request));
         }
 
         #endregion Public Methods

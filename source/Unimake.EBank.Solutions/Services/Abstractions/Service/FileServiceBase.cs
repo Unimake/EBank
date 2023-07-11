@@ -2,10 +2,10 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Converters.Json;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Scopes.Security;
 using Unimake.EBank.Solutions.Services.Abstractions.Request;
 using Unimake.Primitives.Collections.Page;
 using static Newtonsoft.Json.JsonConvert;
@@ -34,13 +34,19 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         #region Protected Methods
 
         /// <summary>
+        /// Conversor para os tipos
+        /// </summary>
+        /// <returns></returns>
+        protected abstract JsonConverter GetConverter();
+
+        /// <summary>
         /// Prepara a resposta e retorna.
         /// </summary>
         /// <typeparam name="T">Tipo de resultado</typeparam>
         /// <param name="response">Resposta recebida do servidor</param>
         /// <returns></returns>
         /// <exception cref="ResponseException">Exceção lançada caso ocorra erro no servidor</exception>
-        protected static async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
+        protected async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
         {
             var json = await response.Content.ReadAsStringAsync();
 
@@ -51,8 +57,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
                     NullValueHandling = NullValueHandling.Ignore,
                     Converters = new List<JsonConverter>
                     {
-                        new ObjectConverter(),
-                        new CharConverter()
+                        new CharConverter(),
+                        GetConverter()
                     }
                 });
             }
@@ -75,8 +81,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         public async Task<PagedList<TGet>> GetAsync(TRequest request, AuthenticatedScope authenticatedScope)
         {
             request.Validate();
-            var apiClient = new APIClient(authenticatedScope, Path);
-            return await PrepareResponseAsync<PagedList<TGet>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, Path, request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TGet>>(await apiClient.GetAsync());
         }
 
         /// <summary>
@@ -89,8 +95,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         {
             request.Validate();
 
-            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab");
-            return await PrepareResponseAsync<PagedList<TCNAB>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarCnab", request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TCNAB>>(await apiClient.GetAsync());
         }
 
         /// <summary>
@@ -103,8 +109,8 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         {
             request.Validate();
 
-            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson");
-            return await PrepareResponseAsync<PagedList<TJson>>(await apiClient.GetAsync(request.ToQueryString()));
+            var apiClient = new APIClient(authenticatedScope, $"{Path}/ListarJson", request.ToQueryString());
+            return await PrepareResponseAsync<PagedList<TJson>>(await apiClient.GetAsync());
         }
 
         #endregion Public Methods

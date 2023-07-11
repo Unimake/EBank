@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Unimake.EBank.Solutions.Services.Billet.Abstractions.Request;
 
 namespace Unimake.EBank.Solutions.Services.Billet.Request

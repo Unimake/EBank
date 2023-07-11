@@ -1,5 +1,4 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
-using System.Net;
 
 namespace Unimake.EBank.Solutions.Exceptions
 {

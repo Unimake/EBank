@@ -2,9 +2,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
 using Unimake.EBank.Solutions.Exceptions;
-using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Services.Billet.Response;
 using static Newtonsoft.Json.JsonConvert;
 
@@ -23,6 +24,12 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
         #endregion Private Constructors
 
+        #region Internal Methods
+
+        internal static Task<CancelResponse> RequestAsync(CancelRequest request, AuthenticatedScope authenticatedScope, string v) => throw new NotImplementedException();
+
+        #endregion Internal Methods
+
         #region Public Methods
 
         public static async Task<TResponse> RequestAsync(TRequest request, AuthenticatedScope authenticatedScope, string action)
@@ -30,7 +37,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
             request.Validate();
 
             var apiClient = new APIClient(authenticatedScope, $"boleto/{action}");
-            var response = await apiClient.PostAsync(SerializeObject(request));
+            var response = await apiClient.PostAsync(request);
             var json = await response.Content.ReadAsStringAsync();
 
             if(response.IsSuccessStatusCode)

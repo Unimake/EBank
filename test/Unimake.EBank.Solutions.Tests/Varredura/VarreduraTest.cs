@@ -1,21 +1,33 @@
 ﻿using EBank.Solutions.Primitives.Enumerations;
 using System;
 using System.Threading.Tasks;
-using Unimake.EBank.Solutions.Services.Cobranca;
-using Unimake.EBank.Solutions.Services.Cobranca.Request;
+using Unimake.EBank.Solutions.Services.Varredura;
+using Unimake.EBank.Solutions.Services.Varredura.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Unimake.EBank.Solutions.Tests.Cobranca
+namespace Unimake.EBank.Solutions.Tests.Varredura
 {
-    public class CobrancaTest : TestBase
+    public class VarreduraTest : TestBase
     {
+        #region Private Methods
+
+        private static VarreduraRequest GetRequest() => new()
+        {
+            StartDate = DateTime.Parse("2022-08-29"),
+            EndDate = DateTime.Parse("2022-08-30"),
+            Bank = Banco.Sicredi,
+        };
+
+        #endregion Private Methods
+
         #region Public Constructors
 
-        public CobrancaTest(ITestOutputHelper output)
-            : base(output)
+        public VarreduraTest(ITestOutputHelper output)
+                    : base(output)
         {
+            StartServerDebugMode();
         }
 
         #endregion Public Constructors
@@ -23,18 +35,13 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
         #region Public Methods
 
         [Fact]
-        public async Task ListAsJsonAsync()
+        public async Task Get()
         {
             try
             {
-                var service = new CobrancaService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.ListAsJsonAsync(new CobrancaRequest
-                {
-                    AccountNumber = "007145",
-                    StartDate = DateTime.Parse("10/09/2022"),
-                    Bank = Banco.Itau
-                }, scope);
+                var service = new VarreduraService();
+                var response = await service.GetAsync(GetRequest(), scope);
 
                 DumpAsJson(response);
             }
@@ -50,14 +57,9 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
         {
             try
             {
-                var service = new CobrancaService();
+                var service = new VarreduraService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.ListAsCnabAsync(new CobrancaRequest
-                {
-                    AccountNumber = "007145",
-                    StartDate = DateTime.Parse("24/07/2020"),
-                    Bank = Banco.Itau
-                }, scope);
+                var response = await service.ListAsCnabAsync(GetRequest(), scope);
 
                 DumpAsJson(response);
             }
@@ -69,19 +71,13 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
         }
 
         [Fact]
-        public async Task Get()
+        public async Task ListAsJsonAsync()
         {
             try
             {
-                var service = new CobrancaService();
+                var service = new VarreduraService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.GetAsync(new CobrancaRequest
-                {
-                    AccountNumber = "007145",
-                    StartDate = DateTime.Parse("24/07/2020"),
-                    Bank = Banco.Itau
-                }, scope);
-
+                var response = await service.ListAsJsonAsync(GetRequest(), scope);
                 DumpAsJson(response);
             }
             catch(Exception ex)
@@ -90,6 +86,7 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
                 throw;//forward
             }
         }
+
         #endregion Public Methods
     }
 }

@@ -1,10 +1,10 @@
-﻿using EBank.Solutions.Primitives.Debug;
-using System;
+﻿using System;
+using System.Http;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Unimake.Debug;
-using Unimake.EBank.Solutions.Scopes.Security;
+using Unimake.AuthServer.Security.Scope;
+using Unimake.Primitives.UDebug;
 
 namespace Unimake.EBank.Solutions.Client
 {
@@ -14,6 +14,7 @@ namespace Unimake.EBank.Solutions.Client
 
         private readonly AuthenticatedScope authenticatedScope;
         private readonly HttpClient client = new HttpClient();
+        private QueryString _queryString;
 
         #endregion Private Fields
 
@@ -31,9 +32,24 @@ namespace Unimake.EBank.Solutions.Client
             client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
         }
 
-        private string PrepareURI(string queryString = "")
+        private async Task<HttpResponseMessage> PostAsync(string json)
         {
-            return $"{debugStateObject?.EBankServerUrl ?? $"https://ebank.solutions/api/v1/"}{Action}?{queryString}";
+            EnsureAuthorization();
+            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
+        }
+
+        private string PrepareURI()
+        {
+            return $"{debugStateObject?.AnotherServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}{ToQueryString()}";
+        }
+
+        private string ToQueryString()
+        {
+            if(QueryString == null)
+            {
+                return "";
+            }
+            return QueryString.ToString(urlEncodeValue: false);
         }
 
         #endregion Private Methods
@@ -41,15 +57,17 @@ namespace Unimake.EBank.Solutions.Client
         #region Public Properties
 
         public string Action { get; }
+        public QueryString QueryString { get => _queryString ?? (_queryString = new QueryString()); }
 
         #endregion Public Properties
 
         #region Public Constructors
 
-        public APIClient(AuthenticatedScope scope, string action)
+        public APIClient(AuthenticatedScope scope, string action, QueryString queryString = null)
         {
             authenticatedScope = scope ?? throw new ArgumentNullException(nameof(scope));
             Action = action;
+            _queryString = queryString;
         }
 
         #endregion Public Constructors
@@ -61,17 +79,13 @@ namespace Unimake.EBank.Solutions.Client
             client.Dispose();
         }
 
-        public async Task<HttpResponseMessage> GetAsync(string queryString)
+        public async Task<HttpResponseMessage> GetAsync()
         {
             EnsureAuthorization();
-            return await client.GetAsync(PrepareURI(queryString));
+            return await client.GetAsync(PrepareURI());
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string json)
-        {
-            EnsureAuthorization();
-            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
-        }
+        public async Task<HttpResponseMessage> PostAsync(object param) => await PostAsync(Newtonsoft.Json.JsonConvert.SerializeObject(param));
 
         #endregion Public Methods
     }

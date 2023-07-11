@@ -1,5 +1,4 @@
-﻿using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.CNAB;
+﻿using EBank.Solutions.Primitives.CNAB;
 using EBank.Solutions.Primitives.CNAB.CNAB240;
 using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
 using System;

@@ -3,11 +3,11 @@
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0;net5.0</TargetFrameworks>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2022.10.06.1745</AssemblyVersion>
-		<Version>20221006.1745.32</Version>
+		<AssemblyVersion>2023.07.03.1027</AssemblyVersion>
+		<Version>20230703.1027.02</Version>
 		<Authors>Unimake Software</Authors>
 		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
-		<PackageProjectUrl>https://ebank.solutions/swagger/</PackageProjectUrl>
+		<PackageProjectUrl>https://unimake.app/ebank/swagger/</PackageProjectUrl>
 		<Deterministic>False</Deterministic>
 		<RepositoryUrl>https://github.com/Unimake/EBank</RepositoryUrl>
 		<PackageTags>unimake;banco;pix;Billet;conciliação;extrato;cobrança;pagamento</PackageTags>
@@ -23,22 +23,41 @@
 		<PackageReleaseNotes>Padronização dos erros retornados no padrão Problem Details.</PackageReleaseNotes>
 		<RootNamespace>Unimake.EBank.Solutions</RootNamespace>
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
+		<Configurations>Debug;Release;Debug-Unimake</Configurations>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Unimake|netstandard2.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	  <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+		<Optimize>False</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug-Unimake|net5.0|AnyCPU'">
+	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	  <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+		<Optimize>False</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
@@ -78,12 +97,11 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
-		<PackageReference Include="Unimake.AuthServer" Version="20221006.1745.32" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20221006.1745.32" />
-		<PackageReference Include="Unimake.Primitives" Version="20221006.1745.32" />
+		<PackageReference Include="Unimake.AuthServer" Version="20230703.1027.2" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20230703.1027.2" />
+		<PackageReference Include="Unimake.Primitives" Version="20230703.1027.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Services\Extrato\Request\" />
@@ -96,6 +114,6 @@
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<Exec Command="call $(SolutionDir)build.bat $(TargetPath) $(OutDir) " />
+		<Exec Command="call $(SolutionDir)build.bat $(TargetPath) $(OutDir) " ContinueOnError="true" />
 	</Target>
 </Project>

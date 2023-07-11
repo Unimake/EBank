@@ -7,10 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eBank.Desktop", "eBank.Desk
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Unimake|Any CPU = Debug_Unimake|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48B51099-6729-418A-A69A-75CF4F2631FA}.Debug_Unimake|Any CPU.ActiveCfg = Debug|Any CPU
+		{48B51099-6729-418A-A69A-75CF4F2631FA}.Debug_Unimake|Any CPU.Build.0 = Debug|Any CPU
 		{48B51099-6729-418A-A69A-75CF4F2631FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48B51099-6729-418A-A69A-75CF4F2631FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48B51099-6729-418A-A69A-75CF4F2631FA}.Release|Any CPU.ActiveCfg = Release|Any CPU

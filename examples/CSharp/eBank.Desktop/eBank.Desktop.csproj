@@ -11,11 +11,11 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Unimake.AuthServer" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.EBank.Primitives" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.EBank.Solutions" Version="20230703.1027.2" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20230710.1719.12" />
+    <PackageReference Include="Unimake.EBank.Solutions" Version="20230710.1719.12" />
     <PackageReference Include="Unimake.Extensions" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.MessageBroker" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.MessageBroker.Primitives" Version="20230703.1027.2" />
+    <PackageReference Include="Unimake.MessageBroker" Version="20230710.1719.12" />
+    <PackageReference Include="Unimake.MessageBroker.Primitives" Version="20230710.1719.12" />
     <PackageReference Include="Unimake.Utils" Version="20230703.1027.2" />
   </ItemGroup>
 

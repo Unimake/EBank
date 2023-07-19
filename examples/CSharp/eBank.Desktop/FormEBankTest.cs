@@ -1000,11 +1000,11 @@ namespace eBankTest
         {
             TxtResposta.Clear();
 
-            debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
-            {
-                AuthServerUrl = "http://209.14.24.39:54469/api/auth/",
-                AnotherServerUrl = "http://209.14.24.39:58295/api/v1/"
-            });
+            //debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
+            //{
+            //    AuthServerUrl = "http://209.14.24.39:54469/api/auth/",
+            //    AnotherServerUrl = "http://209.14.24.39:58295/api/v1/"
+            //});
 
             using var authScope = new AuthenticatedScope(new AuthenticationRequest
             {
@@ -1024,7 +1024,7 @@ namespace eBankTest
                 Description = "Melhor churrasqueiro do mundo ?",
                 IssuedDate = "31/12/2050",
                 QueryString = linkSigned,
-                To = "554411111111",
+                To = "554491423078",
                 Value = "R$ 250,00",
                 Testing = true
             }, authScope);
@@ -1081,11 +1081,11 @@ namespace eBankTest
         {
             TxtResposta.Clear();
 
-            debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
-            {
-                AuthServerUrl = "http://209.14.24.39:54469/api/auth/",
-                AnotherServerUrl = "http://209.14.24.39:58295/api/v1/"
-            });
+            //debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
+            //{
+            //    AuthServerUrl = "http://209.14.24.39:54469/api/auth/",
+            //    AnotherServerUrl = "http://209.14.24.39:58295/api/v1/"
+            //});
 
             using var authScope = new AuthenticatedScope(new AuthenticationRequest
             {
@@ -1105,7 +1105,7 @@ namespace eBankTest
                 Description = "Melhor churrasqueiro do mundo ?",
                 DueDate = "31/12/2050",
                 QueryString = linkSigned,
-                To = "554411111111",
+                To = "554491423078",
                 Value = "R$ 250,00",
                 Testing = true
             }, authScope);

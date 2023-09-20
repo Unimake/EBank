@@ -39,8 +39,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             Conta = new ContaCorrente
             {
                 Agencia = "<<AGENCIA>>",
-                //Até o momento da criação deste teste, apenas o Sicoob estava homologado.
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.BancoDoBrasil,
                 Numero = "<<CONTA>>"
             },
             Inscricao = "<<CPF OU CNPJ>>",

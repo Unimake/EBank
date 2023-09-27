@@ -38,12 +38,12 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         {
             Conta = new ContaCorrente
             {
-                Agencia = "<<AGENCIA>>",
+                Agencia = "...",
                 Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.BancoDoBrasil,
-                Numero = "<<CONTA>>"
+                Numero = "..."
             },
-            Inscricao = "<<CPF OU CNPJ>>",
-            Nome = "<<NOME>>"
+            Inscricao = "...",
+            Nome = "..."
         };
 
         #endregion Protected Properties
@@ -55,8 +55,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "61a73f4735ad4993959e28e2b0e4552a",
-            Secret = "35955532e0c54517bc9d7e900b61b8d3"
+            AppId = "...",
+            Secret = "..."
         }));
 
         protected void StartServerDebugMode()
@@ -93,6 +93,12 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             var text = SerializeObject(value, JsonSettings);
             output.WriteLine(text);
             System.Diagnostics.Debug.WriteLine(text, "EBankDebug");
+        }
+
+        public void WriteLine(string line)
+        {
+            output.WriteLine(line);
+            System.Diagnostics.Debug.WriteLine(line, "EBankDebug");
         }
 
         #endregion Public Methods

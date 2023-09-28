@@ -28,8 +28,6 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         [Fact]
         public async void Get240Caracteres()
         {
-            StartServerDebugMode();
-
             using var authScope = new AuthenticatedScope(new AuthenticationRequest
             {
                 AppId = "<<appid>>",

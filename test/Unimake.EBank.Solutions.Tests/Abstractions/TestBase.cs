@@ -32,34 +32,9 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #endregion Private Properties
 
-        #region Protected Properties
+        #region Private Methods
 
-        protected static Beneficiario BeneficiarioDefault => new Beneficiario
-        {
-            Conta = new ContaCorrente
-            {
-                Agencia = "...",
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.BancoDoBrasil,
-                Numero = "..."
-            },
-            Inscricao = "...",
-            Nome = "..."
-        };
-
-        #endregion Protected Properties
-
-        #region Protected Methods
-
-        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await Task.FromResult(new AuthenticatedScope(new AuthenticationRequest
-        {
-            // Você consegue realizar os testes de emissão de seus Billets com estas informações.
-            // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
-            // Este AppId e Secret foram criados apenas para testes.
-            AppId = "...",
-            Secret = "..."
-        }));
-
-        protected void StartServerDebugMode()
+        private void StartServerDebugMode()
         {
 #if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
@@ -72,13 +47,46 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 #endif
         }
 
+        #endregion Private Methods
+
+        #region Protected Properties
+
+        protected static Beneficiario BeneficiarioDefault => new Beneficiario
+        {
+            Conta = new ContaCorrente
+            {
+                Agencia = "<<?>>",
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.BancoDoBrasil,
+                Numero = "<<?>>"
+            },
+            Inscricao = "<<?>>",
+            Nome = "<<?>>"
+        };
+
+        #endregion Protected Properties
+
+        #region Protected Constructors
+
+        protected TestBase(ITestOutputHelper output)
+        {
+            this.output = output;
+            StartServerDebugMode();
+        }
+
+        #endregion Protected Constructors
+
+        #region Protected Methods
+
+        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await Task.FromResult(new AuthenticatedScope(new AuthenticationRequest
+        {
+            // Você consegue realizar os testes de emissão de seus Billets com estas informações.
+            // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
+            // Este AppId e Secret foram criados apenas para testes.
+            AppId = "<<?>>",
+            Secret = "<<?>>"
+        }));
+
         #endregion Protected Methods
-
-        #region Public Constructors
-
-        public TestBase(ITestOutputHelper output) => this.output = output;
-
-        #endregion Public Constructors
 
         #region Public Methods
 

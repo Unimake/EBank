@@ -13,7 +13,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
         #region Public Constructors
 
         public PIXConsultarTest(ITestOutputHelper output)
-            : base(output) => StartServerDebugMode();
+            : base(output) { }
 
         #endregion Public Constructors
 

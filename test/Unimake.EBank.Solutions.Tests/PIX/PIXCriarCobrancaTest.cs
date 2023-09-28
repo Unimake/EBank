@@ -19,7 +19,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
         #region Public Constructors
 
         public PIXCriarCobrancaTest(ITestOutputHelper output)
-                    : base(output) => StartServerDebugMode();
+                    : base(output) { }
 
         #endregion Public Constructors
 

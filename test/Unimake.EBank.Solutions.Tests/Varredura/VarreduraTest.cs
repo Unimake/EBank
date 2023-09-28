@@ -25,10 +25,7 @@ namespace Unimake.EBank.Solutions.Tests.Varredura
         #region Public Constructors
 
         public VarreduraTest(ITestOutputHelper output)
-                    : base(output)
-        {
-            StartServerDebugMode();
-        }
+                    : base(output) { }
 
         #endregion Public Constructors
 

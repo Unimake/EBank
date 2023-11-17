@@ -39,7 +39,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 #if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
-                AuthServerUrl = "https://localhost:44386/api/auth/",
+                AuthServerUrl = "http://localhost:54469/api/auth/",
                 AnotherServerUrl = "https://localhost:44341/api/v1/"
             });
 #else

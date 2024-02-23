@@ -1,5 +1,5 @@
-﻿using EBank.Solutions.Primitives.CNAB;
-using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
+﻿using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
+using EBank.Solutions.Primitives.Enumerations.CNAB;
 using Newtonsoft.Json;
 using System;
 

@@ -1,6 +1,6 @@
-﻿using EBank.Solutions.Primitives.CNAB;
-using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
+﻿using EBank.Solutions.Primitives.CNAB.CNAB240.Campo;
 using EBank.Solutions.Primitives.Enumerations;
+using EBank.Solutions.Primitives.Enumerations.CNAB;
 using System;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.Pagamento;
@@ -64,7 +64,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                             Bairro = "Lorem",
                             CEP = "89653-236",
                             Cidade = "Ispum",
-                            Conta = new ContaCorrente 
+                            Conta = new ContaCorrente
                             {
                                 Agencia = "122",
                                 Banco = Banco.Banrisul,

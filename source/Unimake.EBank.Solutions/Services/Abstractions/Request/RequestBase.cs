@@ -9,9 +9,11 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Request
     {
         #region Public Properties
 
-        /// <summary>
+        /// <inheritdoc cref="Contract.IRequest.ConfigurationId"/>
+        [JsonProperty("configurationId")]
+        public string ConfigurationId { get; set; }
+
         /// <inheritdoc cref="Contract.IRequest.Testing"/>
-        /// </summary>
         [JsonProperty("testing")]
         public bool Testing { get; set; }
 

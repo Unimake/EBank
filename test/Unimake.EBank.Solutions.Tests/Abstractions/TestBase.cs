@@ -39,8 +39,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 #if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
-                AuthServerUrl = "http://localhost:54469/api/auth/",
-                AnotherServerUrl = "https://localhost:44341/api/v1/"
+                AuthServerUrl = "http://homolog.unimake.software:54469/api/auth/",
+                AnotherServerUrl = "http://localhost:58200/api/v1/"
             });
 #else
             debugScope = null;
@@ -51,16 +51,17 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Protected Properties
 
-        protected static Beneficiario BeneficiarioDefault => new Beneficiario
+        protected static Beneficiario BeneficiarioDefault => new()
         {
             Conta = new ContaCorrente
             {
-                Agencia = "<<?>>",
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.BancoDoBrasil,
-                Numero = "<<?>>"
+                Agencia = "4340",
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
+                Numero = "123365"
             },
             Inscricao = "<<?>>",
-            Nome = "<<?>>"
+            Nome = "<?>>",
+            Codigo = "<?>>"
         };
 
         #endregion Protected Properties
@@ -82,8 +83,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "<<?>>",
-            Secret = "<<?>>"
+            AppId = "<?>>",
+            Secret = "<?>>"
         }));
 
         #endregion Protected Methods

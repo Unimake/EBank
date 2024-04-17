@@ -5,7 +5,7 @@ namespace Unimake.EBank.Solutions.Exceptions
     /// <summary>
     /// Exceção lançada sempre que algum erro acontecer entre as requisições
     /// </summary>
-    public class ResponseException : EBankException
+    public class ResponseException : EBankPrimitiveException
     {
         #region Public Constructors
 

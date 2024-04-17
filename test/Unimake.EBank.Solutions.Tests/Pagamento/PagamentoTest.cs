@@ -36,8 +36,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.AutorizarPagamento(new System.Collections.Generic.List<AutorizarPagamentoRequest>
                 {
-                    new AutorizarPagamentoRequest
-                    {
+                    new() {
                         FormaDePagamento = FormaDeLancamento.CreditoEmContaCorrente,
                         NossoNumero = "1234",
                         ValorDoTitulo = 500,

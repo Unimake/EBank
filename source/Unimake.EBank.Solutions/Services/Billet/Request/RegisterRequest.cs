@@ -1,4 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
+using Newtonsoft.Json;
 
 namespace Unimake.EBank.Solutions.Services.Billet.Request
 {
@@ -7,6 +8,14 @@ namespace Unimake.EBank.Solutions.Services.Billet.Request
     /// </summary>
     public class RegisterRequest : Boleto, Contract.IRequest
     {
+        #region Public Properties
+
+        /// <inheritdoc cref="Services.Contract.IRequest.ConfigurationId"/>
+        [JsonProperty("configurationId")]
+        public string ConfigurationId { get; set; }
+
+        #endregion Public Properties
+
         #region Public Constructors
 
         /// <summary>

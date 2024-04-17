@@ -14,7 +14,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
     internal class BilletServiceClient<TRequest, TResponse, TException>
         where TRequest : Contract.IRequest
         where TResponse : class
-        where TException : EBankException
+        where TException : EBankPrimitiveException
     {
         #region Private Constructors
 
@@ -62,10 +62,10 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
             if(constructor != null)
             {
-                throw Activator.CreateInstance(exType, new object[] { errors.Message, (int)response.StatusCode }) as EBankException;
+                throw Activator.CreateInstance(exType, new object[] { errors.Message, (int)response.StatusCode }) as EBankPrimitiveException;
             }
 
-            throw Activator.CreateInstance(typeof(TException), new[] { errors.Message }) as EBankException;
+            throw Activator.CreateInstance(typeof(TException), new[] { errors.Message }) as EBankPrimitiveException;
         }
 
         #endregion Public Methods

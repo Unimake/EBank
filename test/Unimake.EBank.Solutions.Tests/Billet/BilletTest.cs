@@ -42,7 +42,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Codigo = "1234",
                     Nome = "Unimake Software",
-                    Inscricao = "71444314000121",
+                    Inscricao = "<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Itau,
@@ -130,7 +130,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Nome = "UNIMAKE SOLUCOES CORPORATIVAS LTDA",
                     Codigo = "94914",
-                    Inscricao = "06117473000150",
+                    Inscricao = "<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Sicredi,
@@ -138,6 +138,44 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                         Numero = "94914"
                     }
                 }
+            };
+
+            try
+            {
+                using var scope = await CreateAuthenticatedScopeAsync();
+                var service = new BilletService();
+                var response = await service.QueryAsync(request, scope);
+                DumpAsJson(response);
+            }
+            catch(QueryInformationResponseException registerEx)
+            {
+                DumpAsJson(registerEx);
+                throw;//forward
+            }
+        }
+
+        [Fact]
+        [Trait("Issue", "#162636")]
+        public async Task QueryByConfigurationId()
+        {
+            var request = new QueryRequest
+            {
+                Beneficiario = new Beneficiario
+                {
+                    Nome = "<?>>",
+                    Codigo = "<?>>",
+                    Inscricao = "<?>>",
+                    Conta = new ContaCorrente
+                    {
+                        Banco = Banco.Sicoob,
+                        Agencia = "<?>>",
+                        Numero = "<?>>"
+                    }
+                },
+                DataEmissaoInicial = DateTime.Parse("2023-06-30"),
+                DataEmissaoFinal = DateTime.Parse("2023-07-05"),
+                Testing = false,
+                //ConfigurationId = "F8A7D69F6E5E402"
             };
 
             try
@@ -172,7 +210,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Codigo = "1234",
                     Nome = "Unimake Software",
-                    Inscricao = "71444314000121",
+                    Inscricao = "<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Itau,
@@ -242,8 +280,8 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             {
                 var x = new AuthenticationRequest
                 {
-                    AppId = "61a73f4735ad4993959e28e2692ge455",
-                    Secret = "35955532e0c54517bc9d7e900f531b8"
+                    AppId = "<?>>",
+                    Secret = "<?>>"
                 };
                 _ = new AuthenticatedScope(x);
             });

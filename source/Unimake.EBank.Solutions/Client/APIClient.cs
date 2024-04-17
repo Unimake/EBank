@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
+using Unimake.EBank.Solutions.Services.Contract;
 using Unimake.Primitives.UDebug;
 
 namespace Unimake.EBank.Solutions.Client
@@ -32,23 +33,22 @@ namespace Unimake.EBank.Solutions.Client
             client.DefaultRequestHeaders.Add("Authorization", $"{authenticatedScope.Type} {authenticatedScope.Token}");
         }
 
-        private async Task<HttpResponseMessage> PostAsync(string json)
+        private async Task<HttpResponseMessage> PostAsync(string json, Unimake.EBank.Solutions.Services.Contract.IRequest request)
         {
             EnsureAuthorization();
-            return await client.PostAsync(PrepareURI(), new StringContent(json, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync(PrepareURI(request), new StringContent(json, Encoding.UTF8, "application/json"));
+            return response;
         }
 
-        private string PrepareURI()
+        private string PrepareURI(Unimake.EBank.Solutions.Services.Contract.IRequest request)
         {
-            return $"{debugStateObject?.AnotherServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}{ToQueryString()}";
+            var uri = $"{debugStateObject?.AnotherServerUrl ?? $"https://unimake.app/ebank/api/v1/"}{Action}{ToQueryString(request)}";
+            return uri;
         }
 
-        private string ToQueryString()
+        private string ToQueryString(Unimake.EBank.Solutions.Services.Contract.IRequest request)
         {
-            if(QueryString == null)
-            {
-                return "";
-            }
+            QueryString.AddOrUpdateValue("configurationId", request?.ConfigurationId ?? "");
             return QueryString.ToString(urlEncodeValue: false);
         }
 
@@ -79,13 +79,21 @@ namespace Unimake.EBank.Solutions.Client
             client.Dispose();
         }
 
+        public async Task<HttpResponseMessage> GetAsync(Unimake.EBank.Solutions.Services.Contract.IRequest request)
+        {
+            EnsureAuthorization();
+            return await client.GetAsync(PrepareURI(request));
+        }
+
         public async Task<HttpResponseMessage> GetAsync()
         {
             EnsureAuthorization();
-            return await client.GetAsync(PrepareURI());
+            return await client.GetAsync(PrepareURI(default));
         }
 
-        public async Task<HttpResponseMessage> PostAsync(object param) => await PostAsync(Newtonsoft.Json.JsonConvert.SerializeObject(param));
+        public async Task<HttpResponseMessage> PostAsync(object param) => await PostAsync(Newtonsoft.Json.JsonConvert.SerializeObject(param), default);
+
+        public async Task<HttpResponseMessage> PostAsync(IRequest request) => await PostAsync(Newtonsoft.Json.JsonConvert.SerializeObject(request), request);
 
         #endregion Public Methods
     }

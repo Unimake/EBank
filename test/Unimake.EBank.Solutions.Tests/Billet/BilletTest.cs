@@ -81,7 +81,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {
-                        Rua = "Rua Fictícia",
+                        Logradouro = "Rua Fictícia",
                         Numero = "11",
                         Bairro = "Bairro",
                         CEP = "11111111",
@@ -226,7 +226,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {
-                        Rua = "Rua Fictícia",
+                        Logradouro = "Rua Fictícia",
                         Numero = "11",
                         Bairro = "Bairro",
                         CEP = "11111111",

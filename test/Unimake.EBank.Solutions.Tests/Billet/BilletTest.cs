@@ -5,13 +5,13 @@ using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using Unimake.AuthServer.Authentication;
-using Unimake.AuthServer.Exceptions.Security;
+using Unimake.AuthServer.Exceptions;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Services.Billet.Response;
 using Unimake.EBank.Solutions.Tests.Abstractions;
+using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
 using Xunit;
 using Xunit.Abstractions;
@@ -254,7 +254,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         public async Task RegisterInvalidAppIdOrSecret() =>
             await Assert.ThrowsAsync<AuthenticationServiceException>(async () =>
         {
-            using var scope = new AuthenticatedScope(new AuthenticationRequest
+            using var scope = new AuthenticatedScope(new AuthenticationToken
             {
                 AppId = "invalid appId",
                 Secret = "invalid secret",
@@ -270,7 +270,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         {
             var json = "{\"CodigoBarraNumerico\":null,\"LinhaDigitavel\":\"03399617328610000000805641701015393460000057100\",\"NumeroNoBanco\":\"0000000056417\",\"PDFContent\":{\"Content\":\"\",\"Message\":\"Santander não retorna o PDF do boleto.\",\"Success\":false}}";
             var response = JsonConvert.DeserializeObject<RegisterResponse>(json);
-            Assert.True(response != null);
+            Assert.NotNull(response);
         }
 
         [Fact]
@@ -278,7 +278,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         {
             Assert.Throws<AuthenticationServiceException>(() =>
             {
-                var x = new AuthenticationRequest
+                var x = new AuthenticationToken
                 {
                     AppId = "<?>>",
                     Secret = "<?>>"

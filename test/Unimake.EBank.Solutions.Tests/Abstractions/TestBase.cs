@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
+using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
 using Xunit.Abstractions;
 using static Newtonsoft.Json.JsonConvert;
@@ -78,7 +79,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Protected Methods
 
-        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await Task.FromResult(new AuthenticatedScope(new AuthenticationRequest
+        protected static async Task<AuthenticatedScope> CreateAuthenticatedScopeAsync() => await Task.FromResult(new AuthenticatedScope(new AuthenticationToken
         {
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/

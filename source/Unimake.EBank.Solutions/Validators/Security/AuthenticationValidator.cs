@@ -1,5 +1,5 @@
 ﻿using System;
-using Unimake.AuthServer.Authentication;
+using Unimake.Primitives.Security.Credentials;
 
 /// <summary>
 /// Faz a validação dos dados de autenticação
@@ -12,8 +12,8 @@ public static class AuthenticationValidator
     /// Valida os campos necessários para a autenticação
     /// </summary>
     /// <param name="request">Requisição</param>
-    ///<exception cref="ArgumentException">lançada se o <see cref="AuthenticationRequest.AppId"/> ou <see cref="AuthenticationRequest.Secret"/> for nulo, vazio ou espaços em branco </exception>
-    public static void Validate(this AuthenticationRequest request)
+    ///<exception cref="ArgumentException">lançada se o <see cref="AuthenticationToken.AppId"/> ou <see cref="AuthenticationToken.Secret"/> for nulo, vazio ou espaços em branco </exception>
+    public static void Validate(this AuthenticationToken request)
     {
         request.AppId.ValidateRequiredField(nameof(request.AppId));
         request.Secret.ValidateRequiredField(nameof(request.Secret));

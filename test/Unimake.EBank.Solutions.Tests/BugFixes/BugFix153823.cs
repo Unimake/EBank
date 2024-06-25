@@ -2,10 +2,12 @@
 using EBank.Solutions.Primitives.Enumerations;
 using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using System;
+using System.Threading.Tasks;
 using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.PIX;
 using Unimake.EBank.Solutions.Tests.Abstractions;
+using Unimake.Primitives.Security.Credentials;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -27,9 +29,9 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         [Trait("Bug", "153823")]
         [Trait("Error", "HeaderDeArquivo deve ter 240 caracteres")]
         [Fact]
-        public async void UnimakeEBankSolutionsExceptionsResponseException()
+        public async Task UnimakeEBankSolutionsExceptionsResponseException()
         {
-            using var authScope = new AuthenticatedScope(new AuthenticationRequest
+            using var authScope = new AuthenticatedScope(new AuthenticationToken
             {
                 AppId = "<< app id >>",
                 Secret = "<< secret >>"

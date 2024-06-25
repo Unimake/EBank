@@ -1,7 +1,6 @@
 ﻿using EBank.Solutions.Primitives.Abstractions.Paged;
 using EBank.Solutions.Primitives.Enumerations;
 using System;
-using System.Collections.Generic;
 using System.Http;
 
 namespace Unimake.EBank.Solutions.Services.Abstractions.Request

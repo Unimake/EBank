@@ -42,7 +42,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Codigo = "1234",
                     Nome = "Unimake Software",
-                    Inscricao = "<?>>",
+                    Inscricao = "<<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Itau,
@@ -130,7 +130,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Nome = "UNIMAKE SOLUCOES CORPORATIVAS LTDA",
                     Codigo = "94914",
-                    Inscricao = "<?>>",
+                    Inscricao = "<<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Sicredi,
@@ -162,14 +162,14 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             {
                 Beneficiario = new Beneficiario
                 {
-                    Nome = "<?>>",
-                    Codigo = "<?>>",
-                    Inscricao = "<?>>",
+                    Nome = "<<?>>",
+                    Codigo = "<<?>>",
+                    Inscricao = "<<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Sicoob,
-                        Agencia = "<?>>",
-                        Numero = "<?>>"
+                        Agencia = "<<?>>",
+                        Numero = "<<?>>"
                     }
                 },
                 DataEmissaoInicial = DateTime.Parse("2023-06-30"),
@@ -210,7 +210,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 {
                     Codigo = "1234",
                     Nome = "Unimake Software",
-                    Inscricao = "<?>>",
+                    Inscricao = "<<?>>",
                     Conta = new ContaCorrente
                     {
                         Banco = Banco.Itau,
@@ -280,8 +280,8 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             {
                 var x = new AuthenticationToken
                 {
-                    AppId = "<?>>",
-                    Secret = "<?>>"
+                    AppId = "<<?>>",
+                    Secret = "<<?>>"
                 };
                 _ = new AuthenticatedScope(x);
             });

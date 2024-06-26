@@ -1,5 +1,8 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Enumerations.Billet;
+using EBank.Solutions.Primitives.PDF.Models;
+using EBank.Solutions.Primitives.PIX.QrCode;
+using Newtonsoft.Json;
 using System;
 using Unimake.EBank.Solutions.Services.Abstractions.Response;
 
@@ -11,6 +14,11 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
     public class QueryResponse : ResponseBase
     {
         #region Public Properties
+
+        /// <summary>
+        /// Código de barras do boleto
+        /// </summary>
+        public string CodigoBarras { get; set; }
 
         /// <summary>
         /// Data de emissão do boleto
@@ -51,7 +59,12 @@ namespace Unimake.EBank.Solutions.Services.Billet.Response
         /// <summary>
         /// Arquivo PDF do boleto em base 64.
         /// </summary>
-        public string PdfContent { get; set; }
+        public PDFContent PdfContent { get; set; }
+
+        /// <summary>
+        /// Conteúdo QrCode PIX, pode não existir
+        /// </summary>
+        public QrCodeContent QrCodeContent { get; set; }
 
         /// <summary>
         /// Situação do boleto no momento da pesquisa. <see cref="SituacaoBoleto"/>

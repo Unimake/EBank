@@ -1,6 +1,6 @@
-﻿using EBank.Solutions.Primitives.Enumerations;
-using System;
+﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -16,13 +16,11 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             // Cria uma instância do HttpClient
             using(var client = new HttpClient())
             {
-                var dataInicio = "2024-08-01";
-                var dataFinal = "2024-08-05";
-                var banco = Banco.Sicredi;
-                var contaCorrente = 94914;
+                var dataInicio = "2024-08-09";
+                var dataFinal = "2024-08-09";
 
                 // Define a URL da API
-                var url = $"https://unimake.app/ebank/api/v1/extrato?StartDate={dataInicio}&EndDate={dataFinal}&pagesize=5&pageNumber=1&bank={banco}&AccountNumber={contaCorrente}";
+                var url = $"https://unimake.app/ebank/api/v1/boleto/consultar?configurationId=GW54H8W65J58E5S5L";
 
                 // Token retornado pelo servidor de autenticação
                 var bearerToken = "<Token retornado pelo servidor de autenticação>";
@@ -30,10 +28,17 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 // Configura os cabeçalhos da requisição
                 client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
 
+                // json de consulta
+                var json = "{\"testing\": false," +
+                           $"\"dataEmissaoInicial\": \"{dataInicio}\"," +
+                           $"\"dataEmissaoFinal\": \"{dataFinal}\"" +
+                           "}";
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
                 try
                 {
-                    // Envia a requisição GET
-                    var response = await client.GetAsync(url);
+                    // Envia a requisição POST
+                    var response = await client.PostAsync(url, content);
                     var responseBody = await response.Content.ReadAsStringAsync();
 
                     // Verifica se a resposta foi bem-sucedida

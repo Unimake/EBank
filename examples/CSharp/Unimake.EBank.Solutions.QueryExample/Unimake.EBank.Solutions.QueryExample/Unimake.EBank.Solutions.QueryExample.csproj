@@ -16,9 +16,9 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Unimake.AuthServer" Version="20230405.1727.35" />
-    <PackageReference Include="Unimake.EBank.Primitives" Version="20230405.1727.35" />
-    <PackageReference Include="Unimake.EBank.Solutions" Version="20230405.1727.35" />
+    <PackageReference Include="Unimake.AuthServer" Version="20240624.1024.3" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20240624.1910.31" />
+    <PackageReference Include="Unimake.EBank.Solutions" Version="20240626.1455.30" />
   </ItemGroup>
 
 </Project>

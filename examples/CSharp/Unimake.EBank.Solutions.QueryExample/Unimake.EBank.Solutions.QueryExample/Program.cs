@@ -3,10 +3,10 @@ using EBank.Solutions.Primitives.Enumerations;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System;
 using System.IO;
-using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Billet;
 using Unimake.EBank.Solutions.Services.Billet.Request;
+using Unimake.Primitives.Security.Credentials;
 using Unimake.Threading;
 
 namespace Unimake.EBank.Solutions.QueryExample
@@ -33,10 +33,10 @@ namespace Unimake.EBank.Solutions.QueryExample
 
             try
             {
-                using var authScope = new AuthenticatedScope(new AuthenticationRequest
+                using var authScope = new AuthenticatedScope(new AuthenticationToken
                 {
-                    AppId = "f9ec78cfb3614056bbb720770083ef6a",
-                    Secret = "c94b8ede51bb42298876113a4f0d87e2"
+                    AppId = "<<seu appId>>",
+                    Secret = "<<seu secret>>"
                 });
 
                 MessageCenter.Log("Escopo autenticado com sucesso. Iniciando consulta...");

@@ -1,4 +1,4 @@
-﻿using EBank.Solutions.Primitives.CNAB.CNAB400;
+﻿using EBank.Solutions.Primitives.Enumerations.CNAB;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -56,20 +56,20 @@ namespace Unimake.EBank.Solutions.Converters.Json
             }
             else if(objectType == typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Contract.IRegistro))
             {
-                switch(UConvert.ToAny<TipoDeRegistro>(jObject.GetValue("Tipo")))
+                switch(UConvert.ToAny<TipoDeRegistro400>(jObject.GetValue("Tipo")))
                 {
-                    case TipoDeRegistro.Detalhe1OuTransacao1:
+                    case TipoDeRegistro400.Detalhe1OuTransacao1:
                         type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Cobranca.Retorno.Detalhe1);
                         break;
 
-                    case TipoDeRegistro.Detalhe4:
+                    case TipoDeRegistro400.Detalhe4:
                         type = typeof(global::EBank.Solutions.Primitives.CNAB.CNAB400.Cobranca.Retorno.Detalhe4);
                         break;
 
-                    case TipoDeRegistro.Detalhe5CobrancaEmailOuDadosSacadorAvalista:
-                    case TipoDeRegistro.Trailer:
-                    case TipoDeRegistro.Detalhe2ComplementoMulta:
-                    case TipoDeRegistro.Header:
+                    case TipoDeRegistro400.Detalhe5CobrancaEmailOuDadosSacadorAvalista:
+                    case TipoDeRegistro400.Trailer:
+                    case TipoDeRegistro400.Detalhe2ComplementoMulta:
+                    case TipoDeRegistro400.Header:
                     default:
                         break;
                 }

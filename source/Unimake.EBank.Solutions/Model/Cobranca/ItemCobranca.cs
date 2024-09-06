@@ -1,5 +1,5 @@
-﻿using EBank.Solutions.Primitives.CNAB.CNAB400;
-using EBank.Solutions.Primitives.Enumerations;
+﻿using EBank.Solutions.Primitives.Enumerations;
+using EBank.Solutions.Primitives.Enumerations.CNAB;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
@@ -158,7 +158,7 @@ namespace Unimake.EBank.Solutions.Model.Cobranca
         /// <summary>
         /// Tipo de arquivo CNAB
         /// </summary>
-        public TipoDeRegistro Tipo { get; set; }
+        public TipoDeRegistro400 Tipo { get; set; }
 
         /// <summary>
         /// Indica o tipo de inscrição informada na propriedade <see cref="Inscricao"/>

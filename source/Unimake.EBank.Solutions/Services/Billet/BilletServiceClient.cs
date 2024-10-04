@@ -50,7 +50,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
             if(typeof(TException) == typeof(ResponseException))
             {
-                throw new ResponseException(errors.Message, (int)response.StatusCode);
+                throw new ResponseException(errors.Message, response.StatusCode);
             }
 
             var exType = typeof(TException);

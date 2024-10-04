@@ -65,7 +65,7 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
 
             var errors = ExceptionObject.FromJson(json);
             System.Diagnostics.Debug.WriteLine(errors.Message);
-            throw new ResponseException(errors.Message, (int)response.StatusCode);
+            throw new ResponseException(errors.Message, response.StatusCode);
         }
 
         #endregion Protected Methods

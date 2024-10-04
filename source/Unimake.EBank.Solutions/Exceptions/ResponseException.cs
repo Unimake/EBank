@@ -1,4 +1,5 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
+using System.Net;
 
 namespace Unimake.EBank.Solutions.Exceptions
 {
@@ -23,7 +24,7 @@ namespace Unimake.EBank.Solutions.Exceptions
         /// </summary>
         /// <param name="message">Mensagem de erro</param>
         /// <param name="statusCode">Código do estado original da resposta </param>
-        public ResponseException(string message, int statusCode)
+        public ResponseException(string message, HttpStatusCode statusCode)
             : base(message)
         {
             StatusCode = statusCode;

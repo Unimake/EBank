@@ -2,7 +2,6 @@
 using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.PDF.Models;
 using EBank.Solutions.Primitives.PIX.QrCode;
-using Newtonsoft.Json;
 using System;
 using Unimake.EBank.Solutions.Services.Abstractions.Response;
 

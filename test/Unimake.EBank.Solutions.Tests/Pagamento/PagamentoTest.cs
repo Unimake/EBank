@@ -8,20 +8,15 @@ using Unimake.EBank.Solutions.Services.Pagamento.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
-using Beneficiario = EBank.Solutions.Primitives.Billet.Models.Beneficiario;
 using ContaCorrente = EBank.Solutions.Primitives.Billet.Models.ContaCorrente;
 using Favorecido = EBank.Solutions.Primitives.Billet.Models.Favorecido;
 
 namespace Unimake.EBank.Solutions.Tests.Pagamento
 {
-    public class PagamentoTest : TestBase
+    public class PagamentoTest(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public PagamentoTest(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -34,27 +29,17 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
             {
                 var service = new PagamentoService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.AutorizarPagamento(new System.Collections.Generic.List<AutorizarPagamentoRequest>
-                {
+                var response = await service.AutorizarPagamento(
+                [
                     new() {
+                        Testing = true,
                         FormaDePagamento = FormaDeLancamento.CreditoEmContaCorrente,
                         NossoNumero = "1234",
                         ValorDoTitulo = 500,
                         ValorDoPagamento = 450,
                         ValorDoDesconto = 50,
                         DataPagamento = DateTime.Today,
-                        Beneficiario = new Beneficiario
-                        {
-                            Codigo = "1234",
-                            Nome = "Unimake Software",
-                            Inscricao = "71444314000121",
-                            Conta = new ContaCorrente
-                            {
-                                Banco = Banco.Itau,
-                                Agencia = "0246",
-                                Numero = "0246"
-                            }
-                        },
+                        Beneficiario = BeneficiarioDefault,
                         Favorecido = new Favorecido
                         {
                             TipoInscricao = TipoDeInscricao.CPF,
@@ -77,7 +62,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                             UF = "SP"
                         }
                     }
-                }, scope);
+                ], scope);
 
                 DumpAsJson(response);
             }
@@ -97,6 +82,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.GetAsync(new PagamentoRequest
                 {
+                    Testing = true,
                     Bank = Banco.Itau,
                     StartDate = DateTime.Now.AddDays(-6),
                     EndDate = DateTime.Now,
@@ -122,6 +108,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsCnabAsync(new PagamentoRequest
                 {
+                    Testing = true,
                     AccountNumber = "007137",
                     StartDate = DateTime.Parse("04/03/2022"),
                     Bank = Banco.Itau
@@ -145,6 +132,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsJsonAsync(new PagamentoRequest
                 {
+                    Testing = true,
                     AccountNumber = "007137",
                     StartDate = DateTime.Parse("04/03/2022"),
                     Bank = Banco.Itau

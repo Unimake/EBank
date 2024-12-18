@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
-using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
@@ -35,18 +34,17 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Private Methods
 
-        private void StartServerDebugMode()
-        {
+        private void StartServerDebugMode() =>
 #if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
-                AuthServerUrl = "http://homolog.unimake.software:54469/api/auth/",
-                AnotherServerUrl = "http://homolog.unimake.software:58200/api/v1/"
+                AuthServerUrl = "http://localhost:54469/api/auth/", // "https://unimake.app/auth/api/auth/"
+                AnotherServerUrl = "http://localhost:58200/api/v1/" //"https://unimake.app/EBank/"
             });
+
 #else
             debugScope = null;
 #endif
-        }
 
         #endregion Private Methods
 
@@ -54,15 +52,15 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         protected static Beneficiario BeneficiarioDefault => new()
         {
+            Nome = "Unifake",  //Não é obrigatório
+            Codigo = "000014340",
+            Inscricao = "06117473000079",
             Conta = new ContaCorrente
             {
-                Agencia = "<<?>>",
                 Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
-                Numero = "<<?>>"
-            },
-            Inscricao = "<<?>>",
-            Nome = "<<?>>",
-            Codigo = "<<?>>"
+                Agencia = "4340",
+                Numero = "00001"
+            }
         };
 
         #endregion Protected Properties
@@ -84,8 +82,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "<<?>>",
-            Secret = "<<?>>"
+            AppId = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            Secret = "11111111111111111111111111111111"
         }));
 
         #endregion Protected Methods

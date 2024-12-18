@@ -9,30 +9,27 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Cobranca
 {
-    public class CobrancaTest : TestBase
+    public class CobrancaTest(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public CobrancaTest(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
         #region Public Methods
 
         [Fact]
-        public async Task ListAsJsonAsync()
+        public async Task Get()
         {
             try
             {
                 var service = new CobrancaService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.ListAsJsonAsync(new CobrancaRequest
+                var response = await service.GetAsync(new CobrancaRequest
                 {
+                    Testing = true,
                     AccountNumber = "007145",
-                    StartDate = DateTime.Parse("10/09/2022"),
+                    StartDate = DateTime.Parse("24/07/2020"),
                     Bank = Banco.Itau
                 }, scope);
 
@@ -54,6 +51,7 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var response = await service.ListAsCnabAsync(new CobrancaRequest
                 {
+                    Testing = true,
                     AccountNumber = "007145",
                     StartDate = DateTime.Parse("24/07/2020"),
                     Bank = Banco.Itau
@@ -69,16 +67,17 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
         }
 
         [Fact]
-        public async Task Get()
+        public async Task ListAsJsonAsync()
         {
             try
             {
                 var service = new CobrancaService();
                 using var scope = await CreateAuthenticatedScopeAsync();
-                var response = await service.GetAsync(new CobrancaRequest
+                var response = await service.ListAsJsonAsync(new CobrancaRequest
                 {
+                    Testing = true,
                     AccountNumber = "007145",
-                    StartDate = DateTime.Parse("24/07/2020"),
+                    StartDate = DateTime.Parse("10/09/2022"),
                     Bank = Banco.Itau
                 }, scope);
 
@@ -90,6 +89,7 @@ namespace Unimake.EBank.Solutions.Tests.Cobranca
                 throw;//forward
             }
         }
+
         #endregion Public Methods
     }
 }

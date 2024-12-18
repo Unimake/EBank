@@ -9,23 +9,20 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Varredura
 {
-    public class VarreduraTest : TestBase
+    public class VarreduraTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Methods
 
         private static VarreduraRequest GetRequest() => new()
         {
+            Testing = true,
             StartDate = DateTime.Parse("2022-08-29"),
             EndDate = DateTime.Parse("2022-08-30"),
             Bank = Banco.Sicredi,
         };
 
         #endregion Private Methods
-
         #region Public Constructors
-
-        public VarreduraTest(ITestOutputHelper output)
-                    : base(output) { }
 
         #endregion Public Constructors
 

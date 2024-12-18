@@ -9,26 +9,21 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Extrato
 {
-    public class ExtratoTest : TestBase
+    public class ExtratoTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Methods
 
         private static ExtratoRequest GetRequest() => new()
         {
+            Testing = true,
             AccountNumber = "82406",
-            StartDate = DateTime.Parse("2022-09-01"),
-            EndDate = DateTime.Parse("2022-09-08"),
+            StartDate = DateTime.Now.AddDays(-3),
+            EndDate = DateTime.Now,
             Bank = Banco.Sicoob,
         };
 
         #endregion Private Methods
-
         #region Public Constructors
-
-        public ExtratoTest(ITestOutputHelper output)
-                    : base(output)
-        {
-        }
 
         #endregion Public Constructors
 

@@ -9,20 +9,14 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class ScopeAlreadyDefinedException : TestBase
+    public class ScopeAlreadyDefinedException(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Fields
 
         private const int NumOfThreads = 7;
 
         #endregion Private Fields
-
         #region Public Constructors
-
-        public ScopeAlreadyDefinedException(ITestOutputHelper output)
-            : base(output)
-        {
-        }
 
         #endregion Public Constructors
 
@@ -33,7 +27,7 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         {
             var waitHandles = new WaitHandle[NumOfThreads];
 
-            for(int i = 0; i < NumOfThreads; i++)
+            for(var i = 0; i < NumOfThreads; i++)
             {
                 var handle = new EventWaitHandle(false, EventResetMode.ManualReset);
                 waitHandles[i] = handle;
@@ -54,23 +48,24 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
                         }, scope);
 
                         DumpAsJson(response);
-                        handle.Set();
+                        _ = handle.Set();
                         scope.Dispose();
                     })
-                );
-
-                tworker.IsBackground = true;
+                )
+                {
+                    IsBackground = true
+                };
                 tworker.Start();
             }
 
-            WaitHandle.WaitAll(waitHandles);
+            _ = WaitHandle.WaitAll(waitHandles);
             WriteLine("All thread exits");
         }
 
         [Fact]
         public async Task FixLoopDisposeAsync()
         {
-            for(int i = 0; i < NumOfThreads; i++)
+            for(var i = 0; i < NumOfThreads; i++)
             {
                 WriteLine($"Starting thread {i}");
 
@@ -94,7 +89,7 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         [Fact]
         public async Task FixLoopNoDisposeAsync()
         {
-            for(int i = 0; i < NumOfThreads; i++)
+            for(var i = 0; i < NumOfThreads; i++)
             {
                 WriteLine($"Starting thread {i}");
 
@@ -119,7 +114,7 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         {
             var scope = await CreateAuthenticatedScopeAsync();
 
-            for(int i = 0; i < NumOfThreads; i++)
+            for(var i = 0; i < NumOfThreads; i++)
             {
                 WriteLine($"Starting thread {i}");
 
@@ -143,7 +138,7 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         {
             var waitHandles = new WaitHandle[NumOfThreads];
 
-            for(int i = 0; i < NumOfThreads; i++)
+            for(var i = 0; i < NumOfThreads; i++)
             {
                 var handle = new EventWaitHandle(false, EventResetMode.ManualReset);
                 waitHandles[i] = handle;
@@ -164,15 +159,16 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
                         }, scope);
 
                         DumpAsJson(response);
-                        handle.Set();
+                        _ = handle.Set();
                     })
-                );
-
-                tworker.IsBackground = true;
+                )
+                {
+                    IsBackground = true
+                };
                 tworker.Start();
             }
 
-            WaitHandle.WaitAll(waitHandles);
+            _ = WaitHandle.WaitAll(waitHandles);
             WriteLine("All thread exits");
         }
 

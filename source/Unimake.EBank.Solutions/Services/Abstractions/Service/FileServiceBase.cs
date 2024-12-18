@@ -1,6 +1,7 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
@@ -21,6 +22,7 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
     /// <typeparam name="TJson">Retorno para as requisições do tipo Json, <see cref="ListAsJsonAsync(TRequest, AuthenticatedScope)"/></typeparam>
     public abstract class FileServiceBase<TRequest, TGet, TJson, TCNAB>
         where TRequest : FileRequestBase
+        where TGet : new()
     {
         #region Protected Properties
 
@@ -48,10 +50,15 @@ namespace Unimake.EBank.Solutions.Services.Abstractions.Service
         /// <exception cref="ResponseException">Exceção lançada caso ocorra erro no servidor</exception>
         protected async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
         {
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.ReadAsJsonAsync();
 
-            if(response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode())
             {
+                if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return default;
+                }
+
                 return DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore,

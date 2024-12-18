@@ -25,18 +25,6 @@ namespace Unimake.EBank.Solutions.Services.Billet.Request
         public DateTime? DataEmissaoInicial { get; set; }
 
         /// <summary>
-        /// Última data para pesquisa do boleto com base na liquidação
-        /// </summary>
-        [JsonProperty("dataLiquidacaoFinal")]
-        public DateTime? DataLiquidacaoFinal { get; set; }
-
-        /// <summary>
-        /// Data de incício para pesquisa do boleto com base na liquidação
-        /// </summary>
-        [JsonProperty("dataLiquidacaoInicial")]
-        public DateTime? DataLiquidacaoInicial { get; set; }
-
-        /// <summary>
         /// Número do boleto gerado pela empresa (SeuNumero)
         /// </summary>
         [JsonProperty("numeroNaEmpresa")]

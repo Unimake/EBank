@@ -1,7 +1,6 @@
 ﻿using EBank.Solutions.Primitives.Enumerations;
 using System;
 using System.Threading.Tasks;
-using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Extrato;
 using Unimake.EBank.Solutions.Services.Extrato.Request;
@@ -12,14 +11,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class BugFix149986 : TestBase
+    public class BugFix149986(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public BugFix149986(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 

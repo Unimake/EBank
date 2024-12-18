@@ -2,21 +2,23 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>EBank.Desktop</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Unimake.AuthServer" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.EBank.Primitives" Version="20230710.1719.12" />
-    <PackageReference Include="Unimake.EBank.Solutions" Version="20230710.1719.12" />
-    <PackageReference Include="Unimake.Extensions" Version="20230703.1027.2" />
-    <PackageReference Include="Unimake.MessageBroker" Version="20230710.1719.12" />
-    <PackageReference Include="Unimake.MessageBroker.Primitives" Version="20230710.1719.12" />
-    <PackageReference Include="Unimake.Utils" Version="20230703.1027.2" />
+    <PackageReference Include="Unimake.AuthServer" Version="20241127.138.52" />
+    <PackageReference Include="Unimake.Cryptography" Version="20241127.138.52" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20241127.138.52" />
+    <PackageReference Include="Unimake.EBank.Solutions" Version="20241218.216.15" />
+    <PackageReference Include="Unimake.Extensions" Version="20241127.138.52" />
+    <PackageReference Include="Unimake.MessageBroker" Version="20241203.27.38" />
+    <PackageReference Include="Unimake.MessageBroker.Primitives" Version="20241129.1403.53" />
+    <PackageReference Include="Unimake.Utils" Version="20241127.138.52" />
   </ItemGroup>
 
 </Project>

@@ -18,17 +18,8 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Billet
 {
-    public class BilletTest : TestBase
+    public class BilletTest(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
-
-        public BilletTest(ITestOutputHelper output)
-            : base(output)
-        {
-        }
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         [Fact]
@@ -38,18 +29,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             var billetService = new BilletService();
             var response = await billetService.InformPaymentAsync(new InformPaymentRequest
             {
-                Beneficiario = new Beneficiario
-                {
-                    Codigo = "1234",
-                    Nome = "Unimake Software",
-                    Inscricao = "<<?>>",
-                    Conta = new ContaCorrente
-                    {
-                        Banco = Banco.Itau,
-                        Agencia = "0246",
-                        Numero = "0246"
-                    }
-                },
+                Beneficiario = BeneficiarioDefault,
                 NumeroNoBanco = "00000033",
                 Testing = true
             }, scope);
@@ -64,15 +44,13 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
             var request = new RegisterRequest
             {
+                Testing = true,
                 Especie = EspecieTitulo.Outros,
                 ValorNominal = 45.88m,
                 Vencimento = DateTime.Today.AddDays(15),
                 NumeroNaEmpresa = "12345",
                 NumeroNoBanco = "12345",
-                Beneficiario = new Beneficiario
-                {
-                    Conta = new ContaCorrente()
-                },
+                Beneficiario = BeneficiarioDefault,
                 Pagador = new Pagador
                 {
                     Nome = "Marcelo de Souza",
@@ -106,7 +84,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         }
 
         [Fact]
-        public async Task JustASimpleDebugScopeTest()
+        public void JustASimpleDebugScopeTest() => Assert.Throws<ArgumentNullException>("scope", () =>
         {
             using(new DebugScope<DebugStateObject>(new DebugStateObject
             {
@@ -115,29 +93,22 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             }))
             {
                 var service = new BilletService();
-                var response = await service.RegisterAsync(new RegisterRequest(), null);
+                var response = service.RegisterAsync(new RegisterRequest
+                {
+                    Testing = true
+                }, null).GetAwaiter().GetResult();
                 DumpAsJson(response);
             }
-        }
+        });
 
         [Fact]
         public async Task Query()
         {
             var request = new QueryRequest
             {
+                Testing = true,
                 NumeroNoBanco = "222145568",
-                Beneficiario = new Beneficiario
-                {
-                    Nome = "UNIMAKE SOLUCOES CORPORATIVAS LTDA",
-                    Codigo = "94914",
-                    Inscricao = "<<?>>",
-                    Conta = new ContaCorrente
-                    {
-                        Banco = Banco.Sicredi,
-                        Agencia = "0718",
-                        Numero = "94914"
-                    }
-                }
+                Beneficiario = BeneficiarioDefault
             };
 
             try
@@ -160,22 +131,11 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         {
             var request = new QueryRequest
             {
-                Beneficiario = new Beneficiario
-                {
-                    Nome = "<<?>>",
-                    Codigo = "<<?>>",
-                    Inscricao = "<<?>>",
-                    Conta = new ContaCorrente
-                    {
-                        Banco = Banco.Sicoob,
-                        Agencia = "<<?>>",
-                        Numero = "<<?>>"
-                    }
-                },
+                Testing = true,
+                Beneficiario = BeneficiarioDefault,
                 DataEmissaoInicial = DateTime.Parse("2023-06-30"),
                 DataEmissaoFinal = DateTime.Parse("2023-07-05"),
-                Testing = false,
-                //ConfigurationId = "F8A7D69F6E5E402"
+                ConfigurationId = "ZCKWGQ55LTDXKYYC"
             };
 
             try
@@ -201,23 +161,13 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
             var request = new RegisterRequest
             {
+                Testing = true,
                 Especie = EspecieTitulo.Outros,
                 ValorNominal = 45.88m,
                 Vencimento = DateTime.Today.AddDays(15),
                 NumeroNaEmpresa = "12345",
                 NumeroNoBanco = "12345",
-                Beneficiario = new Beneficiario
-                {
-                    Codigo = "1234",
-                    Nome = "Unimake Software",
-                    Inscricao = "<<?>>",
-                    Conta = new ContaCorrente
-                    {
-                        Banco = Banco.Itau,
-                        Agencia = "0246",
-                        Numero = "0246"
-                    }
-                },
+                Beneficiario = BeneficiarioDefault,
                 Pagador = new Pagador
                 {
                     Nome = "Marcelo de Souza",
@@ -261,7 +211,10 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             });
 
             var service = new BilletService();
-            var response = await service.RegisterAsync(new RegisterRequest(), scope);
+            var response = await service.RegisterAsync(new RegisterRequest
+            {
+                Testing = true
+            }, scope);
             DumpAsJson(response);
         });
 
@@ -274,18 +227,15 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         }
 
         [Fact]
-        public void WrongKey()
-        {
-            Assert.Throws<AuthenticationServiceException>(() =>
-            {
-                var x = new AuthenticationToken
-                {
-                    AppId = "<<?>>",
-                    Secret = "<<?>>"
-                };
-                _ = new AuthenticatedScope(x);
-            });
-        }
+        public void WrongKey() => Assert.Throws<AuthenticationServiceException>(() =>
+                                                           {
+                                                               var x = new AuthenticationToken
+                                                               {
+                                                                   AppId = "<<?>>",
+                                                                   Secret = "<<?>>"
+                                                               };
+                                                               _ = new AuthenticatedScope(x);
+                                                           });
 
         #endregion Public Methods
     }

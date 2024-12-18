@@ -9,14 +9,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class BugFix164606 : TestBase
+    public class BugFix164606(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public BugFix164606(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -29,10 +25,10 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         {
             var request = new QueryRequest
             {
+                Testing = true,
                 Beneficiario = BeneficiarioDefault,
-                DataEmissaoInicial = DateTime.Parse("2023-08-30"),
-                DataEmissaoFinal = DateTime.Parse("2023-09-04"),
-                Testing = false
+                DataEmissaoInicial = DateTime.Now.AddDays(-3),
+                DataEmissaoFinal = DateTime.Now
             };
 
             try

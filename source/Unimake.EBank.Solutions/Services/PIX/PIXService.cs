@@ -4,6 +4,7 @@ using EBank.Solutions.Primitives.PIX.Request.Cobranca;
 using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using EBank.Solutions.Primitives.PIX.Response;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
@@ -28,10 +29,15 @@ namespace Unimake.EBank.Solutions.Services.PIX
         /// <exception cref="ResponseException">Exceção lançada caso ocorra erro no servidor</exception>
         private async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
         {
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.ReadAsJsonAsync();
 
-            if(response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode())
             {
+                if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return default;
+                }
+
                 return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore

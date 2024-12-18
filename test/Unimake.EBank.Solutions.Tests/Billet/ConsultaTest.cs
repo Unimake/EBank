@@ -14,52 +14,50 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         public async Task ConsultarBoleto()
         {
             // Cria uma instância do HttpClient
-            using(var client = new HttpClient())
+            using var client = new HttpClient();
+            var dataInicio = "2024-08-09";
+            var dataFinal = "2024-08-09";
+
+            // Define a URL da API
+            var url = $"https://unimake.app/ebank/api/v1/boleto/consultar?configurationId=GW54H8W65J58E5S5L";
+
+            // Token retornado pelo servidor de autenticação
+            var bearerToken = "<Token retornado pelo servidor de autenticação>";
+
+            // Configura os cabeçalhos da requisição
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+
+            // json de consulta
+            var json = "{\"testing\": false," +
+                       $"\"dataEmissaoInicial\": \"{dataInicio}\"," +
+                       $"\"dataEmissaoFinal\": \"{dataFinal}\"" +
+                       "}";
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
             {
-                var dataInicio = "2024-08-09";
-                var dataFinal = "2024-08-09";
+                // Envia a requisição POST
+                var response = await client.PostAsync(url, content);
+                var responseBody = await response.ReadAsJsonAsync();
 
-                // Define a URL da API
-                var url = $"https://unimake.app/ebank/api/v1/boleto/consultar?configurationId=GW54H8W65J58E5S5L";
-
-                // Token retornado pelo servidor de autenticação
-                var bearerToken = "<Token retornado pelo servidor de autenticação>";
-
-                // Configura os cabeçalhos da requisição
-                client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
-
-                // json de consulta
-                var json = "{\"testing\": false," +
-                           $"\"dataEmissaoInicial\": \"{dataInicio}\"," +
-                           $"\"dataEmissaoFinal\": \"{dataFinal}\"" +
-                           "}";
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                try
+                // Verifica se a resposta foi bem-sucedida
+                if(response.IsSuccessStatusCode())
                 {
-                    // Envia a requisição POST
-                    var response = await client.PostAsync(url, content);
-                    var responseBody = await response.Content.ReadAsStringAsync();
+                    // Ler o conteúdo da resposta
+                    Console.WriteLine("Resposta da API:");
+                    Console.WriteLine(responseBody);
 
-                    // Verifica se a resposta foi bem-sucedida
-                    if(response.IsSuccessStatusCode)
-                    {
-                        // Ler o conteúdo da resposta
-                        Console.WriteLine("Resposta da API:");
-                        Console.WriteLine(responseBody);
-
-                        // Fique atento, aqui vai retornar paginado
-                        // Veja a documentação em https://unimake.app/ebank/#Paginacao
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Falha na requisição: {response.StatusCode}{Environment.NewLine}{responseBody}");
-                    }
+                    // Fique atento, aqui vai retornar paginado
+                    // Veja a documentação em https://unimake.app/ebank/#Paginacao
                 }
-                catch(Exception ex)
+                else
                 {
-                    Console.WriteLine($"Erro ao fazer a requisição: {ex.Message}");
+                    Console.WriteLine($"Falha na requisição: {response.StatusCode}{Environment.NewLine}{responseBody}");
                 }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Erro ao fazer a requisição: {ex.Message}");
             }
         }
 

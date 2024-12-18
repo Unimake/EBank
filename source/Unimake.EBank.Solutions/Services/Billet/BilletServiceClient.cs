@@ -1,6 +1,7 @@
 ﻿using EBank.Solutions.Primitives.Exceptions;
 using System;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Client;
@@ -13,7 +14,7 @@ namespace Unimake.EBank.Solutions.Services.Billet
 {
     internal class BilletServiceClient<TRequest, TResponse, TException>
         where TRequest : Contract.IRequest
-        where TResponse : class
+        where TResponse : class, new()
         where TException : EBankPrimitiveException
     {
         #region Private Constructors
@@ -38,10 +39,15 @@ namespace Unimake.EBank.Solutions.Services.Billet
 
             var apiClient = new APIClient(authenticatedScope, $"boleto/{action}");
             var response = await apiClient.PostAsync(request);
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.ReadAsJsonAsync();
 
-            if(response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode())
             {
+                if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                {
+                    return new TResponse();
+                }
+
                 return DeserializeObject<TResponse>(json);
             }
 
@@ -54,18 +60,38 @@ namespace Unimake.EBank.Solutions.Services.Billet
             }
 
             var exType = typeof(TException);
-            var constructor = (from ctor in exType.GetConstructors()
-                               let ctorParams = ctor.GetParameters()
-                               where ctorParams.Length > 1 &&
-                                     ctorParams[1].ParameterType == typeof(int)
-                               select ctor).FirstOrDefault();
+            var constructors = exType.GetConstructors();
 
-            if(constructor != null)
+            if(constructors != null)
             {
-                throw Activator.CreateInstance(exType, new object[] { errors.Message, (int)response.StatusCode }) as EBankPrimitiveException;
+                var constructor = constructors.FirstOrDefault(c => c.GetParameters().Length == 2 &&
+                                                                     c.GetParameters()[0].ParameterType == typeof(string) &&
+                                                                    c.GetParameters()[1].ParameterType == typeof(int));
+
+                if(constructor != null)
+                {
+                    throw Activator.CreateInstance(exType, new object[] { errors.Message, (int)response.StatusCode }) as EBankPrimitiveException;
+                }
+
+                constructor = constructors.FirstOrDefault(c => c.GetParameters().Length == 2 &&
+                                                                     c.GetParameters()[0].ParameterType == typeof(string) &&
+                                                                    c.GetParameters()[1].ParameterType == typeof(System.Net.HttpStatusCode));
+
+                if(constructor != null)
+                {
+                    throw Activator.CreateInstance(exType, new object[] { errors.Message, response.StatusCode }) as EBankPrimitiveException;
+                }
+
+                constructor = constructors.FirstOrDefault(c => c.GetParameters().Length == 1 &&
+                                                                     c.GetParameters()[0].ParameterType == typeof(string));
+
+                if(constructor != null)
+                {
+                    throw Activator.CreateInstance(exType, new object[] { errors.Message }) as EBankPrimitiveException;
+                }
             }
 
-            throw Activator.CreateInstance(typeof(TException), new[] { errors.Message }) as EBankPrimitiveException;
+            throw new EBankPrimitiveException(errors.Message, response.StatusCode);
         }
 
         #endregion Public Methods

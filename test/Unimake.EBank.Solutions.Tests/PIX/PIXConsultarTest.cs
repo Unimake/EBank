@@ -10,12 +10,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.PIX
 {
-    public class PIXConsultarTest : TestBase
+    public class PIXConsultarTest(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public PIXConsultarTest(ITestOutputHelper output)
-            : base(output) { }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -30,6 +28,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var response = await service.GetAsync(new PIXGetRequest
                 {
+                    Testing = true,
                     Beneficiario = BeneficiarioDefault,
                     EndToEndId = "<< END TO END ID VÁLIDO>>"
                 }, scope);
@@ -57,6 +56,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 {
                     response = await service.GetAsync(new PIXGetRequest
                     {
+                        Testing = true,
                         Beneficiario = BeneficiarioDefault,
                         StartDate = DateTime.Parse("2023-11-01"),
                         EndDate = DateTime.Parse("2023-11-05"),
@@ -84,6 +84,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var response = await service.GetAsync(new PIXGetRequest
                 {
+                    Testing = true,
                     Beneficiario = BeneficiarioDefault,
                     StartDate = DateTime.Parse("2022-11-01"),
                     EndDate = DateTime.Parse("2022-11-30"),

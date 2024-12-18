@@ -8,14 +8,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class BugFix157679 : TestBase
+    public class BugFix157679(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public BugFix157679(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -30,10 +26,10 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
                 var service = new PIXService();
                 var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
                 {
+                    Testing = true,
                     Beneficiario = BeneficiarioDefault,
                     Valor = 1.17852m,
-                    Chave = "<<CHAVE>>",
-                    Testing = false
+                    Chave = "<<CHAVE>>"
                 }, scope);
 
                 DumpAsJson(response);

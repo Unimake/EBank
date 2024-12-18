@@ -8,18 +8,14 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.PIX
 {
-    public class PIXCriarCobrancaTest : TestBase
+    public class PIXCriarCobrancaTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Fields
 
         private const string TX_ID = "CobrancaDeTestePix20230213183421";
 
         #endregion Private Fields
-
         #region Public Constructors
-
-        public PIXCriarCobrancaTest(ITestOutputHelper output)
-                    : base(output) { }
 
         #endregion Public Constructors
 
@@ -36,6 +32,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
+                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
@@ -65,6 +62,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
+                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
@@ -95,6 +93,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
                 {
+                    Testing = true,
                     Beneficiario = beneficiario,
                     Valor = 1.17852m,
                     Chave = "<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>",
@@ -118,14 +117,14 @@ namespace Unimake.EBank.Solutions.Tests.PIX
             try
             {
                 var beneficiario = BeneficiarioDefault;
-
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
                 var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
                 {
+                    Testing = true,
                     Beneficiario = beneficiario,
                     Valor = 1.17852m,
-                    Chave = "<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>",
+                    Chave = beneficiario.Inscricao,
                     TxId = txId
                 }, scope);
 
@@ -135,6 +134,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 //Já fica como teste :)
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
+                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
@@ -165,6 +165,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var service = new PIXService();
                 var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
                 {
+                    Testing = true,
                     Beneficiario = beneficiario,
                     Valor = 1.17852m,
                     Chave = "<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>"
@@ -178,6 +179,7 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 //Já fica como teste :)
                 var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
                 {
+                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,

@@ -1,9 +1,6 @@
-﻿using EBank.Solutions.Primitives.Billet.Models;
-using EBank.Solutions.Primitives.Enumerations;
-using EBank.Solutions.Primitives.PIX.Request.Consulta;
+﻿using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using System;
 using System.Threading.Tasks;
-using Unimake.AuthServer.Authentication;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.PIX;
 using Unimake.EBank.Solutions.Tests.Abstractions;
@@ -13,14 +10,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class BugFix153823 : TestBase
+    public class BugFix153823(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public BugFix153823(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -47,17 +40,7 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
             {
                 StartDate = startDate,
                 EndDate = endDate,
-                Beneficiario = new Beneficiario
-                {
-                    Conta = new ContaCorrente
-                    {
-                        Agencia = "4340",
-                        Numero = "1899430",
-                        Banco = Banco.Sicoob,
-                    },
-                    Inscricao = "37765786000148",
-                    Nome = "Dream Solutions" //Não é obrigatório
-                }
+                Beneficiario = BeneficiarioDefault
             }, authScope);
 
             DumpAsJson(response);

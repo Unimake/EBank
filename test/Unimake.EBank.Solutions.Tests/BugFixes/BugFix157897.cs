@@ -9,14 +9,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
-    public class BugFix157897 : TestBase
+    public class BugFix157897(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public BugFix157897(ITestOutputHelper output)
-            : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -30,8 +26,8 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
             var service = new PIXService();
             var response = await service.QueryCobAsync(new PIXCobrancaGetRequest
             {
-                Beneficiario = BeneficiarioDefault,
                 Testing = true,
+                Beneficiario = BeneficiarioDefault,
                 TxId = "6b344afaef3b40d5b345274c92358f89"
             }, scope);
 
@@ -46,8 +42,8 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
             var service = new PIXService();
             var response = await service.GetAsync(new PIXGetRequest
             {
-                Beneficiario = BeneficiarioDefault,
                 Testing = true,
+                Beneficiario = BeneficiarioDefault,
                 TxId = "c321df8318e04ab98dc347054be684c9",
                 StartDate = DateTime.Parse("2023-09-26"),
                 EndDate = DateTime.Parse("2023-09-26")
@@ -64,8 +60,8 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
             var service = new PIXService();
             var response = await service.GetAsync(new PIXGetRequest
             {
-                Beneficiario = BeneficiarioDefault,
                 Testing = true,
+                Beneficiario = BeneficiarioDefault,
                 StartDate = DateTime.Parse("2023-09-22"),
                 EndDate = DateTime.Parse("2023-09-26")
             }, scope);

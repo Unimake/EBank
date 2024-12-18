@@ -8,14 +8,10 @@ using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Paginacao
 {
-    public class PaginacaoTest : TestBase
+    public class PaginacaoTest(ITestOutputHelper output) : TestBase(output)
     {
-        #region Public Constructors
 
-        public PaginacaoTest(ITestOutputHelper output)
-                  : base(output)
-        {
-        }
+        #region Public Constructors
 
         #endregion Public Constructors
 
@@ -36,13 +32,13 @@ namespace Unimake.EBank.Solutions.Tests.Paginacao
             // Criar a requisição
             var request = new Services.Extrato.Request.ExtratoRequest
             {
+                Testing = true,
                 AccountNumber = "94914",
                 StartDate = DateTime.Parse("2024-08-01"),
                 EndDate = DateTime.Parse("2024-08-05"),
                 Bank = Banco.Sicredi,
                 PageNumber = currentPage,
-                PageSize = 5,
-                Testing = false
+                PageSize = 5
             };
 
             // Buscar os dados paginados
@@ -50,13 +46,14 @@ namespace Unimake.EBank.Solutions.Tests.Paginacao
 
             // For percorrendo as páginas
 
-            for(int i = 0; i < response.PageInfo.TotalPages; i++)
+            for(var i = 0; i < response.PageInfo.TotalPages; i++)
             {
                 // ... faça seus tratamentos aqui ...
                 DumpAsJson(response);
 
                 // Buscar próxima página
                 request.PageNumber = ++currentPage;
+                request.Testing = true;
 
                 // Buscar os dados paginados
                 response = await service.GetAsync(request, scope);
@@ -81,13 +78,13 @@ namespace Unimake.EBank.Solutions.Tests.Paginacao
             // Criar a requisição
             var request = new Services.Extrato.Request.ExtratoRequest
             {
+                Testing = true,
                 AccountNumber = "94914",
                 StartDate = DateTime.Parse("2024-08-01"),
                 EndDate = DateTime.Parse("2024-08-05"),
                 Bank = Banco.Sicredi,
                 PageNumber = currentPage,
-                PageSize = 5,
-                Testing = false
+                PageSize = 5
             };
 
             // Enquanto hasNext for verdadeiro, leia

@@ -1,4 +1,7 @@
-﻿namespace eBankTest
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace EBank.Desktop
 {
     partial class Form1
     {
@@ -50,8 +53,8 @@
             ImageQrCodePIX = new PictureBox();
             BtnSinalizarPIX = new Button();
             tabPage5 = new TabPage();
-            BtnMsgWhatsPIX = new Button();
             BtnMsgWhatsBoleto = new Button();
+            BtnMsgWhatsPIX = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -64,22 +67,20 @@
             // BtnConsultarBoleto
             // 
             BtnConsultarBoleto.FlatStyle = FlatStyle.Flat;
-            BtnConsultarBoleto.Location = new Point(9, 8);
-            BtnConsultarBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnConsultarBoleto.Location = new Point(8, 6);
             BtnConsultarBoleto.Name = "BtnConsultarBoleto";
-            BtnConsultarBoleto.Size = new Size(255, 51);
+            BtnConsultarBoleto.Size = new Size(223, 38);
             BtnConsultarBoleto.TabIndex = 0;
             BtnConsultarBoleto.Text = "Consultar boleto";
             BtnConsultarBoleto.UseVisualStyleBackColor = true;
-            BtnConsultarBoleto.Click += BtnConsultarBoleto_ClickAsync;
+            BtnConsultarBoleto.Click += BtnConsultarBoleto_Click;
             // 
             // BtnRegistrarBoleto
             // 
             BtnRegistrarBoleto.FlatStyle = FlatStyle.Flat;
-            BtnRegistrarBoleto.Location = new Point(9, 67);
-            BtnRegistrarBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnRegistrarBoleto.Location = new Point(8, 50);
             BtnRegistrarBoleto.Name = "BtnRegistrarBoleto";
-            BtnRegistrarBoleto.Size = new Size(255, 51);
+            BtnRegistrarBoleto.Size = new Size(223, 38);
             BtnRegistrarBoleto.TabIndex = 1;
             BtnRegistrarBoleto.Text = "Registrar de boleto";
             BtnRegistrarBoleto.UseVisualStyleBackColor = true;
@@ -89,22 +90,20 @@
             // 
             TxtResposta.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TxtResposta.BorderStyle = BorderStyle.FixedSingle;
-            TxtResposta.Location = new Point(299, 16);
-            TxtResposta.Margin = new Padding(3, 4, 3, 4);
+            TxtResposta.Location = new Point(262, 12);
             TxtResposta.Multiline = true;
             TxtResposta.Name = "TxtResposta";
             TxtResposta.ReadOnly = true;
             TxtResposta.ScrollBars = ScrollBars.Vertical;
-            TxtResposta.Size = new Size(1248, 998);
+            TxtResposta.Size = new Size(1092, 749);
             TxtResposta.TabIndex = 2;
             // 
             // BtnExtrato
             // 
             BtnExtrato.FlatStyle = FlatStyle.Flat;
-            BtnExtrato.Location = new Point(9, 8);
-            BtnExtrato.Margin = new Padding(3, 4, 3, 4);
+            BtnExtrato.Location = new Point(8, 6);
             BtnExtrato.Name = "BtnExtrato";
-            BtnExtrato.Size = new Size(255, 51);
+            BtnExtrato.Size = new Size(223, 38);
             BtnExtrato.TabIndex = 3;
             BtnExtrato.Text = "Consulta extrato bancário";
             BtnExtrato.UseVisualStyleBackColor = true;
@@ -113,10 +112,9 @@
             // BtnListarPagamento
             // 
             BtnListarPagamento.FlatStyle = FlatStyle.Flat;
-            BtnListarPagamento.Location = new Point(9, 125);
-            BtnListarPagamento.Margin = new Padding(3, 4, 3, 4);
+            BtnListarPagamento.Location = new Point(8, 94);
             BtnListarPagamento.Name = "BtnListarPagamento";
-            BtnListarPagamento.Size = new Size(255, 51);
+            BtnListarPagamento.Size = new Size(223, 38);
             BtnListarPagamento.TabIndex = 4;
             BtnListarPagamento.Text = "Listar pagamentos efetuados";
             BtnListarPagamento.UseVisualStyleBackColor = true;
@@ -125,10 +123,9 @@
             // BtnAutorizarPagamento
             // 
             BtnAutorizarPagamento.FlatStyle = FlatStyle.Flat;
-            BtnAutorizarPagamento.Location = new Point(9, 67);
-            BtnAutorizarPagamento.Margin = new Padding(3, 4, 3, 4);
+            BtnAutorizarPagamento.Location = new Point(8, 50);
             BtnAutorizarPagamento.Name = "BtnAutorizarPagamento";
-            BtnAutorizarPagamento.Size = new Size(255, 51);
+            BtnAutorizarPagamento.Size = new Size(223, 38);
             BtnAutorizarPagamento.TabIndex = 5;
             BtnAutorizarPagamento.Text = "Autorizar Pagamentos";
             BtnAutorizarPagamento.UseVisualStyleBackColor = true;
@@ -137,10 +134,9 @@
             // BtnCancelarBoleto
             // 
             BtnCancelarBoleto.FlatStyle = FlatStyle.Flat;
-            BtnCancelarBoleto.Location = new Point(9, 125);
-            BtnCancelarBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnCancelarBoleto.Location = new Point(8, 94);
             BtnCancelarBoleto.Name = "BtnCancelarBoleto";
-            BtnCancelarBoleto.Size = new Size(255, 51);
+            BtnCancelarBoleto.Size = new Size(223, 38);
             BtnCancelarBoleto.TabIndex = 6;
             BtnCancelarBoleto.Text = "Cancelar boleto";
             BtnCancelarBoleto.UseVisualStyleBackColor = true;
@@ -149,22 +145,20 @@
             // BtnAlterarVencimentoBoleto
             // 
             BtnAlterarVencimentoBoleto.FlatStyle = FlatStyle.Flat;
-            BtnAlterarVencimentoBoleto.Location = new Point(9, 184);
-            BtnAlterarVencimentoBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnAlterarVencimentoBoleto.Location = new Point(8, 138);
             BtnAlterarVencimentoBoleto.Name = "BtnAlterarVencimentoBoleto";
-            BtnAlterarVencimentoBoleto.Size = new Size(255, 51);
+            BtnAlterarVencimentoBoleto.Size = new Size(223, 38);
             BtnAlterarVencimentoBoleto.TabIndex = 7;
             BtnAlterarVencimentoBoleto.Text = "Alterar vencimento boleto";
             BtnAlterarVencimentoBoleto.UseVisualStyleBackColor = true;
-            BtnAlterarVencimentoBoleto.Click += BtnAlterarVencimentoBoleto_Click;
+            BtnAlterarVencimentoBoleto.Click += BtnAlterarVencimentoBoleto_ClickAsync;
             // 
             // BtnInformarPagamentoBoleto
             // 
             BtnInformarPagamentoBoleto.FlatStyle = FlatStyle.Flat;
-            BtnInformarPagamentoBoleto.Location = new Point(9, 243);
-            BtnInformarPagamentoBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnInformarPagamentoBoleto.Location = new Point(8, 182);
             BtnInformarPagamentoBoleto.Name = "BtnInformarPagamentoBoleto";
-            BtnInformarPagamentoBoleto.Size = new Size(255, 51);
+            BtnInformarPagamentoBoleto.Size = new Size(223, 38);
             BtnInformarPagamentoBoleto.TabIndex = 8;
             BtnInformarPagamentoBoleto.Text = "Informar pagamento boleto";
             BtnInformarPagamentoBoleto.UseVisualStyleBackColor = true;
@@ -173,10 +167,9 @@
             // BtnVarredura
             // 
             BtnVarredura.FlatStyle = FlatStyle.Flat;
-            BtnVarredura.Location = new Point(9, 8);
-            BtnVarredura.Margin = new Padding(3, 4, 3, 4);
+            BtnVarredura.Location = new Point(8, 6);
             BtnVarredura.Name = "BtnVarredura";
-            BtnVarredura.Size = new Size(255, 51);
+            BtnVarredura.Size = new Size(223, 38);
             BtnVarredura.TabIndex = 9;
             BtnVarredura.Text = "Varredura - Consulta boletos a pagar";
             BtnVarredura.UseVisualStyleBackColor = true;
@@ -185,10 +178,9 @@
             // BtnConsultaPIX
             // 
             BtnConsultaPIX.FlatStyle = FlatStyle.Flat;
-            BtnConsultaPIX.Location = new Point(9, 8);
-            BtnConsultaPIX.Margin = new Padding(3, 4, 3, 4);
+            BtnConsultaPIX.Location = new Point(8, 6);
             BtnConsultaPIX.Name = "BtnConsultaPIX";
-            BtnConsultaPIX.Size = new Size(255, 51);
+            BtnConsultaPIX.Size = new Size(223, 38);
             BtnConsultaPIX.TabIndex = 10;
             BtnConsultaPIX.Text = "Consulta PIX por período";
             BtnConsultaPIX.UseVisualStyleBackColor = true;
@@ -197,14 +189,13 @@
             // button1
             // 
             button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(9, 67);
-            button1.Margin = new Padding(3, 4, 3, 4);
+            button1.Location = new Point(8, 50);
             button1.Name = "button1";
-            button1.Size = new Size(255, 51);
+            button1.Size = new Size(223, 38);
             button1.TabIndex = 11;
             button1.Text = "Consulta PIX por TxId";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += Button1_Click;
             // 
             // tabControl1
             // 
@@ -214,11 +205,10 @@
             tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage5);
-            tabControl1.Location = new Point(14, 16);
-            tabControl1.Margin = new Padding(3, 4, 3, 4);
+            tabControl1.Location = new Point(12, 12);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(283, 999);
+            tabControl1.Size = new Size(248, 749);
             tabControl1.TabIndex = 12;
             // 
             // tabPage1
@@ -228,11 +218,10 @@
             tabPage1.Controls.Add(BtnInformarPagamentoBoleto);
             tabPage1.Controls.Add(BtnAlterarVencimentoBoleto);
             tabPage1.Controls.Add(BtnCancelarBoleto);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Margin = new Padding(3, 4, 3, 4);
+            tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 4, 3, 4);
-            tabPage1.Size = new Size(275, 966);
+            tabPage1.Padding = new Padding(3, 3, 3, 3);
+            tabPage1.Size = new Size(240, 721);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Boletos";
             tabPage1.UseVisualStyleBackColor = true;
@@ -240,11 +229,10 @@
             // tabPage2
             // 
             tabPage2.Controls.Add(BtnExtrato);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Margin = new Padding(3, 4, 3, 4);
+            tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 4, 3, 4);
-            tabPage2.Size = new Size(275, 966);
+            tabPage2.Padding = new Padding(3, 3, 3, 3);
+            tabPage2.Size = new Size(240, 721);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Extrato";
             tabPage2.UseVisualStyleBackColor = true;
@@ -254,11 +242,10 @@
             tabPage3.Controls.Add(BtnVarredura);
             tabPage3.Controls.Add(BtnAutorizarPagamento);
             tabPage3.Controls.Add(BtnListarPagamento);
-            tabPage3.Location = new Point(4, 29);
-            tabPage3.Margin = new Padding(3, 4, 3, 4);
+            tabPage3.Location = new Point(4, 24);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3, 4, 3, 4);
-            tabPage3.Size = new Size(275, 966);
+            tabPage3.Padding = new Padding(3, 3, 3, 3);
+            tabPage3.Size = new Size(240, 721);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Pagamentos";
             tabPage3.UseVisualStyleBackColor = true;
@@ -271,11 +258,10 @@
             tabPage4.Controls.Add(BtnSinalizarPIX);
             tabPage4.Controls.Add(BtnConsultaPIX);
             tabPage4.Controls.Add(button1);
-            tabPage4.Location = new Point(4, 29);
-            tabPage4.Margin = new Padding(3, 4, 3, 4);
+            tabPage4.Location = new Point(4, 24);
             tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(3, 4, 3, 4);
-            tabPage4.Size = new Size(275, 966);
+            tabPage4.Padding = new Padding(3, 3, 3, 3);
+            tabPage4.Size = new Size(240, 721);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "PIX";
             tabPage4.UseVisualStyleBackColor = true;
@@ -283,10 +269,9 @@
             // BtnSinalizarPIXVencto
             // 
             BtnSinalizarPIXVencto.FlatStyle = FlatStyle.Flat;
-            BtnSinalizarPIXVencto.Location = new Point(9, 629);
-            BtnSinalizarPIXVencto.Margin = new Padding(3, 4, 3, 4);
+            BtnSinalizarPIXVencto.Location = new Point(8, 472);
             BtnSinalizarPIXVencto.Name = "BtnSinalizarPIXVencto";
-            BtnSinalizarPIXVencto.Size = new Size(255, 84);
+            BtnSinalizarPIXVencto.Size = new Size(223, 63);
             BtnSinalizarPIXVencto.TabIndex = 15;
             BtnSinalizarPIXVencto.Text = "Sinalizar para o banco um recebimento via PIX com vencimento e obter o QRCode";
             BtnSinalizarPIXVencto.UseVisualStyleBackColor = true;
@@ -295,10 +280,9 @@
             // BtnVerificarPIXFoiRecebido
             // 
             BtnVerificarPIXFoiRecebido.FlatStyle = FlatStyle.Flat;
-            BtnVerificarPIXFoiRecebido.Location = new Point(9, 532);
-            BtnVerificarPIXFoiRecebido.Margin = new Padding(3, 4, 3, 4);
+            BtnVerificarPIXFoiRecebido.Location = new Point(8, 399);
             BtnVerificarPIXFoiRecebido.Name = "BtnVerificarPIXFoiRecebido";
-            BtnVerificarPIXFoiRecebido.Size = new Size(255, 65);
+            BtnVerificarPIXFoiRecebido.Size = new Size(223, 49);
             BtnVerificarPIXFoiRecebido.TabIndex = 14;
             BtnVerificarPIXFoiRecebido.Text = "Verificar se o PIX foi efetuado pelo pagador";
             BtnVerificarPIXFoiRecebido.UseVisualStyleBackColor = true;
@@ -306,20 +290,18 @@
             // 
             // ImageQrCodePIX
             // 
-            ImageQrCodePIX.Location = new Point(11, 229);
-            ImageQrCodePIX.Margin = new Padding(3, 4, 3, 4);
+            ImageQrCodePIX.Location = new Point(10, 172);
             ImageQrCodePIX.Name = "ImageQrCodePIX";
-            ImageQrCodePIX.Size = new Size(253, 295);
+            ImageQrCodePIX.Size = new Size(221, 221);
             ImageQrCodePIX.TabIndex = 13;
             ImageQrCodePIX.TabStop = false;
             // 
             // BtnSinalizarPIX
             // 
             BtnSinalizarPIX.FlatStyle = FlatStyle.Flat;
-            BtnSinalizarPIX.Location = new Point(9, 149);
-            BtnSinalizarPIX.Margin = new Padding(3, 4, 3, 4);
+            BtnSinalizarPIX.Location = new Point(8, 112);
             BtnSinalizarPIX.Name = "BtnSinalizarPIX";
-            BtnSinalizarPIX.Size = new Size(255, 65);
+            BtnSinalizarPIX.Size = new Size(223, 49);
             BtnSinalizarPIX.TabIndex = 12;
             BtnSinalizarPIX.Text = "Sinalizar para o banco um recebimento via PIX e obter o QRCode";
             BtnSinalizarPIX.UseVisualStyleBackColor = true;
@@ -329,48 +311,46 @@
             // 
             tabPage5.Controls.Add(BtnMsgWhatsBoleto);
             tabPage5.Controls.Add(BtnMsgWhatsPIX);
-            tabPage5.Location = new Point(4, 29);
+            tabPage5.Location = new Point(4, 24);
+            tabPage5.Margin = new Padding(3, 2, 3, 2);
             tabPage5.Name = "tabPage5";
-            tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(275, 966);
+            tabPage5.Padding = new Padding(3, 2, 3, 2);
+            tabPage5.Size = new Size(240, 721);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "WhatsApp";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // BtnMsgWhatsPIX
-            // 
-            BtnMsgWhatsPIX.FlatStyle = FlatStyle.Flat;
-            BtnMsgWhatsPIX.Location = new Point(10, 7);
-            BtnMsgWhatsPIX.Margin = new Padding(3, 4, 3, 4);
-            BtnMsgWhatsPIX.Name = "BtnMsgWhatsPIX";
-            BtnMsgWhatsPIX.Size = new Size(255, 51);
-            BtnMsgWhatsPIX.TabIndex = 11;
-            BtnMsgWhatsPIX.Text = "Mensagem Whats PIX";
-            BtnMsgWhatsPIX.UseVisualStyleBackColor = true;
-            BtnMsgWhatsPIX.Click += BtnMsgWhatsPIX_Click;
-            // 
             // BtnMsgWhatsBoleto
             // 
             BtnMsgWhatsBoleto.FlatStyle = FlatStyle.Flat;
-            BtnMsgWhatsBoleto.Location = new Point(10, 66);
-            BtnMsgWhatsBoleto.Margin = new Padding(3, 4, 3, 4);
+            BtnMsgWhatsBoleto.Location = new Point(9, 50);
             BtnMsgWhatsBoleto.Name = "BtnMsgWhatsBoleto";
-            BtnMsgWhatsBoleto.Size = new Size(255, 51);
+            BtnMsgWhatsBoleto.Size = new Size(223, 38);
             BtnMsgWhatsBoleto.TabIndex = 12;
             BtnMsgWhatsBoleto.Text = "Mensagem Whats Boleto";
             BtnMsgWhatsBoleto.UseVisualStyleBackColor = true;
             BtnMsgWhatsBoleto.Click += BtnMsgWhatsBoleto_Click;
             // 
+            // BtnMsgWhatsPIX
+            // 
+            BtnMsgWhatsPIX.FlatStyle = FlatStyle.Flat;
+            BtnMsgWhatsPIX.Location = new Point(9, 5);
+            BtnMsgWhatsPIX.Name = "BtnMsgWhatsPIX";
+            BtnMsgWhatsPIX.Size = new Size(223, 38);
+            BtnMsgWhatsPIX.TabIndex = 11;
+            BtnMsgWhatsPIX.Text = "Mensagem Whats PIX";
+            BtnMsgWhatsPIX.UseVisualStyleBackColor = true;
+            BtnMsgWhatsPIX.Click += BtnMsgWhatsPIX_Click;
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1561, 1031);
+            ClientSize = new Size(1366, 773);
             Controls.Add(tabControl1);
             Controls.Add(TxtResposta);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            Text = "eBank - Unimake";
+            Text = "EBank - Unimake";
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);

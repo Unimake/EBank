@@ -16,8 +16,10 @@ Public Sub AutenticarAPI()
     ' Inicializa o objeto XMLHTTP
     Set loHttp = CreateObject("MSXML2.XMLHTTP.6.0")
 
-    ' Define a URL da API
+    ' Define a URL da API Produção
     lcURL = "https://unimake.app/auth/api/auth"
+    ' Define a URL do SandBOX
+    'lcURL = "https://auth.sandbox.unimake.software/api/auth"
 
     ' Cria o conteúdo da requisição no formato JSON
     lcJsonContent = "{""appId"": ""124494fcf65441c2abd36d1e08ab4f45"",""secret"": ""a9ebaee34da7473c9f5126214514a804""}"
@@ -39,14 +41,14 @@ Public Sub AutenticarAPI()
         Set jsonParser = JsonConverter.ParseJson(lcResponse)
         
         If Not jsonParser Is Nothing Then
-           If jsonParser.exists("expiration") Then
+           If jsonParser.Exists("expiration") Then
               lcExpiration = jsonParser("expiration")
               MsgBox lcExpiration, vbInformation, "Expiration"
            Else
               MsgBox "Chave 'expiration' não encontrada no JSON.", vbCritical, "Erro de JSON"
            End If
                
-           If jsonParser.exists("token") Then
+           If jsonParser.Exists("token") Then
               lcToken = jsonParser("token")
               MsgBox lcToken, vbInformation, "Token"
            Else

@@ -29,6 +29,15 @@ Begin VB.Form frmMain
          Caption         =   "Consultar PIX"
       End
    End
+   Begin VB.Menu mnuBoleto 
+      Caption         =   "eBoleto"
+      Begin VB.Menu mnuBoleto_RegistrarBoleto 
+         Caption         =   "Registrar Boleto"
+      End
+      Begin VB.Menu mnuBoleto_ConsultarBoleto 
+         Caption         =   "Consultar Boleto"
+      End
+   End
 End
 Attribute VB_Name = "frmMain"
 Attribute VB_GlobalNameSpace = False
@@ -50,7 +59,11 @@ Private Sub mnuPIX_ConsultarPIX_Click()
    ConsultarPIX
 End Sub
 
+Private Sub mnuBoleto_RegistrarBoleto_Click()
+   RegistrarBoleto
+End Sub
 
-
-
+Private Sub mnuBoleto_ConsultarBoleto_Click()
+   ConsultarBoleto
+End Sub
 

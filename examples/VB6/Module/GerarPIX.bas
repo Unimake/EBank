@@ -16,8 +16,10 @@ Public Sub GerarPIX()
     ' Inicializa o objeto XMLHTTP
     Set loHttp = CreateObject("MSXML2.XMLHTTP.6.0")
 
-    ' Define a URL da API
+    ' Define a URL da API Produção
     lcURL = "https://unimake.app/auth/api/auth"
+    ' Define a URL do SandBOX
+    'lcURL = "https://auth.sandbox.unimake.software/api/auth"
 
     ' Cria o conteúdo da requisição no formato JSON
     lcJsonContent = "{""appId"": ""124494fcf65441c2abd36d1e08ab4f45"",""secret"": ""a9ebaee34da7473c9f5126214514a804""}"
@@ -39,13 +41,13 @@ Public Sub GerarPIX()
         Set jsonParser = JsonConverter.ParseJson(lcResponse)
         
         If Not jsonParser Is Nothing Then
-           If jsonParser.exists("expiration") Then
+           If jsonParser.Exists("expiration") Then
               lcExpiration = jsonParser("expiration")
            Else
               MsgBox "Chave 'expiration' não encontrada no JSON.", vbCritical, "Erro de JSON"
            End If
                
-           If jsonParser.exists("token") Then
+           If jsonParser.Exists("token") Then
               lcToken = jsonParser("token")
               
               ConsumirAPICobranca (lcToken)
@@ -79,13 +81,13 @@ Public Sub ConsumirAPICobranca(lcToken As String)
     Dim QRCodeImage As String
     Dim cMensagem As String
     Dim cUrl As String
-    Dim cidconf As String
     Dim qrCodePIX As String
     Dim loHttp As Object
 
-    ' Configuração do URL e Identificação
-    cidconf = "ZCKWGQ55LTDXKYYC"
-    cUrl = "https://unimake.app/ebank/api/v1/pix/Cobranca?configurationId=" & Trim(cidconf)
+    ' Define a URL da API Produção
+    cUrl = "https://unimake.app/ebank/api/v1/pix/Cobranca?configurationId=ZCKWGQ55LTDXKYYC"
+    ' Define a URL do SandBOX
+    'lcURL = "https://ebank.sandbox.unimake.software/api/v1/pix/Cobranca?configurationId=ZCKWGQ55LTDXKYYC"
 
     ' Gerar JSON para a requisição
     lcJsonContent = CriarJSONCobrancaPIX()
@@ -106,14 +108,14 @@ Public Sub ConsumirAPICobranca(lcToken As String)
        Set jsonParser = JsonConverter.ParseJson(lcResponse)
        
        If Not jsonParser Is Nothing Then
-          If jsonParser.exists("QRCodeImage") Then
+          If jsonParser.Exists("QRCodeImage") Then
              QRCodeImage = jsonParser("QRCodeImage")
              MsgBox "QrCodeImage: " & QRCodeImage
           Else
              MsgBox "Chave 'QRCodeImage' não encontrada no JSON.", vbCritical, "Erro de JSON"
           End If
                
-          If jsonParser.exists("pixCopiaECola") Then
+          If jsonParser.Exists("pixCopiaECola") Then
              pixCopiaECola = jsonParser("pixCopiaECola")
              MsgBox "QrCodeImage: " & pixCopiaECola
           Else

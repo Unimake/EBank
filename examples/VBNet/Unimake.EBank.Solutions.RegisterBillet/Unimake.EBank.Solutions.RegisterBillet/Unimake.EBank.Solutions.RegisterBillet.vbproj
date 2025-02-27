@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unimake.EBank.Solutions" Version="20230405.1727.35" />
-    <PackageReference Include="Unimake.Extensions" Version="20230405.1727.35" />
+    <PackageReference Include="Unimake.EBank.Primitives" Version="20250131.1813.25" />
+    <PackageReference Include="Unimake.EBank.Solutions" Version="20250131.1813.25" />
+    <PackageReference Include="Unimake.Extensions" Version="20250214.1918.37" />
   </ItemGroup>
 
 </Project>

@@ -22,7 +22,7 @@ Public Sub AutenticarAPI()
     'lcURL = "https://auth.sandbox.unimake.software/api/auth"
 
     ' Cria o conteúdo da requisição no formato JSON
-    lcJsonContent = "{""appId"": ""124494fcf65441c2abd36d1e08ab4f45"",""secret"": ""a9ebaee34da7473c9f5126214514a804""}"
+    lcJsonContent = "{""appId"": ""f1344af8039c41b4b5137c74fb4b4aca"",""secret"": ""04fd5c84a4fe4ff7bb00458dc6fb0806""}"
 
     On Error GoTo ErrorHandler
 

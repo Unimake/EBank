@@ -22,7 +22,7 @@ Public Sub RegistrarBoleto()
     'lcURL = "https://auth.sandbox.unimake.software/api/auth"
 
     ' Cria o conteúdo da requisição no formato JSON
-    lcJsonContent = "{""appId"": ""124494fcf65441c2abd36d1e08ab4f45"", ""secret"": ""a9ebaee34da7473c9f5126214514a804""}"
+    lcJsonContent = "{""appId"": ""f1344af8039c41b4b5137c74fb4b4aca"", ""secret"": ""04fd5c84a4fe4ff7bb00458dc6fb0806""}"
 
     On Error GoTo ErrorHandler
 
@@ -119,15 +119,17 @@ End Sub
 ' -----------------------------------------------------------------------------------
 Function CreateJsonBoleto() As String
     Dim json As Object
+    Dim dataEmissao As Date: dataEmissao = Now
+    Dim dataVencimento As Date: dataVencimento = DateAdd("d", 30, Now)
     Set json = JsonConverter.ParseJson("{}")
-
+    
     ' Adicionando propriedades do JSON
     json.Add "especie", 2
     json.Add "numeroParcela", 1
     json.Add "numeroNoBanco", "00000008548"
     json.Add "numeroNaEmpresa", "000001-01"
-    json.Add "vencimento", "2025-02-10"
-    json.Add "emissao", "2025-01-10"
+    json.Add "vencimento", Format(dataVencimento, "yyyy-MM-dd")
+    json.Add "emissao", Format(dataEmissao, "yyyy-MM-dd")
     json.Add "diasParaBaixaOuDevolucao", 0
     json.Add "tipoBaixaDevolucao", 1
     json.Add "valorIof", 0
@@ -145,7 +147,7 @@ Function CreateJsonBoleto() As String
     Dim jsonJuros As Object
     Set jsonJuros = JsonConverter.ParseJson("{}")
     jsonJuros.Add "tipo", 1
-    jsonJuros.Add "data", "2025-03-10"
+    jsonJuros.Add "data", Format(DateAdd("d", 1, dataVencimento), "yyyy-MM-dd")
     jsonJuros.Add "valor", 0.02
     json.Add "juros", jsonJuros
 

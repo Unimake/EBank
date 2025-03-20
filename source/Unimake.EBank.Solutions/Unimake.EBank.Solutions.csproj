@@ -68,27 +68,22 @@
 
 
 	<ItemGroup>
-		<Compile Remove="Services\Cobranca\**" />
 		<Compile Remove="Services\BankPayment\**" />
 		<Compile Remove="Services\BankStatement\**" />
+		<Compile Remove="Services\FileServer\**" />
 		<Compile Remove="Unimake.EBank.Solutions\**" />
-		<EmbeddedResource Remove="Services\Cobranca\**" />
 		<EmbeddedResource Remove="Services\BankPayment\**" />
 		<EmbeddedResource Remove="Services\BankStatement\**" />
+		<EmbeddedResource Remove="Services\FileServer\**" />
 		<EmbeddedResource Remove="Unimake.EBank.Solutions\**" />
-		<None Remove="Services\Cobranca\**" />
 		<None Remove="Services\BankPayment\**" />
 		<None Remove="Services\BankStatement\**" />
+		<None Remove="Services\FileServer\**" />
 		<None Remove="Unimake.EBank.Solutions\**" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Remove="bank-icon.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Include="Services\Cobranca\CobrancaService.cs" />
-		<Compile Include="Services\Cobranca\Request\CobrancaRequest.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -99,22 +94,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.6.1" />
 		<PackageReference Include="Unimake.AuthServer" Version="20250131.1813.25" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20250131.1813.25" />
-		<PackageReference Include="Unimake.Primitives" Version="20250131.1813.25" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Services\Extrato\Request\" />
-		<Folder Include="Services\FileServer\Abstractions\" />
-		<Folder Include="Services\FileServer\Contract\" />
-		<Folder Include="Services\FileServer\Request\" />
-		<Folder Include="Services\FileServer\Response\" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20250320.348.55" />
+		<PackageReference Include="Unimake.Primitives" Version="20250317.1126.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<Exec Command="call $(SolutionDir)build.bat $(TargetPath) $(OutDir) " ContinueOnError="true" />
-	</Target>
 </Project>

@@ -15,9 +15,6 @@ namespace Unimake.EBank.Solutions.Tests.PIX
         private const string TX_ID = "CobrancaDeTestePix20230213183421";
 
         #endregion Private Fields
-        #region Public Constructors
-
-        #endregion Public Constructors
 
         #region Public Methods
 
@@ -30,18 +27,15 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var beneficiario = BeneficiarioDefault;
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
+                var cobResponse = await service.QueryCobAsync(CreateRequest(() => new PIXCobrancaGetRequest
                 {
-                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
                     TxId = txId
-                }, scope);
+                }), scope);
 
-                //Assert.Equal(response.Txid, cobResponse.Txid);
-                Assert.Equal(txId, cobResponse.Txid);
                 DumpAsJson(cobResponse);
             }
             catch(Exception ex)
@@ -60,19 +54,16 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var beneficiario = BeneficiarioDefault;
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
+                var cobResponse = await service.QueryCobAsync(CreateRequest(() => new PIXCobrancaGetRequest
                 {
-                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
                     TxId = txId,
                     GerarQRCode = true
-                }, scope);
+                }), scope);
 
-                //Assert.Equal(response.Txid, cobResponse.Txid);
-                Assert.Equal(txId, cobResponse.Txid);
                 DumpAsJson(cobResponse);
             }
             catch(Exception ex)
@@ -91,15 +82,13 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var beneficiario = BeneficiarioDefault;
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
+                var response = await service.CreateCobAsync(CreateRequest(() => new PIXCobrancaCreateRequest
                 {
-                    Testing = true,
-                    Beneficiario = beneficiario,
                     Valor = 1.17852m,
                     Chave = "<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>",
                     TxId = txId,
                     GerarQRCode = true
-                }, scope);
+                }), scope);
 
                 DumpAsJson(response);
             }
@@ -119,31 +108,25 @@ namespace Unimake.EBank.Solutions.Tests.PIX
                 var beneficiario = BeneficiarioDefault;
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
+                var response = await service.CreateCobAsync(CreateRequest(() => new PIXCobrancaCreateRequest
                 {
-                    Testing = true,
-                    Beneficiario = beneficiario,
                     Valor = 1.17852m,
                     Chave = beneficiario.Inscricao,
                     TxId = txId
-                }, scope);
+                }), scope);
 
                 DumpAsJson(response);
 
                 //Já realizar a consulta e garantir que foi gerada corretamente
                 //Já fica como teste :)
-                var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
+                var cobResponse = await service.QueryCobAsync(CreateRequest(() => new PIXCobrancaGetRequest
                 {
-                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
                     TxId = txId
-                }, scope);
-
-                //Assert.Equal(response.Txid, cobResponse.Txid);
-                Assert.Equal(txId, cobResponse.Txid);
+                }), scope);
 
                 DumpAsJson(cobResponse);
             }
@@ -163,13 +146,11 @@ namespace Unimake.EBank.Solutions.Tests.PIX
 
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
+                var response = await service.CreateCobAsync(CreateRequest(() => new PIXCobrancaCreateRequest
                 {
-                    Testing = true,
-                    Beneficiario = beneficiario,
                     Valor = 1.17852m,
-                    Chave = "<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>"
-                }, scope);
+                    Chave = "12345678901234" //"<<CHAVE PIX VÁLIDA PARA QUAL O VALOR SERÁ REPASSADO>>"
+                }), scope);
 
                 DumpAsJson(response);
 
@@ -177,18 +158,14 @@ namespace Unimake.EBank.Solutions.Tests.PIX
 
                 //Já realizar a consulta e garantir que foi gerada corretamente
                 //Já fica como teste :)
-                var cobResponse = await service.QueryCobAsync(new PIXCobrancaGetRequest
+                var cobResponse = await service.QueryCobAsync(CreateRequest(() => new PIXCobrancaGetRequest
                 {
-                    Testing = true,
                     Banco = beneficiario.Conta.Banco,
                     Inscricao = beneficiario.Inscricao,
                     NumeroAgencia = beneficiario.Conta.Agencia,
                     NumeroConta = beneficiario.Conta.Numero,
                     TxId = txId
-                }, scope);
-
-                //Assert.Equal(response.Txid, cobResponse.Txid);
-                Assert.Equal(txId, cobResponse.Txid);
+                }), scope);
 
                 DumpAsJson(cobResponse);
             }

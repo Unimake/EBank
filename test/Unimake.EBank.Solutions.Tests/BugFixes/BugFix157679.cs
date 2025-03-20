@@ -10,11 +10,6 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
     public class BugFix157679(ITestOutputHelper output) : TestBase(output)
     {
-
-        #region Public Constructors
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         [Fact]
@@ -24,13 +19,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
             {
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.CreateCobAsync(new PIXCobrancaCreateRequest
+                var response = await service.CreateCobAsync(CreateRequest(() => new PIXCobrancaCreateRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
                     Valor = 1.17852m,
-                    Chave = "<<CHAVE>>"
-                }, scope);
+                    Chave = "12345678901234"
+                }), scope);
 
                 DumpAsJson(response);
             }

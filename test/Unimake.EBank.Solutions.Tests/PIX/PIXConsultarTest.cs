@@ -12,11 +12,6 @@ namespace Unimake.EBank.Solutions.Tests.PIX
 {
     public class PIXConsultarTest(ITestOutputHelper output) : TestBase(output)
     {
-
-        #region Public Constructors
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         [Fact]
@@ -26,12 +21,10 @@ namespace Unimake.EBank.Solutions.Tests.PIX
             {
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.GetAsync(new PIXGetRequest
+                var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
-                    EndToEndId = "<< END TO END ID VÁLIDO>>"
-                }, scope);
+                    EndToEndId = $"E{new Random().NextString(31, true, false).ToUpper()}"
+                }), scope);
 
                 DumpAsJson(response);
             }
@@ -54,15 +47,13 @@ namespace Unimake.EBank.Solutions.Tests.PIX
 
                 do
                 {
-                    response = await service.GetAsync(new PIXGetRequest
+                    response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                     {
-                        Testing = true,
-                        Beneficiario = BeneficiarioDefault,
-                        StartDate = DateTime.Parse("2023-11-01"),
-                        EndDate = DateTime.Parse("2023-11-05"),
+                        StartDate = StartDate,
+                        EndDate = EndDate,
                         PageNumber = currentPage,
                         PageSize = 3
-                    }, scope);
+                    }), scope);
 
                     DumpAsJson(response);
                     currentPage++;
@@ -82,14 +73,12 @@ namespace Unimake.EBank.Solutions.Tests.PIX
             {
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.GetAsync(new PIXGetRequest
+                var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
-                    StartDate = DateTime.Parse("2022-11-01"),
-                    EndDate = DateTime.Parse("2022-11-30"),
-                    TxId = "<< TXTD VÁLIDO >>"
-                }, scope);
+                    StartDate = StartDate,
+                    EndDate = EndDate,
+                    TxId = "xxInformeUmTxIdValidoAquixx"
+                }), scope);
 
                 DumpAsJson(response);
             }

@@ -1,4 +1,5 @@
-﻿using EBank.Solutions.Primitives.PIX.Request.Consulta;
+﻿using EBank.Solutions.Primitives.PIX.Request.Cobranca;
+using EBank.Solutions.Primitives.PIX.Request.Consulta;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +17,6 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         private const int NumOfThreads = 7;
 
         #endregion Private Fields
-        #region Public Constructors
-
-        #endregion Public Constructors
 
         #region Public Methods
 
@@ -39,13 +37,10 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 
                         var scope = await CreateAuthenticatedScopeAsync();
                         var service = new PIXService();
-                        var response = await service.GetAsync(new PIXGetRequest
+                        var response = await service.QueryCobAsync(CreateRequest(() => new PIXCobrancaGetRequest
                         {
-                            Testing = true,
-                            Beneficiario = BeneficiarioDefault,
-                            StartDate = DateTime.Parse("2023-09-24"),
-                            EndDate = DateTime.Parse("2023-09-26")
-                        }, scope);
+                            TxId = new Random().NextString(26, true, false)
+                        }), scope);
 
                         DumpAsJson(response);
                         _ = handle.Set();
@@ -71,13 +66,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 
                 var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.GetAsync(new PIXGetRequest
+                var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
-                    StartDate = DateTime.Parse("2023-09-24"),
-                    EndDate = DateTime.Parse("2023-09-26")
-                }, scope);
+                    StartDate = StartDate,
+                    EndDate = EndDate
+                }), scope);
 
                 DumpAsJson(response);
                 scope.Dispose();
@@ -95,13 +88,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 
                 var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PIXService();
-                var response = await service.GetAsync(new PIXGetRequest
+                var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
-                    StartDate = DateTime.Parse("2023-09-24"),
-                    EndDate = DateTime.Parse("2023-09-26")
-                }, scope);
+                    StartDate = StartDate,
+                    EndDate = EndDate
+                }), scope);
 
                 DumpAsJson(response);
             }
@@ -119,13 +110,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
                 WriteLine($"Starting thread {i}");
 
                 var service = new PIXService();
-                var response = await service.GetAsync(new PIXGetRequest
+                var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                 {
-                    Testing = true,
-                    Beneficiario = BeneficiarioDefault,
-                    StartDate = DateTime.Parse("2023-09-24"),
-                    EndDate = DateTime.Parse("2023-09-26")
-                }, scope);
+                    StartDate = StartDate,
+                    EndDate = EndDate
+                }), scope);
 
                 DumpAsJson(response);
             }
@@ -150,13 +139,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 
                         using var scope = await CreateAuthenticatedScopeAsync();
                         var service = new PIXService();
-                        var response = await service.GetAsync(new PIXGetRequest
+                        var response = await service.GetAsync(CreateRequest(() => new PIXGetRequest
                         {
-                            Testing = true,
-                            Beneficiario = BeneficiarioDefault,
-                            StartDate = DateTime.Parse("2023-09-24"),
-                            EndDate = DateTime.Parse("2023-09-26")
-                        }, scope);
+                            StartDate = StartDate,
+                            EndDate = EndDate
+                        }), scope);
 
                         DumpAsJson(response);
                         _ = handle.Set();

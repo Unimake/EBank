@@ -1,15 +1,18 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.Contract.Request;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
+using Xunit;
 using Xunit.Abstractions;
 using static Newtonsoft.Json.JsonConvert;
 
 namespace Unimake.EBank.Solutions.Tests.Abstractions
 {
+    [Collection("e-Bank Tests")]
     public abstract class TestBase : IDisposable
     {
         #region Private Fields
@@ -21,6 +24,19 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         #endregion Private Fields
 
         #region Private Properties
+
+        protected static Beneficiario BeneficiarioDefault => new()
+        {
+            Nome = "Unifake",  //Não é obrigatório
+            Codigo = "000014340",
+            Inscricao = "06117473000079",
+            Conta = new ContaCorrente
+            {
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
+                Agencia = "4340",
+                Numero = "00001"
+            }
+        };
 
         private JsonSerializerSettings JsonSettings => _jsonSettings ??= _jsonSettings = new JsonSerializerSettings
         {
@@ -38,32 +54,21 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 #if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
-                AuthServerUrl = "http://localhost:54469/api/auth/", // "https://unimake.app/auth/api/auth/"
-                AnotherServerUrl = "http://localhost:58200/api/v1/" //"https://unimake.app/EBank/"
+                AuthServerUrl = "https://auth.sandbox.unimake.software/api/auth/", // "https://unimake.app/auth/api/auth/"
+                AnotherServerUrl = "https://ebank.sandbox.unimake.software/api/v1/" //"https://unimake.app/EBank/"
             });
-
 #else
             debugScope = null;
 #endif
 
         #endregion Private Methods
 
-        #region Protected Properties
+        #region Protected Fields
 
-        protected static Beneficiario BeneficiarioDefault => new()
-        {
-            Nome = "Unifake",  //Não é obrigatório
-            Codigo = "000014340",
-            Inscricao = "06117473000079",
-            Conta = new ContaCorrente
-            {
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
-                Agencia = "4340",
-                Numero = "00001"
-            }
-        };
+        protected DateTime EndDate = DateTime.Now.Date;
+        protected DateTime StartDate = DateTime.Now.AddDays(-5).Date;
 
-        #endregion Protected Properties
+        #endregion Protected Fields
 
         #region Protected Constructors
 
@@ -82,9 +87,28 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-            Secret = "11111111111111111111111111111111"
+            AppId = "f1344af8039c41b4b5137c74fb4b4aca",
+            Secret = "04fd5c84a4fe4ff7bb00458dc6fb0806"
         }));
+
+        protected T CreateRequest<T>(Func<T> builder)
+                    where T : class, IRequest, new()
+        {
+            var t = builder();
+
+            t.ConfigurationId = "ZCKWGQ55LTDXKYYC";
+            t.Testing = true;
+
+            var pi = t.GetType().GetProperty(nameof(Beneficiario));
+
+            if(pi != null &&
+                pi.CanWrite)
+            {
+                pi.SetValue(t, BeneficiarioDefault);
+            }
+
+            return t;
+        }
 
         #endregion Protected Methods
 
@@ -100,13 +124,13 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         {
             var text = SerializeObject(value, JsonSettings);
             output.WriteLine(text);
-            System.Diagnostics.Debug.WriteLine(text, "EBankDebug");
+            System.Diagnostics.Debug.WriteLine(text, "EBank Debug");
         }
 
         public void WriteLine(string line)
         {
             output.WriteLine(line);
-            System.Diagnostics.Debug.WriteLine(line, "EBankDebug");
+            System.Diagnostics.Debug.WriteLine(line, "EBank Debug");
         }
 
         #endregion Public Methods

@@ -1,4 +1,6 @@
 using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.Billet.Request;
+using EBank.Solutions.Primitives.Billet.Response;
 using EBank.Solutions.Primitives.Enumerations;
 using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
@@ -8,8 +10,6 @@ using System.Threading.Tasks;
 using Unimake.AuthServer.Exceptions;
 using Unimake.AuthServer.Security.Scope;
 using Unimake.EBank.Solutions.Services.Billet;
-using Unimake.EBank.Solutions.Services.Billet.Request;
-using Unimake.EBank.Solutions.Services.Billet.Response;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
@@ -27,12 +27,10 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         {
             using var scope = await CreateAuthenticatedScopeAsync();
             var billetService = new BilletService();
-            var response = await billetService.InformPaymentAsync(new InformPaymentRequest
+            var response = await billetService.InformPaymentAsync(CreateRequest(() => new InformPaymentRequest
             {
-                Beneficiario = BeneficiarioDefault,
-                NumeroNoBanco = "00000033",
-                Testing = true
-            }, scope);
+                NumeroNoBanco = "00000033"
+            }), scope);
         }
 
         [Fact]
@@ -42,15 +40,13 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             // CPF e CNPJ foram gerados no site
             // https://www.4devs.com.br
 
-            var request = new RegisterRequest
+            var request = CreateRequest(() => new RegisterRequest
             {
-                Testing = true,
                 Especie = EspecieTitulo.Outros,
                 ValorNominal = 45.88m,
                 Vencimento = DateTime.Today.AddDays(15),
                 NumeroNaEmpresa = "12345",
                 NumeroNoBanco = "12345",
-                Beneficiario = BeneficiarioDefault,
                 Pagador = new Pagador
                 {
                     Nome = "Marcelo de Souza",
@@ -67,7 +63,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                         UF = "DF",
                     },
                 },
-            };
+            });
 
             try
             {
@@ -85,31 +81,29 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
         [Fact]
         public void JustASimpleDebugScopeTest() => Assert.Throws<ArgumentNullException>("scope", () =>
-        {
-            using(new DebugScope<DebugStateObject>(new DebugStateObject
-            {
-                AuthServerUrl = "invalid e-bank uri",
-                AnotherServerUrl = "invalid authserver uri"
-            }))
-            {
-                var service = new BilletService();
-                var response = service.RegisterAsync(new RegisterRequest
-                {
-                    Testing = true
-                }, null).GetAwaiter().GetResult();
-                DumpAsJson(response);
-            }
-        });
+                        {
+                            using(new DebugScope<DebugStateObject>(new DebugStateObject
+                            {
+                                AuthServerUrl = "invalid e-bank uri",
+                                AnotherServerUrl = "invalid authserver uri"
+                            }))
+                            {
+                                var service = new BilletService();
+                                var response = service.RegisterAsync(new RegisterRequest
+                                {
+                                    Testing = true
+                                }, null).GetAwaiter().GetResult();
+                                DumpAsJson(response);
+                            }
+                        });
 
         [Fact]
         public async Task Query()
         {
-            var request = new QueryRequest
+            var request = CreateRequest(() => new QueryInformationRequest
             {
-                Testing = true,
-                NumeroNoBanco = "222145568",
-                Beneficiario = BeneficiarioDefault
-            };
+                NumeroNoBanco = ["222145568"]
+            });
 
             try
             {
@@ -129,14 +123,12 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         [Trait("Issue", "#162636")]
         public async Task QueryByConfigurationId()
         {
-            var request = new QueryRequest
+            var request = CreateRequest(() => new QueryInformationRequest
             {
-                Testing = true,
-                Beneficiario = BeneficiarioDefault,
                 DataEmissaoInicial = DateTime.Parse("2023-06-30"),
                 DataEmissaoFinal = DateTime.Parse("2023-07-05"),
                 ConfigurationId = "ZCKWGQ55LTDXKYYC"
-            };
+            });
 
             try
             {
@@ -159,15 +151,13 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             // CPF e CNPJ foram gerados no site
             // https://www.4devs.com.br
 
-            var request = new RegisterRequest
+            var request = CreateRequest(() => new RegisterRequest
             {
-                Testing = true,
                 Especie = EspecieTitulo.Outros,
                 ValorNominal = 45.88m,
                 Vencimento = DateTime.Today.AddDays(15),
                 NumeroNaEmpresa = "12345",
                 NumeroNoBanco = "12345",
-                Beneficiario = BeneficiarioDefault,
                 Pagador = new Pagador
                 {
                     Nome = "Marcelo de Souza",
@@ -184,7 +174,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                         UF = "DF",
                     },
                 },
-            };
+            });
 
             try
             {
@@ -228,14 +218,14 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
         [Fact]
         public void WrongKey() => Assert.Throws<AuthenticationServiceException>(() =>
-                                                           {
-                                                               var x = new AuthenticationToken
-                                                               {
-                                                                   AppId = "<<?>>",
-                                                                   Secret = "<<?>>"
-                                                               };
-                                                               _ = new AuthenticatedScope(x);
-                                                           });
+        {
+            var x = new AuthenticationToken
+            {
+                AppId = "<<?>>",
+                Secret = "<<?>>"
+            };
+            _ = new AuthenticatedScope(x);
+        });
 
         #endregion Public Methods
     }

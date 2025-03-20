@@ -1,8 +1,7 @@
-﻿using EBank.Solutions.Primitives.Exceptions.Response.Billet;
-using System;
+﻿using EBank.Solutions.Primitives.Billet.Request;
+using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.Billet;
-using Unimake.EBank.Solutions.Services.Billet.Request;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
@@ -11,11 +10,6 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
     public class BugFix164606(ITestOutputHelper output) : TestBase(output)
     {
-
-        #region Public Constructors
-
-        #endregion Public Constructors
-
         #region Public Methods
 
         [Fact]
@@ -23,13 +17,11 @@ namespace Unimake.EBank.Solutions.Tests.BugFixes
         [Trait("Error", "Unexpected character encountered while parsing value: {. Path '[0].PdfContent', line 1, position 340")]
         public async Task Fix()
         {
-            var request = new QueryRequest
+            var request = CreateRequest(() => new QueryInformationRequest
             {
-                Testing = true,
-                Beneficiario = BeneficiarioDefault,
-                DataEmissaoInicial = DateTime.Now.AddDays(-3),
-                DataEmissaoFinal = DateTime.Now
-            };
+                DataEmissaoInicial = StartDate,
+                DataEmissaoFinal = EndDate
+            });
 
             try
             {

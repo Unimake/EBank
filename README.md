@@ -22,7 +22,7 @@ Para utilizar os serviços, **é necessário criar uma conta com a Unimake** par
 
 Nossa API é totalmente compatível com o [Postman](https://www.postman.com/). Utilize o botão abaixo para importar as coleções de testes diretamente no Postman:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/unimakers/public/overview)
+[![Run in Postman](https://raw.githubusercontent.com/Unimake/EBank/492043e4e7d41ab3d8ccfebc8154ad7062dc007d/source/Unimake.EBank.Solutions/Resources/Images/run_in_postman.svg)](https://www.postman.com/unimakers/public/overview)
 
 ---
 

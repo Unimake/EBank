@@ -1,13 +1,46 @@
 # E-Bank
 
-As soluções E-Bank são para auxiliar o desenvolvedor nos serviços mais comuns com relação à integração bancária no Brasil, tais como: conciliação através do extrato, emissão de boletos, transferências via PIX, autorização de pagamentos e retorno de cobrança.
+E-Bank é uma solução desenvolvida para auxiliar desenvolvedores com os serviços mais comuns relacionados à integração bancária no Brasil. Ele oferece funcionalidades como:
 
-A documentação oficial da API e os serviços estão disponíveis em https://ebank.solutions/swagger/
+- Conciliação através do extrato bancário
+- Emissão de boletos
+- Transferências via PIX
+- Autorização de pagamentos
+- Retorno de cobrança
 
-**Atenção:**
+A documentação oficial da API e dos serviços está disponível em: [https://ebank.solutions/swagger/](https://ebank.solutions/swagger/)
 
-*<mark>Para utilizar os serviços, é necessário a criação de uma conta junto à Unimake, para obtenção dos tokens de acesso e as chaves da aplicação.</mark>*
+---
 
-Nossa API é compatível com <img style="vertical-align:middle" src="https://avatars.githubusercontent.com/u/10251060?s=200&v=4" alt="Postman" width="32"/>https://www.postman.com/.
+## 🚨 Atenção:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/21399608-e6e0ff31-d131-44c6-b3e5-4bcfd9a5c748?action=collection%2Ffork&collection-url=entityId%3D21399608-e6e0ff31-d131-44c6-b3e5-4bcfd9a5c748%26entityType%3Dcollection%26workspaceId%3D23906301-644a-4b1f-90fe-24c0d01445e3)
+Para utilizar os serviços, **é necessário criar uma conta com a Unimake** para obter os tokens de acesso e as chaves da aplicação.
+
+---
+
+## 🛠️ Integração com o Postman
+
+Nossa API é totalmente compatível com o [Postman](https://www.postman.com/). Utilize o botão abaixo para importar as coleções de testes diretamente no Postman:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/unimakers/public/overview)
+
+---
+
+## 📝 Quebrando as alterações
+
+Consulte sempre o arquivo [**BREAKING CHANGES**](https://chatgpt.com/BREAKING_CHANGES.md) para garantir que seu código esteja sempre atualizado com as últimas mudanças na API e nos serviços.
+
+---
+
+## 🔄 Atualização para Versão 20250320.359.0
+
+Para atualizar para a versão [20250320.359.0](https://www.nuget.org/packages/Unimake.EBank.Solutions/20250320.359.0) ou versões futuras, **verifique as alterações de compatibilidade** em [BREAKING_CHANGES#Versão-20250320.359.0](https://chatgpt.com/BREAKING_CHANGES.md#Vers%C3%A3o-20250320.359.0).
+
+---
+
+## 💬 Suporte
+
+Caso tenha alguma dúvida ou precise de suporte, não hesite em entrar em contato com a equipe de suporte ou abrir uma **issue** no repositório:
+
+- [Abrir uma issue no GitHub](https://github.com/Unimake/EBank/issues)
+- [Suporte oficial da Unimake](https://unimake.com.br/suporte)

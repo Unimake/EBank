@@ -34,7 +34,7 @@ Consulte sempre o arquivo [**BREAKING CHANGES**](BREAKING_CHANGES.md) para garan
 
 ## 🔄 Atualização para Versão 20250320.359.0
 
-Para atualizar para a versão [20250320.359.0](https://www.nuget.org/packages/Unimake.EBank.Solutions/20250320.359.0) ou versões futuras, **verifique as alterações de compatibilidade** em [BREAKING_CHANGES#Versão-20250320.359.0](https://chatgpt.com/BREAKING_CHANGES.md#Vers%C3%A3o-20250320.359.0).
+Para atualizar para a versão [20250320.359.0](https://www.nuget.org/packages/Unimake.EBank.Solutions/20250320.359.0) ou versões futuras, **verifique as alterações de compatibilidade** em [BREAKING_CHANGES#Versão-20250320.359.0](BREAKING_CHANGES.md#Vers%C3%A3o-20250320.359.0).
 
 ---
 

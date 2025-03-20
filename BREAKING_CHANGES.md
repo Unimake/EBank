@@ -28,7 +28,3 @@ Se você utilizava alguma das funcionalidades removidas, será necessário atual
 Para mais informações e suporte, acesse: [https://unimake.com.br/suporte](https://unimake.com.br/suporte).
 
 Agradecemos pela compreensão e colaboração! 🚀
-
----
-
-Se precisar de mais alguma alteração, é só avisar! 😊

@@ -28,7 +28,7 @@ Nossa API é totalmente compatível com o [Postman](https://www.postman.com/). U
 
 ## 📝 Quebrando as alterações
 
-Consulte sempre o arquivo [**BREAKING CHANGES**](https://chatgpt.com/BREAKING_CHANGES.md) para garantir que seu código esteja sempre atualizado com as últimas mudanças na API e nos serviços.
+Consulte sempre o arquivo [**BREAKING CHANGES**](BREAKING_CHANGES.md) para garantir que seu código esteja sempre atualizado com as últimas mudanças na API e nos serviços.
 
 ---
 

@@ -1,4 +1,4 @@
-using EBank.Solutions.Primitives.Billet.Models;
+Ôªøusing EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Billet.Request;
 using EBank.Solutions.Primitives.Billet.Response;
 using EBank.Solutions.Primitives.Enumerations;
@@ -6,6 +6,7 @@ using EBank.Solutions.Primitives.Enumerations.Billet;
 using EBank.Solutions.Primitives.Exceptions.Response.Billet;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Exceptions;
 using Unimake.AuthServer.Security.Scope;
@@ -36,7 +37,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         [Fact]
         public async Task InvalidRegister()
         {
-            // Billet mÌnimo para gravaÁ„o
+            // Billet m√≠nimo para grava√ß√£o
             // CPF e CNPJ foram gerados no site
             // https://www.4devs.com.br
 
@@ -55,11 +56,11 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {
-                        Logradouro = "Rua FictÌcia",
+                        Logradouro = "Rua Fict√≠cia",
                         Numero = "11",
                         Bairro = "Bairro",
                         CEP = "11111111",
-                        Cidade = "BrasÌlia",
+                        Cidade = "Bras√≠lia",
                         UF = "DF",
                     },
                 },
@@ -81,21 +82,21 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
         [Fact]
         public void JustASimpleDebugScopeTest() => Assert.Throws<ArgumentNullException>("scope", () =>
-                        {
-                            using(new DebugScope<DebugStateObject>(new DebugStateObject
-                            {
-                                AuthServerUrl = "invalid e-bank uri",
-                                AnotherServerUrl = "invalid authserver uri"
-                            }))
-                            {
-                                var service = new BilletService();
-                                var response = service.RegisterAsync(new RegisterRequest
-                                {
-                                    Testing = true
-                                }, null).GetAwaiter().GetResult();
-                                DumpAsJson(response);
-                            }
-                        });
+        {
+            using(new DebugScope<DebugStateObject>(new DebugStateObject
+            {
+                AuthServerUrl = "invalid e-bank uri",
+                AnotherServerUrl = "invalid authserver uri"
+            }))
+            {
+                var service = new BilletService();
+                var response = service.RegisterAsync(new RegisterRequest
+                {
+                    Testing = true
+                }, null).GetAwaiter().GetResult();
+                DumpAsJson(response);
+            }
+        });
 
         [Fact]
         public async Task Query()
@@ -147,7 +148,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         [Fact]
         public async Task Register()
         {
-            // Billet mÌnimo para gravaÁ„o
+            // Billet m√≠nimo para grava√ß√£o
             // CPF e CNPJ foram gerados no site
             // https://www.4devs.com.br
 
@@ -166,14 +167,20 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                     Inscricao = "38640211035",
                     Endereco = new Endereco
                     {
-                        Logradouro = "Rua FictÌcia",
+                        Logradouro = "Rua Fict√≠cia",
                         Numero = "11",
                         Bairro = "Bairro",
                         CEP = "11111111",
-                        Cidade = "BrasÌlia",
+                        Cidade = "Bras√≠lia",
                         UF = "DF",
                     },
                 },
+                PDFConfig = new global::EBank.Solutions.Primitives.PDF.Models.PDFConfig(true),
+                PIXConfig = new global::EBank.Solutions.Primitives.Billet.PIXBilletConfig
+                {
+                    RegistrarPIX = true,
+                    Chave = "12345678901234"
+                }
             });
 
             try
@@ -181,7 +188,18 @@ namespace Unimake.EBank.Solutions.Tests.Billet
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new BilletService();
                 var response = await service.RegisterAsync(request, scope);
+
                 DumpAsJson(response);
+
+                if(response.PDFContent.Success)
+                {
+                    response.PDFContent.SaveToFile("boleto.pdf");
+                }
+
+                if(response.QrCodeContent.Success)
+                {
+                    File.WriteAllBytes("qrcode.png", Convert.FromBase64String(response.QrCodeContent.Image));
+                }
             }
             catch(RegisterResponseException registerEx)
             {
@@ -211,21 +229,21 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         [Fact]
         public void ResultFromJson()
         {
-            var json = "{\"CodigoBarraNumerico\":null,\"LinhaDigitavel\":\"03399617328610000000805641701015393460000057100\",\"NumeroNoBanco\":\"0000000056417\",\"PDFContent\":{\"Content\":\"\",\"Message\":\"Santander n„o retorna o PDF do boleto.\",\"Success\":false}}";
+            var json = "{\"CodigoBarraNumerico\":null,\"LinhaDigitavel\":\"03399617328610000000805641701015393460000057100\",\"NumeroNoBanco\":\"0000000056417\",\"PDFContent\":{\"Content\":\"\",\"Message\":\"Santander n√£o retorna o PDF do boleto.\",\"Success\":false}}";
             var response = JsonConvert.DeserializeObject<RegisterResponse>(json);
             Assert.NotNull(response);
         }
 
         [Fact]
         public void WrongKey() => Assert.Throws<AuthenticationServiceException>(() =>
-        {
-            var x = new AuthenticationToken
-            {
-                AppId = "<<?>>",
-                Secret = "<<?>>"
-            };
-            _ = new AuthenticatedScope(x);
-        });
+                        {
+                            var x = new AuthenticationToken
+                            {
+                                AppId = "<<?>>",
+                                Secret = "<<?>>"
+                            };
+                            _ = new AuthenticatedScope(x);
+                        });
 
         #endregion Public Methods
     }

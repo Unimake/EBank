@@ -223,7 +223,13 @@ Sub ConvertJsonToObject(pJson As String)
             lcPDFContent = jsonPDF("Content")
             
             ' Salvar o PDF do boleto em uma pasta
-            outputPath = "d:\testenfe\pdf\arquivo.pdf" ' Caminho onde o arquivo será salvo
+            outputPath = App.Path & "\teste_ebank\pdf\"
+            
+            ' Garantir que a pasta exista
+            Utils.CreateFolder outputPath
+            
+            outputPath = outputPath & "arquivo.pdf" ' Caminho onde o arquivo será salvo
+            
             sucesso = DecodeBase64(lcPDFContent, outputPath)
             If sucesso Then
                MsgBox "Arquivo salvo com sucesso em: " & outputPath, vbInformation, "Sucesso"

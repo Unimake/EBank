@@ -1,8 +1,0 @@
-frmMain = 78, 78, 849, 1178, C, 137, 55, 954, 1269, C
-AutenticaAPI = 130, 130, 572, 1019, C
-JsonConverter = 182, 182, 624, 1071, C
-GeraPIX = 312, 312, 754, 1201, C
-ConsultaPIX = 416, 416, 858, 1305, C
-RegistraBoleto = 156, 156, 598, 1045, C
-Base64 = 260, 260, 702, 1149, C
-ConsultaBoleto = 52, 52, 494, 941, C

@@ -232,7 +232,10 @@ Sub ConvertJsonToObject(pJson As String)
             
             sucesso = DecodeBase64(lcPDFContent, outputPath)
             If sucesso Then
-               MsgBox "Arquivo salvo com sucesso em: " & outputPath, vbInformation, "Sucesso"
+               If MsgBox("Arquivo salvo com sucesso em: " & outputPath & vbCrLf & "Abrir boleto para visualização?", vbInformation + vbYesNo, "Sucesso") = vbYes Then
+                    ShellExecute outputPath
+               End If
+               
             Else
                MsgBox "Falha ao salvar o arquivo.", vbCritical, "Erro"
             End If

@@ -24,17 +24,6 @@ namespace Unimake.EBank.Solutions.Tests.Billet
         #region Public Methods
 
         [Fact]
-        public async Task InformarPagamentoAsync()
-        {
-            using var scope = await CreateAuthenticatedScopeAsync();
-            var billetService = new BilletService();
-            var response = await billetService.InformPaymentAsync(CreateRequest(() => new InformPaymentRequest
-            {
-                NumeroNoBanco = "00000033"
-            }), scope);
-        }
-
-        [Fact]
         public async Task InvalidRegister()
         {
             // Billet mínimo para gravação

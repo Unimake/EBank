@@ -1,5 +1,57 @@
 # 🚨 Breaking Changes
 
+# 🎧 Suporte
+
+- Para mais informações e suporte, acesse: [https://unimake.app/problems](https://unimake.app/problems).
+- Para dúvidas ou ajuda com a migração, abra uma **issue** em: [Unimake/EBank/issues](https://github.com/Unimake/EBank/issues).
+
+Agradecemos pela compreensão e colaboração! 🚀
+
+----
+## Versão 20250516.1838.2
+https://www.nuget.org/packages/Unimake.EBank.Primitives/20250516.1838.2
+
+Nesta atualização, foram feitas diversas mudanças significativas que podem impactar projetos que utilizam este pacote.
+
+## ❌ Remoções e Renomeações
+
+### 🚫 Tipos Removidos
+
+Foram removidos os seguintes tipos:
+
+- `CancelRequest`
+- `CancelRequestBase`
+- `InformPaymentRequest`
+- `InformPaymentRequestBase`
+- `ICancelRequest`
+- `ICancelResponse`
+- `IInformPaymentRequest`
+- `IInformPaymentResponse`
+
+Foram removidos os métodos:
+
+- `BilletService.InformPaymentAsync()`
+- `BilletService.CancelAsync()`
+
+### ✏️ Renomeações
+
+Os seguintes componentes foram renomeados:
+
+- `InformPaymentRequestValidator` → `BaixarRequestValidator`
+- Exceção `CancelResponseException` → `BaixarResponseException`
+- Interface `ICancelRequestValidatorService` → `IBaixarRequestValidatorService`
+
+## 🔧 Como adaptar seu código
+
+Caso seu projeto utilize algum dos tipos ou componentes mencionados acima, será necessário atualizar as referências conforme abaixo:
+
+- Substitua os tipos `CancelRequest` e `InformPaymentRequest` por `BaixarRequest`.
+- Substitua os tipos `CancelResponse` e `InformPaymentResponse` por `BaixarResponse`.
+- Use as interfaces `IBaixarRequest` e `IBaixarResponse` no lugar das interfaces removidas.
+- Atualize o nome da exceção e dos validadores conforme as novas definições.
+- Alterar os nomes dos métodos `BilletService.InformPaymentAsync()` e `BilletService.CancelAsync()` para `BilletService.BaixarAsync()`
+
+----
 ## Versão 20250320.359.0
 https://www.nuget.org/packages/Unimake.EBank.Solutions/20250320.359.0
 
@@ -18,13 +70,8 @@ Foram removidos os seguintes componentes:
 - Tipos **`Request`** (agora todas as requisições devem ser tipadas pelo pacote: [Unimake.EBank.Primitives](https://www.nuget.org/packages/Unimake.EBank.Primitives/))
 - Tipos **`Response`** (agora todas as respostas devem ser tipadas pelo pacote: [Unimake.EBank.Primitives](https://www.nuget.org/packages/Unimake.EBank.Primitives/))
 
-## 🔧 Como adaptar seu código
+### 🔧 Como adaptar seu código
 
 Se você utilizava alguma das funcionalidades removidas, será necessário atualizar seu código para utilizar soluções alternativas. Em especial:
 
 - **Requisições e respostas** devem ser tipadas através do pacote [Unimake.EBank.Primitives](https://www.nuget.org/packages/Unimake.EBank.Primitives/).
-- Caso precise de suporte ou tenha alguma dúvida sobre a migração, abra uma **issue** em: [Unimake/EBank/issues](https://github.com/Unimake/EBank/issues).
-
-Para mais informações e suporte, acesse: [https://unimake.com.br/suporte](https://unimake.com.br/suporte).
-
-Agradecemos pela compreensão e colaboração! 🚀

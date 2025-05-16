@@ -51,15 +51,11 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         #region Private Methods
 
         private void StartServerDebugMode() =>
-#if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
                 AuthServerUrl = "https://auth.sandbox.unimake.software/api/auth/", // "https://unimake.app/auth/api/auth/"
-                AnotherServerUrl = "https://ebank.sandbox.unimake.software/api/v1/" //"https://unimake.app/EBank/"
+                AnotherServerUrl = "https://ebank.sandbox.unimake.software/api/v1/" //"https://unimake.app/ebank/api/vi/"
             });
-#else
-            debugScope = null;
-#endif
 
         #endregion Private Methods
 
@@ -87,8 +83,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "f1344af8039c41b4b5137c74fb4b4aca",
-            Secret = "04fd5c84a4fe4ff7bb00458dc6fb0806"
+            AppId = "fe5a17ecfe9c4fedac9ea1b7b7da63c7",
+            Secret = "36bc3c9bbb9242f78b498aa9e868cafc"
         }));
 
         protected T CreateRequest<T>(Func<T> builder)

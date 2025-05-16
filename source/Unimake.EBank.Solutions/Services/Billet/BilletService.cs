@@ -22,9 +22,9 @@ namespace Unimake.EBank.Solutions.Services.Billet
         /// <param name="request">Dados do boleto para cancelamento</param>
         /// <param name="authenticatedScope">Escopo autenticado</param>
         /// <returns></returns>
-        /// <exception cref="CancelResponseException">Erros diversos no cancelamento</exception>
-        public async Task<CancelResponse> CancelAsync(CancelRequest request, AuthenticatedScope authenticatedScope) =>
-            await new APIClient(authenticatedScope, "boleto/cancelar").PostAsync<CancelResponse>(request);
+        /// <exception cref="BaixarResponseException">Erros diversos no cancelamento</exception>
+        public async Task<BaixarResponse> BaixarAsync(BaixarRequest request, AuthenticatedScope authenticatedScope) =>
+            await new APIClient(authenticatedScope, "boleto/baixar").PostAsync<BaixarResponse>(request);
 
         /// <summary>
         /// Altera o vencimento do boleto
@@ -35,16 +35,6 @@ namespace Unimake.EBank.Solutions.Services.Billet
         /// <exception cref="ExtendPaymentResponseException">Erros diversos ocorridos durante a alteração de vencimento</exception>
         public async Task<ExtendPaymentResponse> ExtendPaymentAsync(ExtendPaymentRequest request, AuthenticatedScope authenticatedScope) =>
             await new APIClient(authenticatedScope, "boleto/alterarvencimento").PostAsync<ExtendPaymentResponse>(request);
-
-        /// <summary>
-        /// Informar que o boleto foi pago
-        /// </summary>
-        /// <param name="request">Dados para pagamento do boleto</param>
-        /// <param name="authenticatedScope">Escopo autenticado</param>
-        /// <exception cref="ResponseException">Erros gerais durante a confirmação do pagamento</exception>
-        /// <returns></returns>
-        public async Task<InformPaymentResponse> InformPaymentAsync(InformPaymentRequest request, AuthenticatedScope authenticatedScope) =>
-            await new APIClient(authenticatedScope, "boleto/informarpagamento").PostAsync<InformPaymentResponse>(request);
 
         /// <summary>
         /// Enviar instruções ao boleto

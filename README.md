@@ -1,6 +1,6 @@
 [![Unimake e-bank](https://img.shields.io/badge/Unimake-e--bank-004aad)](https://unimake.app/ebank)
 [![NuGet](https://img.shields.io/nuget/v/Unimake.EBank.Solutions.svg)](https://www.nuget.org/packages/Unimake.EBank.Solutions)
-[![Build Status](https://dev.azure.com/unimakesoftware/EBank.Solutions/_apis/build/status/EBank.Solutions-ASP.NET)](https://dev.azure.com/unimakesoftware/EBank.Solutions/_build/latest?definitionId=19)
+[![Build Status](https://dev.azure.com/unimakesoftware/EBank.Solutions/_apis/build/status/EBank.Solutions-ASP.NET)](https://unimake.app/ebank)
 
 # E-Bank
 

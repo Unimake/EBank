@@ -1,5 +1,6 @@
 [![Unimake e-bank](https://unimake-cdn.s3.sa-east-1.amazonaws.com/badges/badge-unimake-e-bank.svg)](https://unimake.app/ebank)
 [![Build](https://unimake-cdn.s3.sa-east-1.amazonaws.com/badges/badge-unimake-e-bank-build.svg)](https://unimake.app/ebank)
+[![Build](https://dev.azure.com/unimakesoftware/EBank.Solutions/_apis/build/status/EBank.Solutions)](https://unimake.app/ebank)
 [![api_version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Funimake.app%2Febank%2Fswagger%2Fv1.0%2Fswagger.json&query=info.version&logo=swagger&label=API-Version)](https://unimake.app/ebank/swagger)
 [![NuGet](https://img.shields.io/nuget/v/Unimake.EBank.Solutions.svg?logo=nuget)](https://www.nuget.org/packages/Unimake.EBank.Solutions)
 [![Postman](https://img.shields.io/badge/Postman-Unimake_Public-orange?style=flat&logo=postman)](https://www.postman.com/unimakers/public/overview)

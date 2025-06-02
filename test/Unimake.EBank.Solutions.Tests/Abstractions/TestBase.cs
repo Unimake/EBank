@@ -1,4 +1,4 @@
-﻿using EBank.Solutions.Primitives.Billet.Models;
+using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Contract.Request;
 using Newtonsoft.Json;
 using System;
@@ -83,8 +83,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "fe5a17ecfe9c4fedac9ea1b7b7da63c7",
-            Secret = "36bc3c9bbb9242f78b498aa9e868cafc"
+            AppId = Environment.GetEnvironmentVariable("UNIMAKE_APPKEY"),
+            Secret = Environment.GetEnvironmentVariable("UNIMAKE_SECRET")
         }));
 
         protected T CreateRequest<T>(Func<T> builder)

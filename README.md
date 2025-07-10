@@ -15,7 +15,7 @@ E-Bank é uma solução desenvolvida para auxiliar desenvolvedores com os servi�
 - Autorização de pagamentos
 - Retorno de cobrança
 
-A documentação oficial da API e dos serviços está disponível em: [https://ebank.solutions/swagger/](https://ebank.solutions/swagger/)
+A documentação oficial da API e dos serviços está disponível em: [https://unimake.app/ebank/swagger](https://unimake.app/ebank/swagger)
 
 ---
 

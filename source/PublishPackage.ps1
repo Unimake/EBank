@@ -12,7 +12,6 @@ $nugetApiKey = $env:NugetApiKey
 $projectFilePath = "Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj" 
 $testProjectPath = "..\test\Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj"
 $nugetSource = "https://api.nuget.org/v3/index.json" 
-$readmePath = "readme.md"
 
 # Gera os números de versão com base na data/hora atual
 $dataAtual = Get-Date -Format "yyyy.MM.dd.HHmm"
@@ -31,23 +30,52 @@ Write-Host "Atualizando versões no arquivo do projeto..."
     -replace "<Version>.*?</Version>", "<Version>$packageVersion</Version>" |
 Set-Content $projectFilePath
 
-# Atualiza o README com a versão publicada
-Copy-Item -Path "readme.tpl" -Destination $readmePath
+# Atualiza o arquivo readme.md com a nova versão
 
+# Caminho do README
+$readmePath = "readme.md"
+
+# Bloco da nova versão
 $versaoMarkdown = @"
-`r`n
----
 
 ## Versão : $packageVersion
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/$packageVersion_
-
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/${packageVersion}_
+---
+`r`n
 "@
 
-Add-Content -Path $readmePath -Value $versaoMarkdown
+# Lê o conteúdo atual do readme
+$linhas = Get-Content $readmePath
 
-# Abre o arquivo no editor padrão e aguarda o término da edição
+# Inicializa a posição como -1 (não encontrada)
+$indiceVersoes = -1
+
+# Procura o índice da linha que contém "# 🔖 Versões"
+for ($i = 0; $i -lt $linhas.Count; $i++) {
+    if ($linhas[$i] -like "*# 🔖 Versões*") {
+        $indiceVersoes = $i
+        break
+    }
+}
+
+if ($indiceVersoes -ge 0) {
+    # Divide o markdown por linha (sem \r\n) e insere logo após
+    $markdownLinhas = $versaoMarkdown.TrimEnd().Split("`n")
+    $linhas = $linhas[0..$indiceVersoes] + $markdownLinhas + $linhas[($indiceVersoes + 1)..($linhas.Count - 1)]
+
+    # Salva o conteúdo modificado
+    Set-Content -Path $readmePath -Value $linhas -Encoding UTF8
+} else {
+    Write-Host "Seção '# 🔖 Versões' não encontrada. Adicionando ao final do arquivo." -ForegroundColor Yellow
+    Add-Content -Path $readmePath -Value $versaoMarkdown -Encoding UTF8
+}
+
+# Abre o arquivo para edição
 Write-Host "Abrindo o readme.md para edição..."
 Start-Process -FilePath $readmePath -Wait
+
+
+exit 0
 
 # Compila apenas o projeto específico
 Write-Host "Compilando o projeto..."

@@ -37,7 +37,9 @@ Consulte sempre o arquivo [**BREAKING CHANGES**](https://github.com/Unimake/EBan
 
 ---
 
+# Versões
+
 ## Versão : 20250715.1745.53
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250715.1745.53_
 
 Implementação do serviço de extrato.

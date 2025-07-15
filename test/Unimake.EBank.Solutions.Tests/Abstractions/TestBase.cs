@@ -1,5 +1,6 @@
-using EBank.Solutions.Primitives.Billet.Models;
+﻿using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Contract.Request;
+using EBank.Solutions.Primitives.Extrato.Request;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -25,19 +26,6 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Private Properties
 
-        protected static Beneficiario BeneficiarioDefault => new()
-        {
-            Nome = "Unifake",  //Não é obrigatório
-            Codigo = "000014340",
-            Inscricao = "06117473000079",
-            Conta = new ContaCorrente
-            {
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
-                Agencia = "4340",
-                Numero = "00001"
-            }
-        };
-
         private JsonSerializerSettings JsonSettings => _jsonSettings ??= _jsonSettings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
@@ -62,9 +50,27 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         #region Protected Fields
 
         protected DateTime EndDate = DateTime.Now.Date;
+
         protected DateTime StartDate = DateTime.Now.AddDays(-5).Date;
 
         #endregion Protected Fields
+
+        #region Protected Properties
+
+        protected static Beneficiario BeneficiarioDefault => new()
+        {
+            Nome = "Unifake",  //Não é obrigatório
+            Codigo = "000014340",
+            Inscricao = "06117473000079",
+            Conta = new ContaCorrente
+            {
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
+                Agencia = "4340",
+                Numero = "00001"
+            }
+        };
+
+        #endregion Protected Properties
 
         #region Protected Constructors
 
@@ -101,6 +107,13 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
                 pi.CanWrite)
             {
                 pi.SetValue(t, BeneficiarioDefault);
+            }
+
+            if(t is ExtratoRequest extratoRequest)
+            {
+                extratoRequest.Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob;
+                extratoRequest.Agencia = "4340";
+                extratoRequest.Conta = "00001";
             }
 
             return t;

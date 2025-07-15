@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		PublishPackage.ps1 = PublishPackage.ps1
 		readme.md = readme.md
+		readme.tpl = readme.tpl
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions.Tests", "..\test\Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj", "{775AB0A8-509E-4EC9-B05C-64948960C25A}"

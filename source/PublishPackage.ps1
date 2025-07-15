@@ -12,6 +12,7 @@ $nugetApiKey = $env:NugetApiKey
 $projectFilePath = "Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj" 
 $testProjectPath = "..\test\Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj"
 $nugetSource = "https://api.nuget.org/v3/index.json" 
+$readmePath = "readme.md"
 
 # Gera os números de versão com base na data/hora atual
 $dataAtual = Get-Date -Format "yyyy.MM.dd.HHmm"
@@ -29,6 +30,24 @@ Write-Host "Atualizando versões no arquivo do projeto..."
 (Get-Content $projectFilePath) -replace "<AssemblyVersion>.*?</AssemblyVersion>", "<AssemblyVersion>$assemblyVersion</AssemblyVersion>" `
     -replace "<Version>.*?</Version>", "<Version>$packageVersion</Version>" |
 Set-Content $projectFilePath
+
+# Atualiza o README com a versão publicada
+Copy-Item -Path "readme.tpl" -Destination $readmePath
+
+$versaoMarkdown = @"
+`r`n
+---
+
+## Versão : $packageVersion
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/$packageVersion_
+
+"@
+
+Add-Content -Path $readmePath -Value $versaoMarkdown
+
+# Abre o arquivo no editor padrão e aguarda o término da edição
+Write-Host "Abrindo o readme.md para edição..."
+Start-Process -FilePath $readmePath -Wait
 
 # Compila apenas o projeto específico
 Write-Host "Compilando o projeto..."

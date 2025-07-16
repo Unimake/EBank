@@ -30,10 +30,10 @@ Write-Host "Atualizando versões no arquivo do projeto..."
     -replace "<Version>.*?</Version>", "<Version>$packageVersion</Version>" |
 Set-Content $projectFilePath
 
-# Atualiza o arquivo readme.md com a nova versão
+# Atualiza o arquivo changelog.md com a nova versão
 
 # Caminho do README
-$readmePath = "readme.md"
+$changelogPath = "..\CHANGELOG.md"
 
 # Bloco da nova versão
 $versaoMarkdown = @"
@@ -45,14 +45,14 @@ _https://www.nuget.org/packages/Unimake.EBank.Solutions/${packageVersion}_
 "@
 
 # Lê o conteúdo atual do readme
-$linhas = Get-Content $readmePath
+$linhas = Get-Content $changelogPath
 
 # Inicializa a posição como -1 (não encontrada)
 $indiceVersoes = -1
 
-# Procura o índice da linha que contém "# 🔖 Versões"
+# Procura o índice da linha que contém "# 🔖 Changelog"
 for ($i = 0; $i -lt $linhas.Count; $i++) {
-    if ($linhas[$i] -like "*# 🔖 Versões*") {
+    if ($linhas[$i] -like "*# 🔖 Changelog*") {
         $indiceVersoes = $i
         break
     }
@@ -64,18 +64,15 @@ if ($indiceVersoes -ge 0) {
     $linhas = $linhas[0..$indiceVersoes] + $markdownLinhas + $linhas[($indiceVersoes + 1)..($linhas.Count - 1)]
 
     # Salva o conteúdo modificado
-    Set-Content -Path $readmePath -Value $linhas -Encoding UTF8
+    Set-Content -Path $changelogPath -Value $linhas -Encoding UTF8
 } else {
-    Write-Host "Seção '# 🔖 Versões' não encontrada. Adicionando ao final do arquivo." -ForegroundColor Yellow
-    Add-Content -Path $readmePath -Value $versaoMarkdown -Encoding UTF8
+    Write-Host "Seção '# 🔖 Changelog' não encontrada. Adicionando ao final do arquivo." -ForegroundColor Yellow
+    Add-Content -Path $changelogPath -Value $versaoMarkdown -Encoding UTF8
 }
 
 # Abre o arquivo para edição
-Write-Host "Abrindo o readme.md para edição..."
-Start-Process -FilePath $readmePath -Wait
-
-
-exit 0
+Write-Host "Abrindo o CHANGELOG.md para edição..."
+Start-Process -FilePath $changelogPath -Wait
 
 # Compila apenas o projeto específico
 Write-Host "Compilando o projeto..."

@@ -20,8 +20,27 @@ namespace Unimake.EBank.Solutions.Services.Extrato
         /// <param name="request">Requisição</param>
         /// <param name="authenticatedScope">Escopo autenticado</param>
         /// <returns></returns>
-        public async Task<ExtratoResponse> GetExtratoAsync(ExtratoRequest request, AuthenticatedScope authenticatedScope) =>
-           await new APIClient(authenticatedScope, $"extrato/{request.Banco}/" +
+        public async Task<ExtratoResponse> GetExtratoAsync(ExtratoRequest request, AuthenticatedScope authenticatedScope)
+        {
+            if(request is null)
+            {
+                throw new ArgumentNullException(nameof(request), "A requisição do extrato não pode ser nula.");
+            }
+
+            if(authenticatedScope is null)
+            {
+                throw new ArgumentNullException(nameof(authenticatedScope), "O escopo autenticado não pode ser nulo.");
+            }
+
+            request.Agencia.ValidateRequiredIfNull(nameof(request.Agencia));
+            request.Conta.ValidateRequiredIfNull(nameof(request.Conta));
+
+            if(request.Banco == global::EBank.Solutions.Primitives.Enumerations.Banco.Desconhecido)
+            {
+                throw new ArgumentException($"O banco informado; {request.Banco}; não é válido.", nameof(request.Banco));
+            }
+
+            return await new APIClient(authenticatedScope, $"extrato/{request.Banco}/" +
                                                    $"{request.Agencia}/" +
                                                    $"{request.Conta}")
             {
@@ -31,6 +50,7 @@ namespace Unimake.EBank.Solutions.Services.Extrato
                     { nameof(request.StartDate), request.StartDate.FormatDate("yyyy-MM-dd") }
                 }
             }.GetAsync<ExtratoResponse>(request);
+        }
 
         #endregion Public Methods
     }

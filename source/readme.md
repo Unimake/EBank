@@ -34,12 +34,3 @@ Nossa API é totalmente compatível com o [Postman](https://www.postman.com/). U
 ## 📝 Quebrando as alterações
 
 Consulte sempre o arquivo [**BREAKING CHANGES**](https://github.com/Unimake/EBank/blob/main/BREAKING_CHANGES.md) para garantir que seu código esteja sempre atualizado com as últimas mudanças na API e nos serviços.
-
----
-
-# 🔖 Versões
-
-## Versão : 20250715.1745.53
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250715.1745.53_
-
-Implementação do serviço de extrato.

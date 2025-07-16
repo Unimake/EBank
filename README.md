@@ -45,6 +45,12 @@ Para atualizar para a versão [20250320.359.0](https://www.nuget.org/packages/Un
 
 ---
 
+## 🔖 Changelog
+
+Consulte o [**changelog**](CHANGELOG.md) para detalhes de versões.
+
+---
+
 ## 💬 Suporte
 
 Caso tenha alguma dúvida ou precise de suporte, não hesite em entrar em contato com a equipe de suporte ou abrir uma **issue** no repositório:

@@ -7,6 +7,14 @@
 
 Agradecemos pela compreensão e colaboração! 🚀
 
+## Versão : 20250808.1837.42
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250808.1837.42_
+
+## ❌ Remoções e Renomeações
+https://www.nuget.org/packages/Unimake.EBank.Primitives/20250808.1837.42
+Corrigido nome do enumerador `PagadorAlegaNaoTerRecebidoAMercadoria, NotaFiscal, Fatura` para `PagadorAlegaNaoTerRecebidoAMercadoria_NF_Ou_Fatura`
+
 ----
 ## Versão 20250516.1838.2
 https://www.nuget.org/packages/Unimake.EBank.Primitives/20250516.1838.2

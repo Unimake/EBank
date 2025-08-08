@@ -5,6 +5,8 @@
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250808.1837.42_
 
+❌ Consulte: [BREAKING CHANGES](BREAKING_CHANGES.md#versão--20250808183742)
+
 fix: Corrigido nome do enumerador `PagadorAlegaNaoTerRecebidoAMercadoria, NotaFiscal, Fatura` para `PagadorAlegaNaoTerRecebidoAMercadoria_NF_Ou_Fatura`
 
 ---

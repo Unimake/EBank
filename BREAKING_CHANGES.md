@@ -6,6 +6,16 @@
 - Para dúvidas ou ajuda com a migração, abra uma **issue** em: [Unimake/EBank/issues](https://github.com/Unimake/EBank/issues).
 
 Agradecemos pela compreensão e colaboração! 🚀
+---
+## Versão : 20250820.2046.57
+
+_https://www.nuget.org/packages/Unimake.EBank.Primitives/20250820.2046.57_
+
+## ❌ Remoções e Renomeações
+https://www.nuget.org/packages/Unimake.EBank.Primitives/20250808.1837.42
+Corrigido nome do enumerador `AssociacaodePais,AmigosePessoascomDeficiencia = 247,` para `AssociacaodePaisAmigosePessoascomDeficiencia = 247,`
+
+---
 
 ## Versão : 20250808.1837.42
 

@@ -1,5 +1,10 @@
 ﻿# 🔖 Changelog
+
+## Versão : 20250822.1517.39
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250822.1517.39_
+Atualização de pacotes.
 
+---
 
 ## Versão : 20250808.1837.42
 

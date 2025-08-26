@@ -1,5 +1,6 @@
 ﻿using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Contract.Request;
+using EBank.Solutions.Primitives.Extrato.Request;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -25,19 +26,6 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
 
         #region Private Properties
 
-        protected static Beneficiario BeneficiarioDefault => new()
-        {
-            Nome = "Unifake",  //Não é obrigatório
-            Codigo = "000014340",
-            Inscricao = "06117473000079",
-            Conta = new ContaCorrente
-            {
-                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
-                Agencia = "4340",
-                Numero = "00001"
-            }
-        };
-
         private JsonSerializerSettings JsonSettings => _jsonSettings ??= _jsonSettings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
@@ -51,24 +39,38 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         #region Private Methods
 
         private void StartServerDebugMode() =>
-#if DEBUG_UNIMAKE
             debugScope = new DebugScope<DebugStateObject>(new DebugStateObject
             {
                 AuthServerUrl = "https://auth.sandbox.unimake.software/api/auth/", // "https://unimake.app/auth/api/auth/"
-                AnotherServerUrl = "https://ebank.sandbox.unimake.software/api/v1/" //"https://unimake.app/EBank/"
+                AnotherServerUrl = "https://ebank.sandbox.unimake.software/api/v1/" //"https://unimake.app/ebank/api/vi/"
             });
-#else
-            debugScope = null;
-#endif
 
         #endregion Private Methods
 
         #region Protected Fields
 
         protected DateTime EndDate = DateTime.Now.Date;
+
         protected DateTime StartDate = DateTime.Now.AddDays(-5).Date;
 
         #endregion Protected Fields
+
+        #region Protected Properties
+
+        protected static Beneficiario BeneficiarioDefault => new()
+        {
+            Nome = "Unifake",  //Não é obrigatório
+            Codigo = "000014340",
+            Inscricao = "06117473000079",
+            Conta = new ContaCorrente
+            {
+                Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob,
+                Agencia = "4340",
+                Numero = "00001"
+            }
+        };
+
+        #endregion Protected Properties
 
         #region Protected Constructors
 
@@ -87,8 +89,8 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             // Você consegue realizar os testes de emissão de seus Billets com estas informações.
             // Mas para que seu Billet seja válido, deverá entrar em contato com a Unimake Software em http://www.unimake.com.br/
             // Este AppId e Secret foram criados apenas para testes.
-            AppId = "f1344af8039c41b4b5137c74fb4b4aca",
-            Secret = "04fd5c84a4fe4ff7bb00458dc6fb0806"
+            AppId = Environment.GetEnvironmentVariable("UNIMAKE_APPKEY"),
+            Secret = Environment.GetEnvironmentVariable("UNIMAKE_SECRET")
         }));
 
         protected T CreateRequest<T>(Func<T> builder)
@@ -105,6 +107,13 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
                 pi.CanWrite)
             {
                 pi.SetValue(t, BeneficiarioDefault);
+            }
+
+            if(t is ExtratoRequest extratoRequest)
+            {
+                extratoRequest.Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob;
+                extratoRequest.Agencia = "4340";
+                extratoRequest.Conta = "00001";
             }
 
             return t;

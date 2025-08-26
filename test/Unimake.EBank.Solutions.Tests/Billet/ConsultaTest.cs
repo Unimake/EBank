@@ -2,11 +2,13 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Billet
 {
-    public class ConsultaTest
+    public class ConsultaTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods
 

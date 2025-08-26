@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyVersion>2025.03.28.1521</AssemblyVersion>
-		<Version>20250328.1521.32</Version>
+		<AssemblyVersion>2025.08.22.1517</AssemblyVersion>
+		<Version>20250822.1517.39</Version>
 		<Description>Pacotes de tipos primitivos para utilização do E-Bank. Possui os enumeradores, exceções e tipos complexos.</Description>
 		<PackageProjectUrl>https://unimake.app/ebank/swagger/</PackageProjectUrl>
 		<Deterministic>False</Deterministic>
@@ -21,10 +21,11 @@
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageIcon>bank-icon.png</PackageIcon>
-		<PackageReleaseNotes>Padronização dos erros retornados no padrão Problem Details.</PackageReleaseNotes>
+		<PackageReleaseNotes></PackageReleaseNotes>
 		<RootNamespace>Unimake.EBank.Solutions</RootNamespace>
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<Configurations>Debug;Release;Debug-Unimake</Configurations>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -84,6 +85,7 @@
 
 	<ItemGroup>
 		<None Remove="bank-icon.png" />
+		<None Remove="Tools\PIXPayload.cs~RF113302c6.TMP" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,12 +96,16 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.7.0" />
-		<PackageReference Include="Unimake.AuthServer" Version="20250131.1813.25" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20250326.1812.10" />
-		<PackageReference Include="Unimake.Primitives" Version="20250317.1126.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+		<PackageReference Include="Unimake.AuthServer" Version="20250707.1650.48" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20250820.2046.57" />
+		<PackageReference Include="Unimake.Primitives" Version="20250728.1652.21" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\.editorconfig" Link=".editorconfig" />
+		<None Include="..\readme.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
 </Project>

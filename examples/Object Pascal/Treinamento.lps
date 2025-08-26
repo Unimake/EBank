@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="Treinamento.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="10" Y="13"/>
+        <UsageCount Value="130"/>
+      </Unit>
+      <Unit>
+        <Filename Value="main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmPrincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Main"/>
+        <CursorPos X="55" Y="18"/>
+        <UsageCount Value="130"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="autenticarapi.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="AutenticarAPI"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="35"/>
+        <CursorPos X="23" Y="69"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="unimake_business_dfe_2023_7_tlb.pas"/>
+        <UnitName Value="Unimake_Business_DFe_2023_7_TLB"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="26597"/>
+        <CursorPos X="37" Y="26598"/>
+        <UsageCount Value="118"/>
+      </Unit>
+      <Unit>
+        <Filename Value="consultarstatusnfe.pas"/>
+        <UnitName Value="ConsultarStatusNFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="18"/>
+        <CursorPos X="47" Y="61"/>
+        <UsageCount Value="116"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfesincrono.pas"/>
+        <UnitName Value="EnviarNFeSincrono"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="26" Y="35"/>
+        <UsageCount Value="115"/>
+      </Unit>
+      <Unit>
+        <Filename Value="imprimirdanfecomunidanfe.pas"/>
+        <UnitName Value="ImprimirDANFEcomUniDANFE"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="55" Y="11"/>
+        <UsageCount Value="78"/>
+      </Unit>
+      <Unit>
+        <Filename Value="main.lfm"/>
+        <ComponentName Value="frmPrincipal"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="26" Y="6"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value="functions\ConsultaStatusNFe.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="24" Y="5"/>
+        <UsageCount Value="6"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\lcl\include\application.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1056"/>
+        <CursorPos X="25" Y="1060"/>
+        <UsageCount Value="15"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="30" Y="20"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfesincronodesserializacao.pas"/>
+        <UnitName Value="EnviarNFeSincronoDesserializacao"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="146"/>
+        <CursorPos X="59" Y="160"/>
+        <UsageCount Value="15"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfesincronoduplicidade.pas"/>
+        <UnitName Value="EnviarNFeSincronoDuplicidade"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="168"/>
+        <CursorPos X="44" Y="180"/>
+        <UsageCount Value="17"/>
+      </Unit>
+      <Unit>
+        <Filename Value="consultarsituacaonfe.pas"/>
+        <UnitName Value="ConsultarSituacaoNFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="48"/>
+        <CursorPos X="51" Y="57"/>
+        <UsageCount Value="15"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2478"/>
+        <CursorPos X="17" Y="2507"/>
+        <UsageCount Value="8"/>
+      </Unit>
+      <Unit>
+        <Filename Value="eventocancelamentonfe.pas"/>
+        <UnitName Value="EventoCancelamentoNFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="22"/>
+        <CursorPos X="27" Y="6"/>
+        <UsageCount Value="23"/>
+      </Unit>
+      <Unit>
+        <Filename Value="main.lrs"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="Treinamento.lpi"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="15" Y="17"/>
+        <UsageCount Value="8"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit>
+      <Unit>
+        <Filename Value="consultardfe.pas"/>
+        <UnitName Value="ConsultarDistribuicaoDFe"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="28" Y="14"/>
+        <UsageCount Value="8"/>
+      </Unit>
+      <Unit>
+        <Filename Value="consultardistribuicaodfe.pas"/>
+        <UnitName Value="ConsultarDistribuicaoDFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="44"/>
+        <CursorPos X="33" Y="65"/>
+        <UsageCount Value="18"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviareventomanifestacaonfe.pas"/>
+        <UnitName Value="EnviarEventoManifestacaoNFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="96"/>
+        <CursorPos X="24" Y="110"/>
+        <UsageCount Value="15"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfcesincrono.pas"/>
+        <UnitName Value="EnviarNFCeSincrono"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
+        <CursorPos X="10" Y="78"/>
+        <UsageCount Value="15"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfcesincronodesserializacao.pas"/>
+        <UnitName Value="EnviarNFCeSincronoDesserializacao"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="137"/>
+        <CursorPos X="52" Y="149"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="eventocancelamentonfce.pas"/>
+        <UnitName Value="EventoCancelamentoNFCe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="84"/>
+        <CursorPos Y="108"/>
+        <UsageCount Value="12"/>
+      </Unit>
+      <Unit>
+        <Filename Value="enviarnfesincronortc.pas"/>
+        <UnitName Value="EnviarNFeSincronoRTC"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="493"/>
+        <CursorPos X="26" Y="393"/>
+        <UsageCount Value="14"/>
+      </Unit>
+      <Unit>
+        <Filename Value="desserializarretornoconsultadfe.pas"/>
+        <UnitName Value="DesserializarRetornoConsultaDFe"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="9" Y="67"/>
+        <UsageCount Value="13"/>
+      </Unit>
+      <Unit>
+        <Filename Value="D:\testenfe\delphi\Unimake.DFe\consultarstatusnfe.pas"/>
+        <UnitName Value="ConsultarStatusNFe"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="28" Y="6"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="autenticaapi.pas"/>
+        <UnitName Value="AutenticaAPI"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="16" Y="6"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Wandrey\AppData\Local\lazarus\onlinepackagemanager\packages\synapse40.1\ssl_openssl.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="C:\Users\Wandrey\AppData\Local\lazarus\onlinepackagemanager\packages\synapse40.1\ftpsend.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit>
+      <Unit>
+        <Filename Value="auth.ini"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Ini"/>
+      </Unit>
+    </Units>
+    <JumpHistory HistoryIndex="16">
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="37" Column="26"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="94" Column="37" TopLine="76"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="27" Column="13"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="13" Column="24"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="3" Column="18"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="57" TopLine="13"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="101" Column="17" TopLine="68"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="87" TopLine="68"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="113" TopLine="68"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="101" Column="29" TopLine="72"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="32" Column="26" TopLine="14"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="13" Column="33"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="39" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="116" Column="24" TopLine="81"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="54" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="55" TopLine="35"/>
+      </Position>
+      <Position>
+        <Filename Value="autenticarapi.pas"/>
+        <Caret Line="56" TopLine="35"/>
+      </Position>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="enviareventomanifestacaonfe.pas"/>
+        <Line Value="31"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="autenticarapi.pas"/>
+        <Line Value="54"/>
+      </Item>
+    </BreakPoints>
+    <Watches>
+      <Item>
+        <Expression Value="AppId"/>
+      </Item>
+    </Watches>
+  </Debugging>
+</CONFIG>

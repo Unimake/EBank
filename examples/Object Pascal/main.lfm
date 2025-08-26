@@ -1,0 +1,30 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 1078
+  Height = 656
+  Top = 404
+  Width = 1234
+  Caption = 'Como utilizar o eBank em Object Pascal'
+  ClientHeight = 656
+  ClientWidth = 1234
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  object GroupBox1: TGroupBox
+    Left = 12
+    Height = 624
+    Top = 0
+    Width = 358
+    Caption = 'eBank - eBoleto'
+    ClientHeight = 594
+    ClientWidth = 354
+    TabOrder = 0
+    object BtnAutenticarAPI: TButton
+      Left = 12
+      Height = 38
+      Top = 9
+      Width = 324
+      Caption = 'Autenticar API'
+      TabOrder = 0
+      OnClick = BtnAutenticarAPIClick
+    end
+  end
+end

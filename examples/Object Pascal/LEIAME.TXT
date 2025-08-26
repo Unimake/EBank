@@ -1,0 +1,38 @@
+LEIA-ME:
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Instalar o pacote Synapse pelo Online Package Manager (OPM):
+
+- Abra Package → Online Package Manager.
+- Pesquise por Synapse e selecione.
+- Clique em Install.
+- O Lazarus vai pedir para recompilar o IDE. Confirme.
+- Após reiniciar, o pacote estará disponível.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Configurar no seu projeto
+
+- Abra Project → Project Inspector.
+- Clique em Add → New Requirement...
+- Pesquie e selecione laz_synapse.
+
+Agora você pode usar IdHTTP, IdSSLOpenSSL, IdGlobal, etc. no uses.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Instalar o Win64OpenSSL_Light-3_5_2.exe
+
+https://slproweb.com/products/Win32OpenSSL.html
+Link direto: https://slproweb.com/download/Win64OpenSSL_Light-3_5_2.exe
+
+Copiar da pasta C:\Program Files\OpenSSL-Win64 os arquivos:
+
+libcrypto-3-x64.dll
+libssl-3-x64.dll
+
+Para a pasta onde fica o EXE do seu projeto, estas tem que acompanhar o EXE.
+
+
+

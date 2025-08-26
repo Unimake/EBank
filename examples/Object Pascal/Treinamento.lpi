@@ -59,6 +59,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="RegistrarBoleto"/>
       </Unit>
+      <Unit>
+        <Filename Value="consultarboleto.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ConsultarBoleto"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

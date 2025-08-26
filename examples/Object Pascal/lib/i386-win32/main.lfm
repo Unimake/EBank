@@ -35,5 +35,14 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 1
       OnClick = BtnRegistrarBoletoClick
     end
+    object BtnConsultarBoleto: TButton
+      Left = 12
+      Height = 38
+      Top = 104
+      Width = 324
+      Caption = 'Consultar Boleto'
+      TabOrder = 2
+      OnClick = BtnConsultarBoletoClick
+    end
   end
 end

@@ -11,7 +11,7 @@ interface
 uses
   Classes, SysUtils, Dialogs,
   httpsend, ssl_openssl, synautil, synacode,
-  fpjson, jsonparser;
+  fpjson, jsonparser, AutenticarAPI;
 
 type
   TRegistrarBoleto = class
@@ -31,8 +31,6 @@ type
   end;
 
 implementation
-
-uses AutenticarAPI; // usa TAutenticarAPI para obter Token/Expiration
 
 class function TRegistrarBoleto.BuildBoletoJson: string;
 var
@@ -136,7 +134,7 @@ begin
   FPDFPath := '';
 
   try
-    // 1) Autentica (reutiliza a sua classe já padrão)
+    // 1) Autentica
     TAutenticarAPI.Executar;
     Token := TAutenticarAPI.Token;
     if Token = '' then

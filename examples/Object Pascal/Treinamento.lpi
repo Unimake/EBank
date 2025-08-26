@@ -54,6 +54,11 @@
         <Filename Value="auth.ini"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="registrarboleto.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RegistrarBoleto"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

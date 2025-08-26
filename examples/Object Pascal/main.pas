@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComObj,
-  AutenticarAPI;
+  AutenticarAPI, RegistrarBoleto;
 
 type
 
@@ -14,8 +14,10 @@ type
 
   TfrmPrincipal = class(TForm)
     BtnAutenticarAPI: TButton;
+    BtnRegistrarBoleto: TButton;
     GroupBox1: TGroupBox;
     procedure BtnAutenticarAPIClick(Sender: TObject);
+    procedure BtnRegistrarBoletoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
 
   private
@@ -52,7 +54,15 @@ begin
   end;
 end;
 
-
-
+procedure TfrmPrincipal.BtnRegistrarBoletoClick(Sender: TObject);
+var
+  oServico: TRegistrarBoleto;
+begin
+  oServico := TRegistrarBoleto.Create;
+  try
+    oServico.Executar();
+  finally
+  end;
+end;
 
 end.

@@ -26,5 +26,14 @@ object frmPrincipal: TfrmPrincipal
       TabOrder = 0
       OnClick = BtnAutenticarAPIClick
     end
+    object BtnRegistrarBoleto: TButton
+      Left = 12
+      Height = 38
+      Top = 56
+      Width = 324
+      Caption = 'Registrar Boleto'
+      TabOrder = 1
+      OnClick = BtnRegistrarBoletoClick
+    end
   end
 end

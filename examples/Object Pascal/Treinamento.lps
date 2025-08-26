@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="10" Y="13"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="131"/>
       </Unit>
       <Unit>
         <Filename Value="main.pas"/>
@@ -19,8 +19,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Main"/>
-        <CursorPos X="55" Y="18"/>
-        <UsageCount Value="130"/>
+        <TopLine Value="10"/>
+        <CursorPos X="33" Y="9"/>
+        <UsageCount Value="131"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -29,10 +30,10 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="AutenticarAPI"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="35"/>
-        <CursorPos X="23" Y="69"/>
-        <UsageCount Value="23"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="18"/>
+        <CursorPos X="24" Y="46"/>
+        <UsageCount Value="24"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -240,78 +241,139 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <DefaultSyntaxHighlighter Value="Ini"/>
       </Unit>
+      <Unit>
+        <Filename Value="registrarboleto.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RegistrarBoleto"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="69"/>
+        <CursorPos X="54" Y="92"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="16">
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="37" Column="26"/>
+        <Caret Line="151" TopLine="97"/>
       </Position>
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="94" Column="37" TopLine="76"/>
+        <Caret Line="152" TopLine="97"/>
       </Position>
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="27" Column="13"/>
+        <Caret Line="43" TopLine="13"/>
       </Position>
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="13" Column="24"/>
+        <Caret Line="153" TopLine="97"/>
       </Position>
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="3" Column="18"/>
+        <Caret Line="43" TopLine="13"/>
       </Position>
       <Position>
         <Filename Value="autenticarapi.pas"/>
-        <Caret Line="57" TopLine="13"/>
+        <Caret Line="153" TopLine="97"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="101" Column="17" TopLine="68"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="141" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="87" TopLine="68"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="142" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="113" TopLine="68"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="149" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="101" Column="29" TopLine="72"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="152" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="32" Column="26" TopLine="14"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="153" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="13" Column="33"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="154" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="39" Column="29"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="156" TopLine="111"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="116" Column="24" TopLine="81"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="158" TopLine="118"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="54" TopLine="35"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="159" TopLine="118"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="55" TopLine="35"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="160" TopLine="118"/>
       </Position>
       <Position>
-        <Filename Value="autenticarapi.pas"/>
-        <Caret Line="56" TopLine="35"/>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="161" TopLine="118"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="163" TopLine="118"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="164" TopLine="118"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="166" TopLine="118"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="172" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="173" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="174" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="176" TopLine="133"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="227" TopLine="181"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="228" TopLine="181"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="227" TopLine="181"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="202" Column="71" TopLine="181"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+      </Position>
+      <Position>
+        <Filename Value="registrarboleto.pas"/>
+        <Caret Line="92" Column="54" TopLine="69"/>
       </Position>
     </JumpHistory>
     <RunParams>
@@ -327,13 +389,6 @@
         <WatchKind Value="wpkWrite"/>
         <Source Value="enviareventomanifestacaonfe.pas"/>
         <Line Value="31"/>
-      </Item>
-      <Item>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="autenticarapi.pas"/>
-        <Line Value="54"/>
       </Item>
     </BreakPoints>
     <Watches>

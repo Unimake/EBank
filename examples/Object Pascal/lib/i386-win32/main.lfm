@@ -7,6 +7,7 @@ object frmPrincipal: TfrmPrincipal
   ClientHeight = 656
   ClientWidth = 1234
   DesignTimePPI = 144
+  LCLVersion = '4.2.0.0'
   OnCreate = FormCreate
   object GroupBox1: TGroupBox
     Left = 12
@@ -43,6 +44,25 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Consultar Boleto'
       TabOrder = 2
       OnClick = BtnConsultarBoletoClick
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 384
+    Height = 622
+    Top = 2
+    Width = 368
+    Caption = 'eBank - PIX'
+    ClientHeight = 592
+    ClientWidth = 364
+    TabOrder = 1
+    object BtnGerarPIX: TToggleBox
+      Left = 8
+      Height = 38
+      Top = 8
+      Width = 344
+      Caption = 'Gerar PIX'
+      TabOrder = 0
+      OnClick = BtnGerarPIXClick
     end
   end
 end

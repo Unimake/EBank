@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ComObj,
-  AutenticarAPI, RegistrarBoleto, ConsultarBoleto;
+  AutenticarAPI, RegistrarBoleto, ConsultarBoleto, GerarPIX;
 
 type
 
@@ -17,8 +17,11 @@ type
     BtnRegistrarBoleto: TButton;
     BtnConsultarBoleto: TButton;
     GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    BtnGerarPIX: TToggleBox;
     procedure BtnAutenticarAPIClick(Sender: TObject);
     procedure BtnConsultarBoletoClick(Sender: TObject);
+    procedure BtnGerarPIXClick(Sender: TObject);
     procedure BtnRegistrarBoletoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
 
@@ -63,6 +66,19 @@ begin
   oServico := TConsultarBoleto.Create;
   try
     oServico.Executar();
+  finally
+  end;
+end;
+
+procedure TfrmPrincipal.BtnGerarPIXClick(Sender: TObject);
+var
+  oServico: TGerarPIX;
+begin
+  oServico := TGerarPIX.Create;
+  try
+    oServico.Executar();
+    ShowMessage('Base64 QRCode: ' + oServico.QRCodeImage);
+    ShowMessage('PIX CopiaECola: ' + oServico.PixCopiaECola);
   finally
   end;
 end;

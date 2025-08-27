@@ -64,6 +64,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="ConsultarBoleto"/>
       </Unit>
+      <Unit>
+        <Filename Value="gerarpix.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="GerarPIX"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

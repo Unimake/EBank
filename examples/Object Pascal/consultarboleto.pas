@@ -16,7 +16,7 @@ uses
 type
   TConsultarBoleto = class
   private
-    class var FResponseJSON: string;
+  class var FResponseJSON: string;
     class function BuildConsultaJson: string; static;
   public
     class procedure Executar; static;
@@ -27,11 +27,10 @@ implementation
 
 class function TConsultarBoleto.BuildConsultaJson: string;
 begin
-  Result := '{' +
-            '  "testing": true,' +
-            '  "dataEmissaoInicial": "2025-02-01",' +
-            '  "dataEmissaoFinal": "2025-02-03"' +
-            '}';
+  Result := '{' + '  "testing": true,' +
+    '  "numeroNoBanco": [ "00000001","00000002","00000003" ]' +
+    //Números dos boletos a serem consultados
+    '}';
 end;
 
 class procedure TConsultarBoleto.Executar;
@@ -47,6 +46,8 @@ var
   Json: TJSONData = nil;
   ResponseStream: TStringStream;
   Token: string;
+  OutDir, OutFile: string;
+  SL: TStringList;
 begin
   Http := nil;
   ResponseStream := nil;
@@ -58,7 +59,8 @@ begin
     Token := TAutenticarAPI.Token;
     if Token = '' then
     begin
-      MessageDlg('Autenticação', 'Token não obtido na autenticação.', mtError, [mbOK], 0);
+      MessageDlg('Autenticação', 'Token não obtido na autenticação.',
+        mtError, [mbOK], 0);
       Exit;
     end;
 
@@ -82,7 +84,8 @@ begin
 
     if not Http.HTTPMethod('POST', Url) then
     begin
-      MessageDlg('Erro na Requisição', 'Falha na requisição: erro de transporte/conexão.', mtError, [mbOK], 0);
+      MessageDlg('Erro na Requisição',
+        'Falha na requisição: erro de transporte/conexão.', mtError, [mbOK], 0);
       Exit;
     end;
 
@@ -107,11 +110,24 @@ begin
       begin
         if (Json.JSONType <> jtArray) then
         begin
-          MessageDlg('Formato inválido', 'Formato do JSON inválido. Esperado um array de boletos.', mtError, [mbOK], 0);
+          MessageDlg('Formato inválido',
+            'Formato do JSON inválido. Esperado um array de boletos.', mtError, [mbOK], 0);
           Exit;
         end;
         // guarda o JSON bruto para consumo externo
         FResponseJSON := ResponseText;
+
+        // salvar o JSON em .\teste_ebank\json\GerarPixRetorno.json
+        OutDir := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) +
+          'teste_ebank' + DirectorySeparator + 'json';
+        OutFile := IncludeTrailingPathDelimiter(OutDir) + 'ConsultarBoletoRetorno.json';
+
+        ForceDirectories(ExtractFileDir(OutFile));
+
+        SL := TStringList.Create;
+        SL.Text := FResponseJSON;
+        SL.SaveToFile(OutFile);
+
       end
       else
         MessageDlg('Erro', 'Erro ao interpretar JSON.', mtError, [mbOK], 0);
@@ -119,7 +135,8 @@ begin
     else
     begin
       MessageDlg('Erro na Requisição',
-        Format('Falha na requisição: %d%s%s', [Http.ResultCode, LineEnding, ResponseText]),
+        Format('Falha na requisição: %d%s%s', [Http.ResultCode,
+        LineEnding, ResponseText]),
         mtError, [mbOK], 0);
     end;
 

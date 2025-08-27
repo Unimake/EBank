@@ -255,7 +255,7 @@ begin
 
       SL := TStringList.Create;
       SL.Text := TGerarPIX.ResponseJSON;
-      SL.SaveToFile(OutFile);  // caminho onde salvar
+      SL.SaveToFile(OutFile);
 
       // Interpreta apenas as chaves esperadas no VB6 (sem mensagens de sucesso)
       try

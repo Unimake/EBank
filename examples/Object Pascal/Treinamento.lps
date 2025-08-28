@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="10" Y="13"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
       </Unit>
       <Unit>
         <Filename Value="main.pas"/>
@@ -21,7 +21,7 @@
         <UnitName Value="Main"/>
         <TopLine Value="39"/>
         <CursorPos X="26" Y="80"/>
-        <UsageCount Value="140"/>
+        <UsageCount Value="141"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -31,7 +31,7 @@
         <UnitName Value="AutenticarAPI"/>
         <EditorIndex Value="4"/>
         <CursorPos X="19" Y="13"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -41,7 +41,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
         <DefaultSyntaxHighlighter Value="Ini"/>
       </Unit>
       <Unit>
@@ -51,28 +51,28 @@
         <EditorIndex Value="2"/>
         <TopLine Value="73"/>
         <CursorPos X="19" Y="17"/>
-        <UsageCount Value="29"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="consultarboleto.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ConsultarBoleto"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
         <TopLine Value="75"/>
         <CursorPos X="22" Y="121"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="gerarpix.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="GerarPIX"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="236"/>
-        <CursorPos X="30" Y="258"/>
-        <UsageCount Value="28"/>
+        <TopLine Value="191"/>
+        <CursorPos X="42" Y="225"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>

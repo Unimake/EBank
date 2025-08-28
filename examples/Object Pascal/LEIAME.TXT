@@ -33,6 +33,3 @@ libcrypto-3-x64.dll
 libssl-3-x64.dll
 
 Para a pasta onde fica o EXE do seu projeto, estas tem que acompanhar o EXE.
-
-
-

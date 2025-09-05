@@ -1,7 +1,16 @@
 ﻿# 🔖 Changelog
-
-## Versão : 20250822.1517.39
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250822.1517.39_
+
+## Versão : 20250905.1512.47
+
+_https://www.nuget.org/packages/Unimake.Primitives/20250905.1512.47_
+
+Implementação de HttpClientLoggingHandler, responsável por logs Http em chamadas com HttpClient.
+
+
+## Versão : 20250822.1517.39
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250822.1517.39_
+
 Atualização de pacotes.
 
 ---
@@ -27,3 +36,4 @@ Validação de requisição de extrato antes de consumir o serviço.
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250715.1745.53_
 
 Implementação do serviço de extrato.
+

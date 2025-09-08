@@ -1,4 +1,10 @@
 ﻿# 🔖 Changelog
+
+## Versão : 20250908.0954.58
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250908.0954.58_
+Implementação de HttpClientLoggingHandler, responsável por logs Http em chamadas com HttpClient.
+
+---
 
 ## Versão : 20250905.1512.47
 

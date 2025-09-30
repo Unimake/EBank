@@ -4,6 +4,7 @@
 [![api_version](https://img.shields.io/badge/dynamic/json?url=https://unimake.app/ebank/swagger/v1.0/swagger.json&query=info.version&logo=swagger&label=API-Version)](https://unimake.app/ebank/swagger)
 [![NuGet](https://img.shields.io/nuget/v/Unimake.EBank.Solutions.svg?logo=nuget)](https://www.nuget.org/packages/Unimake.EBank.Solutions)
 [![Postman](https://img.shields.io/badge/Postman-Unimake_Public-orange?style=flat&logo=postman)](https://www.postman.com/unimakers/public/overview)
+[![Discord](https://img.shields.io/discord/936980012257652788?label=Discord&logo=discord&logoColor=white&color=5865F2)](https://discord.gg/JhCEhbfK)
 
 # E-Bank
 

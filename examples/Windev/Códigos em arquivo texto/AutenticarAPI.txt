@@ -1,0 +1,57 @@
+// -----------------------------------------------------------------------------------
+// Autenticar API Unimake
+// -----------------------------------------------------------------------------------
+
+sURL			is string
+sJsonContent	is string
+sResponse		is string
+httpRequest		is httpRequest
+httpResponse	is httpResponse
+
+// Define a URL da API Produção
+sURL			= "https://unimake.app/auth/api/auth"
+
+// Define a URL do SandBOX (descomente se necessário)
+// sURL = "https://auth.sandbox.unimake.software/api/auth"
+
+// Cria o conteúdo da requisição no formato JSON
+sJsonContent	= [
+	{
+	"appId": "8f6998b1ee1746d8b0836611a15644c1",
+	"secret": "346504a5800047b683c11888c607ac67"
+	}
+]
+
+// Configura a requisição HTTP
+httpRequest..URL			= sURL
+httpRequest..Method			= httpPost
+httpRequest..ContentType	= "application/json"
+httpRequest..Content		= sJsonContent
+
+// Envia a requisição
+httpResponse				= HTTPSend(httpRequest)
+
+// Verifica o status da resposta
+IF httpResponse..StatusCode = 200 THEN
+	
+	sResponse = StringBuild(httpResponse..Content)
+	
+	// Decodifica o JSON
+	vJson is Variant
+	vJson = JSONToVariant(sResponse)	
+	
+	// Agora pode acessar os campos:
+	IF vJson.expiration <> Null THEN
+		Info("Expiration: " + vJson.expiration)
+	ELSE
+		Error("Chave 'expiration' não encontrada no JSON.")
+	END
+	
+	IF vJson.token <> Null THEN
+		Info("Token: " + vJson.token)
+	ELSE
+		Error("Chave 'token' não encontrada no JSON.")
+	END	
+ELSE
+	Error("Falha na requisição: " + httpResponse..StatusCode + CR + httpResponse..Content)
+END

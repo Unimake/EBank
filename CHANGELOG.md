@@ -1,7 +1,22 @@
 ﻿# 🔖 Changelog
-
-## Versão : 20250908.0954.58
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250908.0954.58_
+
+## Versão : 20251013.1803.32
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20251013.1803.32_
+
+Implementação dos tipos:
+- `PIXViolationResponse`: Representa a resposta de uma violação PIX, contendo informações detalhadas sobre o erro ocorrido
+- `PIXViolation`: Representa uma violação específica em uma requisição PIX.
+
+O método `PIXJwtDecoder.GetJwtPayloadAsync(string url, SslProtocols? sslProtocols = null)` pede o [SslProtocols](https://learn.microsoft.com/en-us/dotnet/api/system.security.authentication.sslprotocols) como parâmetro, caso não informado, será usado o padrão do sistema operacional.
+
+O método `PIXJwtDecoder.GetJwtPayloadAsync(string url, SslProtocols? sslProtocols = null)` tenta recuperar pelo menos o TxId, mesmo se o banco retornar 400 (Bad REquest)
+
+---
+
+## Versão : 20250908.0954.58
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20250908.0954.58_
+
 Implementação de HttpClientLoggingHandler, responsável por logs Http em chamadas com HttpClient.
 
 ---

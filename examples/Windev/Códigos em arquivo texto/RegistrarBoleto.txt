@@ -1,0 +1,219 @@
+// Summary: Realiza a autenticação e registra um boleto no eBank da Unimake
+// Syntax: RegistrarBoleto()
+// Return value: Nenhum (mensagens de sucesso/erro exibidas na tela)
+// Throws: Exception em caso de falha na autenticação ou registro do boleto
+
+sToken			is string
+vAuth			is Variant
+
+WHEN EXCEPTION IN
+	// Autentica na API Unimake
+	vAuth	= AutenticarAPI()
+	sToken	= vAuth.token
+	
+	// Consome a API de registro de boleto
+	ConsumirAPIRegistraBoleto(sToken)	
+DO
+	Info(ExceptionInfo(errMessage))
+END
+
+
+// Summary:
+//  Registra o boleto utilizando o eBank
+// Syntax:
+//  ConsumirAPIRegistraBoleto(pToken is string)
+//
+// Parameters:
+//	pToken = Token de segurança para conexão com a API
+// Return value:
+// 	None
+//
+// Example:
+//  ConsumirAPIRegistraBoleto("token_de_segurança")
+//
+PROCEDURE PRIVATE ConsumirAPIRegistraBoleto(pToken is string)
+
+sURL			is string
+sJsonContent	is string
+sResponse		is string
+httpRequest		is httpRequest
+httpResponse	is httpResponse
+vJson			is Variant
+sMensagensErro	is string	= ""
+
+WHEN EXCEPTION IN
+	// URL de produção
+	sURL									= "https://unimake.app/ebank/api/v1/boleto/registrar?configurationId=ZCKWGQ55LTDXKYYC"
+	// URL do SandBOX (descomente se necessário)
+	sURL									= "https://ebank.sandbox.unimake.software/api/v1/boleto/registrar?configurationId=ZCKWGQ55LTDXKYYC"
+	
+	// Cria o JSON do boleto
+	sJsonContent							= CreateJsonBoleto()
+	
+	// Monta a requisição
+	httpRequest..URL						= sURL
+	httpRequest..Method						= httpPost
+	httpRequest..ContentType				= "application/json"
+	httpRequest..Content					= sJsonContent
+	httpRequest..Header["Authorization"]	= "Bearer " + pToken
+	
+	// Envia a requisição
+	httpResponse							= HTTPSend(httpRequest)
+	
+	// Captura a resposta textual
+	sResponse								= StringBuild(httpResponse..Content)
+	
+	// Verifica se houve erro na requisição
+	IF httpResponse..StatusCode <> 200 THEN
+		
+		// Tenta decodificar o JSON de erro
+		IF Position(sResponse, "{") > 0 THEN
+			vJson = JSONToVariant(sResponse)
+			
+			// Verifica se há um array de erros
+			IF vJson.errors <> Null THEN
+				FOR EACH sErro OF vJson.errors
+					sMensagensErro += "- " + sErro + CR
+				END
+			END
+			
+			// Monta mensagem final
+			IF sMensagensErro <> "" THEN
+				Error("Falha ao registrar boleto (HTTP " + httpResponse..StatusCode + "):" + CR + sMensagensErro)
+			ELSE
+				Error("Falha ao registrar boleto (HTTP " + httpResponse..StatusCode + "):" + CR + sResponse)
+			END
+		ELSE
+			Error("Falha na requisição HTTP " + httpResponse..StatusCode + CR + sResponse)
+		END		
+	ELSE
+		// Se chegou aqui, requisição bem-sucedida
+		vJson = JSONToVariant(sResponse)
+		ConvertJsonToObject(sResponse)
+		Info("Boleto registrado com sucesso!" + CR + CR + sResponse)			
+	END	
+DO
+END
+
+// Summary:
+//  Cria o JSON do boleto para enviar ao eBank para que seja registrado
+// Syntax:
+//  CreateJsonBoleto() : string
+//
+// Parameters:
+//	None
+// Return value:
+// 	String do JSON do Boleto
+//
+// Example:
+//  sJsonContent is string = CreateJsonBoleto()
+//
+PROCEDURE CreateJsonBoleto() : string
+dEmissao			is Date	= DateSys()
+dVencimento			is Date	= IntegerToDate(DateToInteger(dEmissao) + 30)
+dDataJuros			is Date	= IntegerToDate(DateToInteger(dEmissao) + 40)
+
+// Cria o objeto JSON como Variant (estrutura dinâmica)
+jsonBoleto			is Variant
+
+// Campos principais
+jsonBoleto.Aceite						= True
+jsonBoleto.emissao						= DateToString(dEmissao, "YYYY-MM-DD")
+jsonBoleto.especie						= 2
+jsonBoleto.vencimento					= DateToString(dVencimento, "YYYY-MM-DD")
+jsonBoleto.valorIof						= 0
+jsonBoleto.valorNominal					= 10
+jsonBoleto.valorAbatimento				= 0
+jsonBoleto.numeroParcela				= 1
+jsonBoleto.numeroNoBanco				= "00000008548"
+jsonBoleto.numeroNaEmpresa				= "000001-01"
+jsonBoleto.diasParaBaixaOuDevolucao		= 0
+jsonBoleto.tipoBaixaDevolucao			= 1
+jsonBoleto.testing						= True
+
+// Mensagens (array)
+jsonBoleto.mensagens[1]					= "JUROS DIARIOS SOBRE ATRASO PAG.R$ 0,02"
+
+// Juros
+jsonBoleto.juros.tipo					= 1
+jsonBoleto.juros.data					= DateToString(dDataJuros, "YYYY-MM-DD")
+jsonBoleto.juros.valor					= 0.02
+
+// Pagador e endereço
+jsonBoleto.pagador.nome					= "Marcelo de Souza"
+jsonBoleto.pagador.tipoInscricao		= 1
+jsonBoleto.pagador.inscricao			= "25806756807"
+jsonBoleto.pagador.endereco.rua			= "RUA Lorem Ipsum"
+jsonBoleto.pagador.endereco.numero		= "001"
+jsonBoleto.pagador.endereco.bairro		= "Centro"
+jsonBoleto.pagador.endereco.cep			= "87711340"
+jsonBoleto.pagador.endereco.cidade		= "PARANAVAI"
+jsonBoleto.pagador.endereco.uf			= "PR"
+
+// PDF Config
+jsonBoleto.pdfConfig.tryGeneratePDF		= True
+
+// PIX Config
+jsonBoleto.pixConfig.chave				= "06117473000150"
+jsonBoleto.pixConfig.registrarPIX		= True
+
+// Converte o Variant em string JSON
+sJsonContent is string = VariantToJSON(jsonBoleto)
+
+RESULT sJsonContent
+// Summary:
+//  Converte o JSON retornado pelo eBank para acesso as informações.
+// Syntax:
+//  ConvertJsonToObject (pJson is string)
+//
+// Parameters:
+//	pJson - String contendo o JSON retornado pelo eBank
+// Return value:
+// 	None
+//
+// Example:
+//  ConvertJsonToObject("string_do_json_retornado_do_ebank")
+//
+PROCEDURE PRIVATE ConvertJsonToObject(pJson is string)
+
+vJsonResponse	is Variant
+sOutputPath		is string
+bSucesso		is boolean
+
+WHEN EXCEPTION IN
+	
+	// Faz o parse do JSON
+	vJsonResponse = JSONToVariant(pJson)
+	
+	// Lê campos principais
+	sCodigoBarraNumerico	is string		= vJsonResponse.CodigoBarraNumerico
+	sLinhaDigitavel			is string		= vJsonResponse.LinhaDigitavel
+	sNumeroNoBanco			is string		= vJsonResponse.NumeroNoBanco
+	sPixCopiaECola            is string         = vJsonResponse.QrCodeContent.Text
+	
+	// PDF (base64)
+	IF vJsonResponse.PDFContent.Content <> Null THEN
+		sBase64PDF is string = vJsonResponse.PDFContent.Content
+		sOutputPath = "d:\testenfe\pdf\"
+		fMakeDir(sOutputPath)
+		sOutputPath += "boleto.pdf"
+		
+		// Decodifica o Base64 e salva o arquivo
+		bufPDF is Buffer = Decode(sBase64PDF, encodeBASE64)		
+		
+		fSaveBuffer(sOutputPath, bufPDF)
+		bSucesso = True
+		
+		IF bSucesso THEN
+			IF YesNo("Arquivo salvo com sucesso em:" + CR + sOutputPath + CR + "Abrir boleto?") = Yes THEN
+				ShellExecute(sOutputPath)
+			END
+		ELSE
+			Error("Falha ao salvar o arquivo PDF.")
+		END
+	END
+	
+	Info("Código de Barras:" + CR + sCodigoBarraNumerico + CR + CR + "Linha Digitável:" + CR + sLinhaDigitavel + CR + CR + "Número no Banco: " + CR + sNumeroNoBanco)
+	Info("PixCopiaECola:"  + CR + sPixCopiaECola)
+DO
+END

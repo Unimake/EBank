@@ -1,0 +1,175 @@
+
+
+// Summary:
+//  Realiza a autenticação e consulta boletos emitidos no eBank da Unimake
+// Syntax: ConsultarBoleto()
+sToken	is string
+vAuth	is Variant
+
+WHEN EXCEPTION IN
+	// Autentica na API Unimake
+	vAuth	= AutenticarAPI()
+	sToken	= vAuth.token
+	
+	// Chama a API de consulta
+	ConsumirAPIConsultarBoleto(sToken)
+DO
+	Error("Erro: " + ExceptionInfo(errMessage))
+END
+
+// Summary: Cria o JSON para consultar boletos
+// Syntax:
+// CreateJsonConsultaBoleto() : string
+//
+// Parameters:
+//	None
+// Return value:
+//  String do JSON da consulta
+//
+// Example:
+// sJsonContent is string = CreateJsonConsultaBoleto()
+//
+PROCEDURE CreateJsonConsultaBoleto() : string
+
+jsonConsulta is Variant
+jsonConsulta.testing				= True
+jsonConsulta.numeroNoBanco[1]	= "00000001"
+jsonConsulta.numeroNoBanco[2]	= "00000002"
+jsonConsulta.numeroNoBanco[3]	= "00000003"
+
+// Converte o Variant em string JSON
+sJsonContent is string = VariantToJSON(jsonConsulta)
+
+RESULT sJsonContent
+// Summary: <specify the procedure action>
+// Syntax:
+//  ConvertJsonConsultaToObject(pJson is string)
+//
+// Parameters:
+//	pJson - JSON a ser convertido para objeto
+// Return value:
+// 	None
+//
+// Example:
+//  ConvertJsonConsultaToObject(JSON)
+//
+PROCEDURE PRIVATE ConvertJsonConsultaToObject(pJson is string)
+
+vJsonResponse	is Variant
+i				is int	= 1
+
+WHEN EXCEPTION IN
+	vJsonResponse = JSONToVariant(pJson)
+	
+	// Se o retorno for um array de boletos
+	IF vJsonResponse[1] <> Null THEN
+		FOR EACH vBoleto OF vJsonResponse
+			sCodigoBarras		is string	= ""
+			sSituacao			is string	= ""
+			sTipoLiquidacao		is string	= ""
+			sLinhaDigitavel		is string	= ""
+			sValor				is string	= ""
+			sValorDesconto		is string	= ""
+			sValorJuros			is string	= ""
+			sValorLiquidado		is string	= ""
+			sPDFBase64			is string	= ""
+			
+			// Extrai campos principais, com verificação de null
+			IF vBoleto.CodigoBarras <> Null THEN sCodigoBarras = vBoleto.CodigoBarras
+			IF vBoleto.Situacao <> Null THEN sSituacao = vBoleto.Situacao
+			IF vBoleto.TipoLiquidacao <> Null THEN sTipoLiquidacao = vBoleto.TipoLiquidacao
+			IF vBoleto.LinhaDigitavel <> Null THEN sLinhaDigitavel = vBoleto.LinhaDigitavel
+			IF vBoleto.Valor <> Null THEN sValor = NumToString(vBoleto.Valor)
+			IF vBoleto.ValorDesconto <> Null THEN sValorDesconto = NumToString(vBoleto.ValorDesconto)
+			IF vBoleto.ValorJuros <> Null THEN sValorJuros = NumToString(vBoleto.ValorJuros)
+			IF vBoleto.ValorLiquidado <> Null THEN sValorLiquidado = NumToString(vBoleto.ValorLiquidado)
+			
+			// PDF
+			IF vBoleto.PDFContent.Content <> Null THEN
+				sPDFBase64 = vBoleto.PDFContent.Content
+			END
+			
+			// Exibe informações do boleto atual
+			Info("Boleto #" + i + CR + "Código de Barras: " + sCodigoBarras + CR + "Situação: " + sSituacao + CR + "Tipo de Liquidação: " + sTipoLiquidacao + CR +  "Linha Digitável: " + sLinhaDigitavel + CR + "Valor: R$ " + sValor + CR + "Desconto: R$ " + sValorDesconto + CR + "Juros: R$ " + sValorJuros + CR + "Valor Liquidado: R$ " + sValorLiquidado)
+			
+			i++
+		END
+	ELSE
+		Error("Nenhum boleto encontrado na resposta.")
+	END	
+DO
+	Error("Erro ao converter JSON: " + ExceptionInfo(errMessage))
+END
+
+
+// Summary: <specify the procedure action>
+// Syntax:
+// ConsumirAPIConsultarBoleto ()
+//
+// Parameters:
+//	None
+// Return value:
+// 	None
+//
+// Example:
+// <Specify a usage example>
+//
+PROCEDURE PRIVATE ConsumirAPIConsultarBoleto(pToken is string)
+
+sURL			is string
+sJsonContent	is string
+sResponse		is string
+httpRequest		is httpRequest
+httpResponse	is httpResponse
+vJson			is Variant
+sMensagensErro	is string	= ""
+
+WHEN EXCEPTION IN	
+	// URL de produção
+	sURL									= "https://unimake.app/ebank/api/v1/boleto/consultar?configurationId=ZCKWGQ55LTDXKYYC"
+	// URL do SandBOX (descomente se necessário)
+	sURL									= "https://ebank.sandbox.unimake.software/api/v1/boleto/consultar?configurationId=ZCKWGQ55LTDXKYYC"
+	
+	// Cria o JSON do filtro de consulta
+	sJsonContent							= CreateJsonConsultaBoleto()
+	
+	// Monta a requisição
+	httpRequest..URL						= sURL
+	httpRequest..Method						= httpPost
+	httpRequest..ContentType				= "application/json"
+	httpRequest..Content					= sJsonContent
+	httpRequest..Header["Authorization"]	= "Bearer " + pToken
+	
+	// Envia a requisição
+	httpResponse							= HTTPSend(httpRequest)
+	sResponse								= StringBuild(httpResponse..Content)
+	
+	// Verifica o status da resposta
+	IF httpResponse..StatusCode <> 200 THEN
+		// Tenta extrair mensagens de erro do JSON
+		IF Position(sResponse, "{") > 0 THEN
+			vJson = JSONToVariant(sResponse)
+			
+			IF vJson.errors <> Null THEN
+				FOR EACH sErro OF vJson.errors
+					sMensagensErro += "- " + sErro + CR
+				END
+			END
+			
+			IF sMensagensErro <> "" THEN
+				Error("Falha na consulta (HTTP " + httpResponse..StatusCode + "):" + CR + sMensagensErro)
+			ELSE
+				Error("Falha na consulta (HTTP " + httpResponse..StatusCode + "):" + CR + sResponse)
+			END
+		ELSE
+			Error("Falha na requisição HTTP " + httpResponse..StatusCode + CR + sResponse)
+		END		
+	ELSE
+		// Processa a resposta JSON
+		vJson = JSONToVariant(sResponse)
+		ConvertJsonConsultaToObject(sResponse)		
+	END
+	
+DO
+	Error("Erro na consulta: " + ExceptionInfo(errMessage))
+END

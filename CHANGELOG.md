@@ -1,6 +1,13 @@
 ﻿# 🔖 Changelog
+
+## Versão : 20251103.1722.21
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20251103.1722.21_
+fix: JWT inválido. Esperado formato com 3 partes. ID #178028
 
-## Versão : 20251013.1803.32
+---
+
+## Versão : 20251013.1803.32
+
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20251013.1803.32_
 
 Implementação dos tipos:

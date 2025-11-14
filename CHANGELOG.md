@@ -1,11 +1,31 @@
 ﻿# 🔖 Changelog
-
-## Versão : 20251106.1529.36
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/20251106.1529.36_
-fix: Incluído "PAGO" na definição de status do PIXPayload ID #178028
+
+## Versão : 20251114.0208.14
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20251114.0208.14_
+
+Nesta atualização, foram adicionadas novas funcionalidades e melhorias importantes no tratamento de respostas da API.
+
+### ✨ Funcionalidades
+
+-   **`PDFService`** adicionado para manipulação de operações relacionadas a PDF, com métodos para obter documentos em **Base64**, **arquivo binário** ou **HTML**.
+-   **`PDFTest`** criado para validar o comportamento do `PDFService`, incluindo testes para retornos em Base64, binário e HTML.
+
+### ⚙️ Melhorias Técnicas
+
+-   **`APIClient`** aprimorado para suportar respostas nos formatos **`byte[]`** e **`string`**, com melhor tratamento de erros e lógica atualizada de desserialização JSON.
+-   Atualização da dependência **`Unimake.EBank.Primitives`** para incluir novos recursos.
+-   Inclusão de namespaces adicionais e melhorias na inicialização dos testes.
 
 ---
 
+## Versão : 20251106.1529.36
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20251106.1529.36_
+
+fix: Incluído "PAGO" na definição de status do PIXPayload ID #178028
+
+---
 
 ## Versão : 20251103.1722.21
 
@@ -20,8 +40,9 @@ fix: JWT inválido. Esperado formato com 3 partes. ID #178028
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20251013.1803.32_
 
 Implementação dos tipos:
-- `PIXViolationResponse`: Representa a resposta de uma violação PIX, contendo informações detalhadas sobre o erro ocorrido
-- `PIXViolation`: Representa uma violação específica em uma requisição PIX.
+
+-   `PIXViolationResponse`: Representa a resposta de uma violação PIX, contendo informações detalhadas sobre o erro ocorrido
+-   `PIXViolation`: Representa uma violação específica em uma requisição PIX.
 
 O método `PIXJwtDecoder.GetJwtPayloadAsync(string url, SslProtocols? sslProtocols = null)` pede o [SslProtocols](https://learn.microsoft.com/en-us/dotnet/api/system.security.authentication.sslprotocols) como parâmetro, caso não informado, será usado o padrão do sistema operacional.
 
@@ -43,7 +64,6 @@ _https://www.nuget.org/packages/Unimake.Primitives/20250905.1512.47_
 
 Implementação de HttpClientLoggingHandler, responsável por logs Http em chamadas com HttpClient.
 
-
 ## Versão : 20250822.1517.39
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250822.1517.39_
@@ -63,6 +83,7 @@ fix: Corrigido nome do enumerador `PagadorAlegaNaoTerRecebidoAMercadoria, NotaFi
 ---
 
 ## Versão : 20250716.0200.59
+
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250716.0200.59_
 
 Validação de requisição de extrato antes de consumir o serviço.
@@ -70,7 +91,7 @@ Validação de requisição de extrato antes de consumir o serviço.
 ---
 
 ## Versão : 20250715.1745.53
+
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250715.1745.53_
 
 Implementação do serviço de extrato.
-

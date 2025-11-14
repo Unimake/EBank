@@ -98,7 +98,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
 		<PackageReference Include="Unimake.AuthServer" Version="20250707.1650.48" />
-		<PackageReference Include="Unimake.EBank.Primitives" Version="20251106.1522.21" />
+		<PackageReference Include="Unimake.EBank.Primitives" Version="20251112.1820.34" />
 		<PackageReference Include="Unimake.Primitives" Version="20250912.1810.37" />
 	</ItemGroup>
 	<ItemGroup>

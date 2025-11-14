@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Http;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Unimake.AuthServer.Security.Scope;
@@ -79,8 +80,6 @@ namespace Unimake.EBank.Solutions.Client
         /// <exception cref="ResponseException">Lançada caso ocorra erro na resposta do servidor.</exception>
         private async Task<T> PrepareResponseAsync<T>(System.Net.Http.HttpResponseMessage response)
         {
-            var json = await response.ReadAsJsonAsync();
-
             if(response.IsSuccessStatusCode())
             {
                 if(response.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -88,13 +87,28 @@ namespace Unimake.EBank.Solutions.Client
                     return default;
                 }
 
+                if(typeof(T) == typeof(byte[]))
+                {
+                    var data = await response.Content.ReadAsByteArrayAsync();
+                    return (T)(object)data;
+                }
+
+                if(typeof(T) == typeof(string) &&
+                   response.Content.Headers.ContentType.MediaType == MediaTypeHeaderValue.Parse("text/html").MediaType)
+                {
+                    return (T)(object)(await response.Content.ReadAsStringAsync());
+                }
+
+                var json = await response.ReadAsJsonAsync();
+
                 return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 });
             }
 
-            var errors = ExceptionObject.FromJson(json);
+            var err = await response.ReadAsJsonAsync();
+            var errors = ExceptionObject.FromJson(err);
             System.Diagnostics.Debug.WriteLine(errors.Message);
             throw new ResponseException(errors.Message, response.StatusCode);
         }

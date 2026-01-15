@@ -1,12 +1,15 @@
 ﻿# 🔖 Changelog
-
-## Versão : 20260115.1205.59
-_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260115.1205.59_
-fix: Referência de objeto não definida para uma instância de um objeto.
 
-• Ajusta tratamento de NullReferenceException para evitar acesso a objeto nulo
-• Adiciona validações de nulidade antes de utilizar dependências e resultados de chamadas
-• Atualiza fluxo de execução para garantir inicialização adequada dos objetos envolvidos
+
+## Versão : 20260115.1205.59
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260115.1205.59_
+
+🐞 fix: Referência de objeto não definida para uma instância de um objeto.
+
+- Ajusta tratamento de NullReferenceException para evitar acesso a objeto nulo
+- Adiciona validações de nulidade antes de utilizar dependências e resultados de chamadas
+- Atualiza fluxo de execução para garantir inicialização adequada dos objetos envolvidos
 
 ---
 
@@ -105,3 +108,4 @@ Validação de requisição de extrato antes de consumir o serviço.
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20250715.1745.53_
 
 Implementação do serviço de extrato.
+

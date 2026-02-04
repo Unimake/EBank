@@ -1,6 +1,14 @@
 ﻿# 🔖 Changelog
 
 
+## Versão : 20260204.0622.06
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260204.0622.06_
+
+fix: Erro ao desserializar o valor '' para o tipo EBank.Solutions.Primitives.PIX.Models.Cobranca.Valor.<br/>`Object reference not set to an instance of an object.`
+
+---
+
 ## Versão : 20260115.1205.59
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20260115.1205.59_

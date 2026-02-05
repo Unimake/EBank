@@ -2,7 +2,7 @@
 * Autenticar API Unimake
 * -----------------------------------------------------------------------------------
 FUNCTION AutenticarAPI()
-	LOCAL loHttp, lcURL, lcJsonContent, lcResponse, lcHeader
+	LOCAL loHttp, cEndPoint, lcJsonContent, lcResponse, lcHeader
 	LOCAL loDecodedJSON, lcToken, lcExpiration
 	
 	DO LOCFILE("PROGS\JSON.PRG")
@@ -10,15 +10,19 @@ FUNCTION AutenticarAPI()
 	* Inicializa o objeto de Internet
 	loHttp = CREATEOBJECT("MSXML2.XMLHTTP.6.0")
 
-	* Define a URL da API
-	lcURL = "https://unimake.app/auth/api/auth"
+	* Define a URL da API de Produção
+	*cEndPoint = "https://unimake.app/auth/api/auth"
+	
+  * Definir o EndPoint de homologação (SANDBOX)
+	cEndPoint = "https://auth.sandbox.unimake.software/api/auth"
 
 	* Cria o conteúdo da requisição no formato JSON
-	lcJsonContent = '{"appId": "64ec6abf1ae54bceb58862b79d002c55","secret": "03be0c8b3a4a42c094a38005e20b1576"}'
+	lcJsonContent = '{"appId": "????????????????????????????????","secret": "????????????????????????????????"}' &&AppID e Secret tem que ser adquirido junto ao DEV do eBank ou uMessenger
 
+    lcToken = ""
 	TRY
 	    * Configura a requisição
-	    loHttp.Open("POST", lcURL, .F.) && False para requisição síncrona
+	    loHttp.Open("POST", cEndPoint, .F.) && False para requisição síncrona
 	    loHttp.setRequestHeader("Content-Type", "application/json")
 
 	    * Envia a requisição com o JSON
@@ -35,10 +39,7 @@ FUNCTION AutenticarAPI()
 		    IF EMPTY(json_getErrorMsg())
   			 * Extrai o valor do token
   			   lcExpiration = loDecodedJSON.get("expiration")
-  			   MESSAGEBOX(lcExpiration)
-  			    			   
   			   lcToken = loDecodedJSON.get("token")
-               MESSAGEBOX(lcToken)  			   
             ELSE
              * Exibe o erro
                MESSAGEBOX("Erro ao decodificar JSON:", json_getErrorMsg())
@@ -53,4 +54,4 @@ FUNCTION AutenticarAPI()
 
 	* Libera o objeto
 	RELEASE loHttp
-RETURN
+RETURN lcToken

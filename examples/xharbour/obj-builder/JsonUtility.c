@@ -1,0 +1,107 @@
+/*
+ * xHarbour build 1.2.1 Intl. (SimpLex) (Rev. 9592)
+ * Generated C source code from <JsonUtility.prg>
+ * Command: -oobj-builder\JsonUtility.c -m -n -pOobj-builder\ -q -gc0 -B -IC:\xHB\include -IC:\xHB\include\w32 JsonUtility.prg 
+ * Created: 2026.02.18 18:39:56 (XCC ISO C Compiler 2.70)
+ */
+
+#include "hbvmpub.h"
+#include "hbinit.h"
+
+#define __PRG_SOURCE__ "JsonUtility.prg"
+
+HB_FUNC( JSONGET );
+HB_FUNC( JSONTOHASH );
+HB_FUNC_INITLINES();
+
+HB_FUNC_EXTERN( VALTYPE );
+HB_FUNC_EXTERN( HHASKEY );
+HB_FUNC_EXTERN( LEN );
+HB_FUNC_EXTERN( __DBGENTRY );
+
+#undef HB_PRG_PCODE_VER
+#define HB_PRG_PCODE_VER 10
+
+#include "hbapi.h"
+
+HB_INIT_SYMBOLS_BEGIN( hb_vm_SymbolInit_JSONUTILITY )
+{ "JSONGET", {HB_FS_PUBLIC | HB_FS_LOCAL | HB_FS_FIRST}, {HB_FUNCNAME( JSONGET )}, &ModuleFakeDyn },
+{ "VALTYPE", {HB_FS_PUBLIC}, {HB_FUNCNAME( VALTYPE )}, NULL },
+{ "HHASKEY", {HB_FS_PUBLIC}, {HB_FUNCNAME( HHASKEY )}, NULL },
+{ "LEN", {HB_FS_PUBLIC}, {HB_FUNCNAME( LEN )}, NULL },
+{ "JSONTOHASH", {HB_FS_PUBLIC | HB_FS_LOCAL}, {HB_FUNCNAME( JSONTOHASH )}, &ModuleFakeDyn },
+{ "__DBGENTRY", {HB_FS_PUBLIC}, {HB_FUNCNAME( __DBGENTRY )}, NULL },
+{ "(_INITLINES)", {HB_FS_INITEXIT}, {hb_INITLINES}, &ModuleFakeDyn }
+HB_INIT_SYMBOLS_END( hb_vm_SymbolInit_JSONUTILITY )
+
+#if defined( HB_PRAGMA_STARTUP )
+   #pragma startup hb_vm_SymbolInit_JSONUTILITY
+#elif defined( HB_DATASEG_STARTUP )
+   #define HB_DATASEG_BODY    HB_DATASEG_FUNC( hb_vm_SymbolInit_JSONUTILITY )
+   #include "hbiniseg.h"
+#endif
+
+HB_FUNC( JSONGET )
+{
+   static const BYTE pcode[] =
+   {
+	13,2,2,51,74,115,111,110,85,116,105,108,105,116,
+	121,46,112,114,103,58,74,83,79,78,71,69,84,0,
+	37,1,0,88,74,83,79,78,0,37,2,0,67,75,
+	69,89,0,133,3,0,37,3,0,78,0,134,1,37,
+	4,0,88,80,65,73,82,0,134,3,108,1,100,95,
+	1,12,1,106,2,72,0,8,28,29,134,4,108,2,
+	100,95,1,95,2,12,2,28,11,134,5,95,1,95,
+	2,1,110,7,134,7,100,110,7,134,10,108,1,100,
+	95,1,12,1,106,2,65,0,8,28,103,134,11,126,
+	3,1,0,95,3,108,3,100,95,1,12,1,34,28,
+	85,134,12,95,1,95,3,1,80,4,134,13,9,108,
+	1,100,95,4,12,1,106,2,65,0,8,28,31,73,
+	9,108,3,100,95,4,12,1,92,2,16,28,17,73,
+	108,1,100,95,4,122,1,12,1,106,2,67,0,8,
+	28,22,134,14,95,4,122,1,95,2,8,28,11,134,
+	15,95,4,92,2,1,110,7,134,18,173,3,25,163,
+	134,20,100,110,7
+   };
+
+   hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC( JSONTOHASH )
+{
+   static const BYTE pcode[] =
+   {
+	13,3,1,51,74,115,111,110,85,116,105,108,105,116,
+	121,46,112,114,103,58,74,83,79,78,84,79,72,65,
+	83,72,0,37,1,0,88,74,83,79,78,0,133,27,
+	0,37,2,0,72,79,85,84,0,172,0,0,80,2,
+	134,1,37,3,0,78,0,134,2,37,4,0,88,80,
+	65,73,82,0,134,4,108,1,100,95,1,12,1,106,
+	2,72,0,8,28,8,134,5,95,1,110,7,134,8,
+	108,1,100,95,1,12,1,106,2,65,0,8,28,98,
+	134,9,126,3,1,0,95,3,108,3,100,95,1,12,
+	1,34,28,80,134,10,95,1,95,3,1,80,4,134,
+	11,9,108,1,100,95,4,12,1,106,2,65,0,8,
+	28,31,73,9,108,3,100,95,4,12,1,92,2,16,
+	28,17,73,108,1,100,95,4,122,1,12,1,106,2,
+	67,0,8,28,17,134,12,95,4,92,2,1,96,2,
+	0,95,4,122,1,2,134,14,173,3,25,168,134,16,
+	95,2,110,7
+   };
+
+   hb_vmExecute( pcode, symbols );
+}
+
+HB_FUNC_INITLINES()
+{
+   static const BYTE pcode[] =
+   {
+	51,74,115,111,110,85,116,105,108,105,116,121,0,106,
+	16,74,115,111,110,85,116,105,108,105,116,121,46,112,
+	114,103,0,121,106,7,216,229,167,184,249,10,0,4,
+	3,0,4,1,0,110,7
+   };
+
+   hb_vmExecute( pcode, symbols );
+}
+

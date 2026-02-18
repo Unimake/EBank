@@ -11,6 +11,8 @@ FUNCTION Main()
 
    AAdd(aOpcoes, "Autenticar API")
    AAdd(aOpcoes, "Gerar PIX")
+   AAdd(aOpcoes, "Consultar PIX")
+   AAdd(aOpcoes, "Registrar Boleto")
 
 
    while .T.
@@ -31,6 +33,11 @@ FUNCTION Main()
 
          CASE nOpcao == 2
             GeraPIX()
+
+         CASE nOpcao == 3
+
+         CASE nOpcao == 4
+            RegistraBoleto()
       ENDCASE
    ENDDO
 RETURN
@@ -93,6 +100,20 @@ STATIC FUNCTION GeraPIX()
       ENDIF
    ELSEIF ValType( hPix ) == "O"
       QOut( FormatError( hPix ) )
+   ELSE
+      QOut( "Erro: retorno inesperado" )
+   ENDIF
+   __Wait( )
+RETURN
+
+STATIC FUNCTION RegistraBoleto()
+   LOCAL hBoleto := RegistrarBoleto()
+
+   IF ValType( hBoleto ) == "H"
+      QOut( "Boleto registrado com sucesso:" )
+      QOut( hb_jsonEncode( hBoleto ) )
+   ELSEIF ValType( hBoleto ) == "O"
+      QOut( FormatError( hBoleto ) )
    ELSE
       QOut( "Erro: retorno inesperado" )
    ENDIF

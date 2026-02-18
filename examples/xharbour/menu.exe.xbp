@@ -31,12 +31,22 @@ MYC_FLAGS =
 MYDEFINES = 
 MYPRG_FLAGS = 
 
+[JsonUtility.prg]
+MYC_FLAGS = 
+MYDEFINES = 
+MYPRG_FLAGS = 
+
 [AutenticarAPI.prg]
 MYC_FLAGS = 
 MYDEFINES = 
 MYPRG_FLAGS = 
 
 [GerarPIX.prg]
+MYC_FLAGS = 
+MYDEFINES = 
+MYPRG_FLAGS = 
+
+[RegistrarBoleto.prg]
 MYC_FLAGS = 
 MYDEFINES = 
 MYPRG_FLAGS = 

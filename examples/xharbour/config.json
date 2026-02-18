@@ -1,0 +1,12 @@
+{
+	"_comment": [
+		"Ambiente: 1 = producao, 2 = sandbox",
+		"AppID: ID do aplicativo, fornecido pela Unimake",
+		"Secret: Chave secreta do aplicativo, fornecida pela Unimake",
+      "ConfigurationID: ID da configuração, fornecida pela Unimake"
+	],
+	"Ambiente": "1",
+	"AppID": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+	"Secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+	"ConfigurationID": "xxxxxxxxxxxxxxxx"
+}

@@ -1,0 +1,135 @@
+
+
+
+
+
+
+FUNCTION Main()
+   LOCAL aOpcoes, nOpcao
+   LOCAL hAuth
+   LOCAL hPix
+   LOCAL cToken := ""
+   LOCAL nExpiration := 0
+   LOCAL cRefreshToken := ""
+   LOCAL cType := ""
+   PUBLIC nAmbiente := 1
+
+   aOpcoes := {}
+
+   AAdd(aOpcoes, "Autenticar API")
+   AAdd(aOpcoes, "Gerar PIX")
+
+   while .T.
+      Scroll() ; SetPos(0,0)
+
+      DevPos( 1, 2 ) ; DevOut( "API Unimake for " + Version() )
+
+      nOpcao := Achoice( 3, 2, 30, 80, aOpcoes)
+
+      Scroll() ; SetPos(0,0)
+
+      DO CASE
+         CASE LastKey() = 27
+              EXIT
+
+         CASE nOpcao = 1
+              hAuth := AutenticarAPI()
+
+              IF ValType( hAuth ) == "H"
+                 cToken := hAuth[ "token" ]
+                 nExpiration := hAuth[ "expiration" ]
+
+                 IF HHasKey( hAuth, "refreshToken" )
+                    cRefreshToken := hAuth[ "refreshToken" ]
+                 ELSE
+                    cRefreshToken := ""
+                 ENDIF
+
+                 IF HHasKey( hAuth, "type" )
+                    cType := hAuth[ "type" ]
+                 ELSE
+                    cType := ""
+                 ENDIF
+
+                 QOut( "Token:" )
+                 QOut( cToken )
+                 QOut( )
+                 QOut( "Expiration:" )
+                 QOut( nExpiration )
+                 QOut( )
+                 QOut( "RefreshToken:" )
+                 QOut( cRefreshToken )
+                 QOut( )
+                 QOut( "Type:" )
+                 QOut( cType )
+                 QOut( )
+              ELSEIF ValType( hAuth ) == "O"
+                 QOut( FormatError( hAuth ) )
+              ELSE
+                 QOut( "Erro: retorno inesperado" )
+              ENDIF
+
+              __Wait( )
+
+         CASE nOpcao = 2
+              hPix := GerarPIX()
+
+              IF ValType( hPix ) == "H"
+                 IF HHasKey( hPix, "QRCodeImage" )
+                    QOut( "QRCodeImage:" )
+                    QOut( hPix[ "QRCodeImage" ] )
+                    QOut( )
+                 ENDIF
+
+                 IF HHasKey( hPix, "pixCopiaECola" )
+                    QOut( "pixCopiaECola:" )
+                    QOut( hPix[ "pixCopiaECola" ] )
+                    QOut( )
+                 ENDIF
+
+                 IF ! HHasKey( hPix, "QRCodeImage" ) .AND. ! HHasKey( hPix, "pixCopiaECola" )
+                    QOut( "Retorno OK, mas sem campos esperados." )
+                 ENDIF
+              ELSEIF ValType( hPix ) == "O"
+                 QOut( FormatError( hPix ) )
+              ELSE
+                 QOut( "Erro: retorno inesperado" )
+              ENDIF
+
+              __Wait( )
+      ENDCASE
+   ENDDO
+RETURN
+
+
+
+
+
+STATIC FUNCTION FormatError( oErr )
+   LOCAL cMsg := "Erro"
+
+   IF oErr == NIL
+      RETURN cMsg
+   ENDIF
+
+   IF __objHasMsg( oErr, "Description" )
+      cMsg += ": " + oErr:Description
+   ENDIF
+
+   IF __objHasMsg( oErr, "SubSystem" )
+      cMsg += " [" + oErr:SubSystem + "]"
+   ENDIF
+
+   IF __objHasMsg( oErr, "GenCode" )
+      cMsg += " Code=" + LTrim( Str( oErr:GenCode ) )
+   ENDIF
+
+   IF __objHasMsg( oErr, "SubCode" )
+      cMsg += " SubCode=" + LTrim( Str( oErr:SubCode ) )
+   ENDIF
+
+   IF __objHasMsg( oErr, "Operation" )
+      cMsg += " Op=" + oErr:Operation
+   ENDIF
+
+RETURN cMsg

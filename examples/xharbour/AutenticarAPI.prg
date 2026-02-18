@@ -27,6 +27,7 @@ FUNCTION AutenticarAPI()
 	LOCAL cHttpErr := ""
 	LOCAL cStatusText := ""
 
+   // Fluxo principal com BREAK para cair no tratamento de erros.
    BEGIN SEQUENCE
 
       // ==============================
@@ -64,16 +65,19 @@ FUNCTION AutenticarAPI()
          BREAK
       ENDIF
 
+      // Define a URL com base no ambiente escolhido.
       cUrl := IF( nAmbiente == 1, ;
          "https://unimake.app/auth/api/auth", ;
          "https://auth.sandbox.unimake.software/api/auth" )
 
+      // Monta o JSON esperado pela API de autenticacao.
       cJson := '{"appId":"' + cAppId + '","secret":"' + cSecret + '"}'
 
       // ==============================
       // WinHTTP
       // ==============================
 
+      // Captura excecoes COM/Harbour para detalhar falhas.
       oErr := NIL
       bOldError := ErrorBlock( { |e| oErr := e, Break( e ) } )
 
@@ -84,6 +88,7 @@ FUNCTION AutenticarAPI()
          ENDIF
 
          // Abre conexao
+         // Chamada sincrona para simplificar o fluxo do exemplo.
          oHttp:Open( "POST", cUrl, .F. )
 
          // Headers
@@ -114,6 +119,7 @@ FUNCTION AutenticarAPI()
          BREAK
       ENDIF
 
+      // 200 indica sucesso na autenticacao.
       IF nStatus <> 200
          BREAK
       ENDIF
@@ -122,6 +128,7 @@ FUNCTION AutenticarAPI()
       // Decodifica JSON resposta
       // ==============================
 
+      // Tenta decodificar o JSON retornado para hash.
       hJson := {=>}
       nDecoded := hb_jsonDecode( cResp, @hJson )
 
@@ -136,6 +143,7 @@ FUNCTION AutenticarAPI()
          BREAK
       ENDIF
 
+      // Campos obrigatorios esperados no retorno.
       cToken      := JsonGet( hJson, "token" )
       xExpiration := JsonGet( hJson, "expiration" )
 
@@ -170,6 +178,7 @@ FUNCTION AutenticarAPI()
       RETURN ErrorNew( "", 1, 1010, "Campo 'Secret' nao encontrado" )
    ENDIF
 
+   // Erros de infraestrutura HTTP/WinHTTP.
    IF oHttp == NIL
       RETURN ErrorNew( "", 1, 1001, "Falha ao criar WinHTTP" + cHttpErr )
    ENDIF
@@ -280,5 +289,4 @@ STATIC FUNCTION ErrText( oErr )
    IF Empty( cText )
       cText := "falha de comunicacao; verifique DNS/SSL/proxy"
    ENDIF
-
 RETURN cText

@@ -23,6 +23,7 @@ FUNCTION AutenticarAPI()
     LOCAL cHttpErr := ""
     LOCAL cStatusText := ""
 
+
    BEGIN SEQUENCE
 
 
@@ -62,9 +63,12 @@ FUNCTION AutenticarAPI()
 
 
 
+
       cUrl := IF( nAmbiente == 1,  "https://unimake.app/auth/api/auth",  "https://auth.sandbox.unimake.software/api/auth" )
 
+
       cJson := '{"appId":"' + cAppId + '","secret":"' + cSecret + '"}'
+
 
 
 
@@ -78,6 +82,7 @@ FUNCTION AutenticarAPI()
          IF oHttp == NIL
             BREAK
          ENDIF
+
 
 
          oHttp:Open( "POST", cUrl, .F. )
@@ -110,9 +115,11 @@ FUNCTION AutenticarAPI()
          BREAK
       ENDIF
 
+
       IF nStatus <> 200
          BREAK
       ENDIF
+
 
 
 
@@ -131,6 +138,7 @@ FUNCTION AutenticarAPI()
       IF ValType( hJson ) <> "H"
          BREAK
       ENDIF
+
 
       cToken      := JsonGet( hJson, "token" )
       xExpiration := JsonGet( hJson, "expiration" )
@@ -165,6 +173,7 @@ FUNCTION AutenticarAPI()
    IF Empty( cSecret )
       RETURN ErrorNew( "", 1, 1010, "Campo 'Secret' nao encontrado" )
    ENDIF
+
 
    IF oHttp == NIL
       RETURN ErrorNew( "", 1, 1001, "Falha ao criar WinHTTP" + cHttpErr )
@@ -276,5 +285,4 @@ STATIC FUNCTION ErrText( oErr )
    IF Empty( cText )
       cText := "falha de comunicacao; verifique DNS/SSL/proxy"
    ENDIF
-
 RETURN cText

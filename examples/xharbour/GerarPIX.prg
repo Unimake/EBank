@@ -6,6 +6,7 @@ FUNCTION GerarPIX()
    LOCAL hAuth := AutenticarAPI()
    LOCAL cToken := ""
 
+   // Autentica e extrai o token; qualquer erro aborta aqui.
    IF ValType( hAuth ) == "H"
       IF HHasKey( hAuth, "token" )
          cToken := hAuth[ "token" ]
@@ -32,6 +33,7 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL nAmbiente := NIL
    LOCAL cConfigurationID := NIL
    LOCAL cUrl := ""
+   // Monta o JSON da cobranca antes da chamada HTTP.
    LOCAL cJson := CriarJSONCobrancaPIX()
    LOCAL oHttp := NIL
    LOCAL cResp := ""
@@ -47,6 +49,7 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL cHttpErr := ""
    LOCAL cStatusText := ""
 
+   // Exibe o payload para facilitar suporte e validacao do exemplo.
    ? cJson
    ?
    Wait
@@ -86,6 +89,7 @@ FUNCTION ConsumirAPICobranca( cToken )
          BREAK
       ENDIF
 
+      // URL muda conforme ambiente (producao/sandbox).
       cUrl := IF( nAmbiente == 1, ;
          "https://unimake.app/ebank/api/v1/pix/Cobranca?configurationId=", ;
          "https://ebank.sandbox.unimake.software/api/v1/pix/Cobranca?configurationId=" ) + cConfigurationID
@@ -94,6 +98,7 @@ FUNCTION ConsumirAPICobranca( cToken )
       // WinHTTP
       // ==============================
 
+      // Captura excecoes COM/Harbour para detalhar falhas.
       oErr := NIL
       bOldError := ErrorBlock( { |e| oErr := e, Break( e ) } )
 
@@ -104,6 +109,7 @@ FUNCTION ConsumirAPICobranca( cToken )
          ENDIF
 
          // Abre conexao
+         // Chamada sincrona para simplificar o fluxo do exemplo.
          oHttp:Open( "POST", cUrl, .F. )
 
          // Headers
@@ -135,6 +141,7 @@ FUNCTION ConsumirAPICobranca( cToken )
          BREAK
       ENDIF
 
+      // Se o status for diferente de 200, interrompe o processamento para tratar o erro abaixo. 200 = sucesso.
       IF nStatus <> 200
          BREAK
       ENDIF
@@ -146,6 +153,7 @@ FUNCTION ConsumirAPICobranca( cToken )
    // Decodifica JSON resposta
    // ==============================
 
+   // Tenta decodificar o JSON retornado para hash.
    hJson := {=>}
    nDecoded := hb_jsonDecode( cResp, @hJson )
 
@@ -156,6 +164,7 @@ FUNCTION ConsumirAPICobranca( cToken )
       ENDIF
    ENDIF
 
+   // Extrai campos principais para validacao e exibicao.
    IF ValType( hJson ) == "H"
       cQRCodeImage := JsonGet( hJson, "QRCodeImage" )
       cPixCopiaECola := JsonGet( hJson, "pixCopiaECola" )
@@ -208,6 +217,7 @@ FUNCTION ConsumirAPICobranca( cToken )
       RETURN ErrorNew( "", 1, 2008, "Campo 'pixCopiaECola' nao encontrado no JSON de resposta" )
    ENDIF
 
+   // Salva o QRCode somente quando vier preenchido.
    IF ValType( cQRCodeImage ) == "C" .AND. ! Empty( AllTrim( cQRCodeImage ) )
       cSaveErr := SaveQRCodeImage( cQRCodeImage )
       IF ValType( cSaveErr ) == "C" .AND. ! Empty( cSaveErr )
@@ -252,7 +262,6 @@ FUNCTION CriarJSONCobrancaPIX()
 
    hValor[ "original" ] := 10
    hJson[ "valor" ] := hValor
-
 RETURN hb_jsonEncode( hJson, .F. )
 
 // Summary: Busca um valor por chave em hash ou array de pares.
@@ -348,17 +357,20 @@ STATIC FUNCTION SaveQRCodeImage( cBase64 )
       RETURN ""
    ENDIF
 
+   // Cria a pasta se ainda nao existir.
    IF ! IsDirectory( cDir )
       IF MakeDir( cDir ) <> 0
          RETURN "Falha ao criar pasta " + cDir
       ENDIF
    ENDIF
 
+   // Decodifica o Base64 para binario (imagem).
    cBin := hb_base64Decode( cBase64 )
    IF Empty( cBin )
       RETURN "Falha ao decodificar Base64 do QRCode"
    ENDIF
 
+   // Nome de arquivo unico baseado em data/hora.
    cFile := cDir + "\\QRCode_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".jpg"
 
    nHandle := FCreate( cFile )

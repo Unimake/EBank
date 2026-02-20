@@ -2,7 +2,7 @@
  * xHarbour build 1.2.1 Intl. (SimpLex) (Rev. 9592)
  * Generated C source code from <ConsultarBoleto.prg>
  * Command: -oobj-builder\ConsultarBoleto.c -m -n -pOobj-builder\ -q -gc0 -B -IC:\xHB\include -IC:\xHB\include\w32 ConsultarBoleto.prg 
- * Created: 2026.02.20 10:33:13 (XCC ISO C Compiler 2.70)
+ * Created: 2026.02.20 10:59:15 (XCC ISO C Compiler 2.70)
  */
 
 #include "hbvmpub.h"

@@ -36,6 +36,7 @@ FUNCTION Main()
             GeraPIX()
 
          CASE nOpcao == 3
+            ConsultaPIX()
 
          CASE nOpcao == 4
             RegistraBoleto()
@@ -103,6 +104,20 @@ STATIC FUNCTION GeraPIX()
       ENDIF
    ELSEIF ValType( hPix ) == "O"
       QOut( FormatError( hPix ) )
+   ELSE
+      QOut( "Erro: retorno inesperado" )
+   ENDIF
+   __Wait( )
+RETURN
+
+STATIC FUNCTION ConsultaPIX()
+   LOCAL xPix := ConsultarPIX()
+
+   IF ValType( xPix ) == "H" .OR. ValType( xPix ) == "A"
+      QOut( "Consulta de PIX concluida:" )
+      QOut( hb_jsonEncode( xPix ) )
+   ELSEIF ValType( xPix ) == "O"
+      QOut( FormatError( xPix ) )
    ELSE
       QOut( "Erro: retorno inesperado" )
    ENDIF

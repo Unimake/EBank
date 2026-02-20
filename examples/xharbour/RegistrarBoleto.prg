@@ -64,11 +64,6 @@ FUNCTION ConsumirAPIRegistraBoleto( cToken )
    LOCAL cStatusText := ""
    LOCAL cProcErr := ""
 
-   // Exibe o payload para facilitar suporte e validacao do exemplo.
-   ? cJson
-   ?
-   Wait
-
    BEGIN SEQUENCE
       // ==============================
       // Leitura config.json
@@ -114,7 +109,6 @@ FUNCTION ConsumirAPIRegistraBoleto( cToken )
       // ==============================
       // WinHTTP
       // ==============================
-
       oErr := NIL
       bOldError := ErrorBlock( { |e| oErr := e, Break( e ) } )
 
@@ -167,7 +161,6 @@ FUNCTION ConsumirAPIRegistraBoleto( cToken )
    // ==============================
    // Decodifica JSON resposta
    // ==============================
-
    hJson := {=>}
    nDecoded := hb_jsonDecode( cResp, @hJson )
 
@@ -181,7 +174,6 @@ FUNCTION ConsumirAPIRegistraBoleto( cToken )
    // ==============================
    // Tratamento de erros (padrao GerarPIX)
    // ==============================
-
    IF Empty( cConfigRaw )
       RETURN ErrorNew( "", 1, 3009, "Falha ao ler " + cConfigPath )
    ENDIF
@@ -232,26 +224,32 @@ FUNCTION CriarJSONBoleto()
    LOCAL hJuros := {=>}
    LOCAL hPagador := {=>}
    LOCAL hEndereco := {=>}
+   LOCAL hPdfConfig := {=>}
+   LOCAL hPixConfig := {=>}
    LOCAL aMensagens := {}
+   LOCAL dEmissao := Date()
+   LOCAL dVencimento := Date() + 30
+   LOCAL dDataJuros := Date() + 40
 
+   hRoot[ "Aceite" ] := .T.
+   hRoot[ "emissao" ] := DateToIso( dEmissao )
    hRoot[ "especie" ] := 2
-   hRoot[ "numeroParcela" ] := 1
-   hRoot[ "numeroNoBanco" ] := "00000008548"
-   hRoot[ "numeroNaEmpresa" ] := "000001-01"
-   hRoot[ "vencimento" ] := "2025-02-10"
-   hRoot[ "emissao" ] := "2025-01-10"
-   hRoot[ "diasParaBaixaOuDevolucao" ] := 0
-   hRoot[ "tipoBaixaDevolucao" ] := 1
+   hRoot[ "vencimento" ] := DateToIso( dVencimento )
    hRoot[ "valorIof" ] := 0
    hRoot[ "valorNominal" ] := 10
    hRoot[ "valorAbatimento" ] := 0
+   hRoot[ "numeroParcela" ] := 1
+   hRoot[ "numeroNoBanco" ] := "00000008548"
+   hRoot[ "numeroNaEmpresa" ] := "000001-01"
+   hRoot[ "diasParaBaixaOuDevolucao" ] := 0
+   hRoot[ "tipoBaixaDevolucao" ] := 1
    hRoot[ "testing" ] := .T.
 
    AAdd( aMensagens, "JUROS DIARIOS SOBRE ATRASO PAG.R$ 0,02" )
    hRoot[ "mensagens" ] := aMensagens
 
    hJuros[ "tipo" ] := 1
-   hJuros[ "data" ] := "2025-03-10"
+   hJuros[ "data" ] := DateToIso( dDataJuros )
    hJuros[ "valor" ] := 0.02
    hRoot[ "juros" ] := hJuros
 
@@ -267,6 +265,13 @@ FUNCTION CriarJSONBoleto()
    hPagador[ "tipoInscricao" ] := 1
    hPagador[ "inscricao" ] := "25806756807"
    hRoot[ "pagador" ] := hPagador
+
+   hPdfConfig[ "tryGeneratePDF" ] := .T.
+   hRoot[ "pdfConfig" ] := hPdfConfig
+
+   hPixConfig[ "chave" ] := "06117473000150"
+   hPixConfig[ "registrarPIX" ] := .T.
+   hRoot[ "pixConfig" ] := hPixConfig
 RETURN hb_jsonEncode( hRoot, .F. )
 
 // Summary: Trata retorno do registro e salva o PDF (se vier).
@@ -282,16 +287,7 @@ STATIC FUNCTION ProcessarRetornoBoleto( hJson )
    LOCAL cMsg := ""
    LOCAL cErr := ""
    LOCAL cFile := ""
-   LOCAL xQRCode := JsonGet( hJson, "QrCodeContent" )
-   LOCAL hQRCode := {=>}
-   LOCAL lQrSuccess := .F.
-   LOCAL cQrImage := ""
-   LOCAL cQrText := ""
-   LOCAL xFicha := JsonGet( hJson, "FichaAceiteContent" )
-   LOCAL hFicha := {=>}
-   LOCAL lFichaSuccess := .F.
-   LOCAL cFichaContent := ""
-   LOCAL cFichaMsg := ""
+   LOCAL cDir := "BoletoPDF"
 
    IF cLinhaDigitavel == NIL
       RETURN "Campo 'LinhaDigitavel' nao encontrado no JSON de resposta"
@@ -334,8 +330,14 @@ STATIC FUNCTION ProcessarRetornoBoleto( hJson )
       ENDIF
 
       IF lSuccess .AND. ValType( cContent ) == "C" .AND. ! Empty( AllTrim( cContent ) )
-         cFile := "BoletoPDF\Boleto_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".pdf"
-         cErr := SaveBase64ToFile( cContent, cFile )
+         IF ! IsDirectory( cDir )
+            IF MakeDir( cDir ) <> 0
+               RETURN "Falha ao criar pasta " + cDir
+            ENDIF
+         ENDIF
+         
+         cFile := cDir + "\Boleto_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".pdf"
+         cErr := SaveBase64ToFileEx( cContent, cFile, NIL, NIL, NIL, .F. )
          IF ! Empty( cErr )
             RETURN "Falha ao salvar PDF: " + cErr
          ELSE
@@ -345,128 +347,5 @@ STATIC FUNCTION ProcessarRetornoBoleto( hJson )
          ? "PDFContent.Message: " + cMsg
       ENDIF
    ENDIF
-
-   // QrCodeContent pode vir como Hash ou Array de pares
-   IF ValType( xQRCode ) == "H"
-      hQRCode := xQRCode
-   ELSEIF ValType( xQRCode ) == "A"
-      hQRCode := JsonToHash( xQRCode )
-   ENDIF
-
-   IF ValType( hQRCode ) == "H"
-      cQrImage := JsonGet( hQRCode, "Image" )
-      cQrText := JsonGet( hQRCode, "Text" )
-      lQrSuccess := JsonGet( hQRCode, "Success" )
-
-      IF ValType( lQrSuccess ) <> "L"
-         lQrSuccess := .F.
-      ENDIF
-
-      IF lQrSuccess .AND. ValType( cQrImage ) == "C" .AND. ! Empty( AllTrim( cQrImage ) )
-         cFile := "QRCodeBoleto\QRCode_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".jpg"
-         cErr := SaveBase64ToFile( cQrImage, cFile )
-         IF ! Empty( cErr )
-            RETURN "Falha ao salvar QRCode: " + cErr
-         ELSE
-            ? "QRCode salvo em: " + cFile
-         ENDIF
-      ELSEIF ValType( cQrText ) == "C" .AND. ! Empty( AllTrim( cQrText ) )
-         ? "QrCodeContent.Text: " + cQrText
-      ENDIF
-   ENDIF
-
-   // FichaAceiteContent pode vir como Hash ou Array de pares
-   IF ValType( xFicha ) == "H"
-      hFicha := xFicha
-   ELSEIF ValType( xFicha ) == "A"
-      hFicha := JsonToHash( xFicha )
-   ENDIF
-
-   IF ValType( hFicha ) == "H"
-      cFichaContent := JsonGet( hFicha, "Content" )
-      cFichaMsg := JsonGet( hFicha, "Message" )
-      lFichaSuccess := JsonGet( hFicha, "Success" )
-
-      IF ValType( lFichaSuccess ) <> "L"
-         lFichaSuccess := .F.
-      ENDIF
-
-      IF lFichaSuccess .AND. ValType( cFichaContent ) == "C" .AND. ! Empty( AllTrim( cFichaContent ) )
-         cFile := "FichaAceite\\Ficha_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".pdf"
-         cErr := SaveBase64ToFile( cFichaContent, cFile )
-         IF ! Empty( cErr )
-            RETURN "Falha ao salvar FichaAceite: " + cErr
-         ELSE
-            ? "FichaAceite salva em: " + cFile
-         ENDIF
-      ELSEIF ValType( cFichaMsg ) == "C" .AND. ! Empty( AllTrim( cFichaMsg ) )
-         ? "FichaAceiteContent.Message: " + cFichaMsg
-      ENDIF
-   ENDIF
 RETURN ""
 
-// Summary: Extrai texto amigavel de um erro COM/Harbour.
-// Params:
-//   oErr -> objeto de erro
-// Return: texto descritivo
-STATIC FUNCTION ErrText( oErr )
-   LOCAL cText := ""
-   LOCAL xVal
-   LOCAL bOldError
-
-   IF oErr == NIL
-      RETURN ""
-   ENDIF
-
-   bOldError := ErrorBlock( { |e| Break( e ) } )
-   BEGIN SEQUENCE
-      xVal := __objSendMsg( oErr, "Description" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText := xVal
-      ENDIF
-
-      xVal := __objSendMsg( oErr, "Operation" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText += IIF( Empty( cText ), "", " (" ) + xVal + IIF( Empty( cText ), "", ")" )
-      ENDIF
-   RECOVER
-   END SEQUENCE
-   ErrorBlock( bOldError )
-
-   IF Empty( cText )
-      cText := "falha de comunicacao; verifique DNS/SSL/proxy"
-   ENDIF
-RETURN cText
-
-// Summary: Salva conteudo Base64 em disco.
-// Params:
-//   cBase64 -> conteudo Base64
-//   cFile   -> caminho completo/relativo do arquivo destino
-// Return: string de erro ou vazio em caso de sucesso
-STATIC FUNCTION SaveBase64ToFile( cBase64, cFile )
-   LOCAL nPos := 0
-   LOCAL cBin := ""
-   LOCAL nHandle := -1
-   LOCAL nWritten := 0
-
-   IF Empty( cBase64 ) .OR. Empty( cFile )
-      RETURN "Parametros invalidos para SaveBase64ToFile"
-   ENDIF
-
-   cBin := hb_base64Decode( cBase64 )
-   IF Empty( cBin )
-      RETURN "Falha ao decodificar Base64"
-   ENDIF
-
-   nHandle := FCreate( cFile )
-   IF nHandle < 0
-      RETURN "Falha ao criar arquivo " + cFile
-   ENDIF
-
-   nWritten := FWrite( nHandle, cBin )
-   FClose( nHandle )
-
-   IF nWritten <> Len( cBin )
-      RETURN "Falha ao gravar arquivo " + cFile
-   ENDIF
-RETURN ""

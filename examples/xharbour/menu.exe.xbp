@@ -36,6 +36,11 @@ MYC_FLAGS =
 MYDEFINES = 
 MYPRG_FLAGS = 
 
+[APIUtility.prg]
+MYC_FLAGS = 
+MYDEFINES = 
+MYPRG_FLAGS = 
+
 [AutenticarAPI.prg]
 MYC_FLAGS = 
 MYDEFINES = 

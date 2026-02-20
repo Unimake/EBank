@@ -30,7 +30,6 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL nAmbiente := NIL
    LOCAL cConfigurationID := NIL
    LOCAL cUrl := ""
-
    LOCAL cJson := CriarJSONCobrancaPIX()
    LOCAL oHttp := NIL
    LOCAL cResp := ""
@@ -45,11 +44,6 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL CRLF := CHR(13) + CHR(10)
    LOCAL cHttpErr := ""
    LOCAL cStatusText := ""
-
-
-   QOut( cJson )
-   QOut( )
-   __Wait( )
 
    BEGIN SEQUENCE
 
@@ -90,6 +84,8 @@ FUNCTION ConsumirAPICobranca( cToken )
 
 
       cUrl := IF( nAmbiente == 1,  "https://unimake.app/ebank/api/v1/pix/Cobranca?configurationId=",  "https://ebank.sandbox.unimake.software/api/v1/pix/Cobranca?configurationId=" ) + cConfigurationID
+
+
 
 
 
@@ -170,7 +166,6 @@ FUNCTION ConsumirAPICobranca( cToken )
 
 
 
-
    IF Empty( cConfigRaw )
       RETURN ErrorNew( "", 1, 2009, "Falha ao ler " + cConfigPath )
    ENDIF
@@ -216,7 +211,7 @@ FUNCTION ConsumirAPICobranca( cToken )
 
 
    IF ValType( cQRCodeImage ) == "C" .AND. ! Empty( AllTrim( cQRCodeImage ) )
-      cSaveErr := SaveQRCodeImage( cQRCodeImage )
+      cSaveErr := SaveBase64ToFileEx( cQRCodeImage, "", "QRCodePIX", "QRCode_", "jpg", .T. )
       IF ValType( cSaveErr ) == "C" .AND. ! Empty( cSaveErr )
          RETURN ErrorNew( "", 1, 2013, cSaveErr )
       ENDIF
@@ -260,89 +255,3 @@ FUNCTION CriarJSONCobrancaPIX()
    hValor[ "original" ] := 10
    hJson[ "valor" ] := hValor
 RETURN hb_jsonEncode( hJson, .F. )
-
-
-
-
-
-STATIC FUNCTION ErrText( oErr )
-   LOCAL cText := ""
-   LOCAL xVal
-   LOCAL bOldError
-
-   IF oErr == NIL
-      RETURN ""
-   ENDIF
-
-   bOldError := ErrorBlock( { |e| Break( e ) } )
-   BEGIN SEQUENCE
-      xVal := __objSendMsg( oErr, "Description" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText := xVal
-      ENDIF
-
-      xVal := __objSendMsg( oErr, "Operation" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText += IIF( Empty( cText ), "", " (" ) + xVal + IIF( Empty( cText ), "", ")" )
-      ENDIF
-   RECOVER
-   end
-   ErrorBlock( bOldError )
-
-   IF Empty( cText )
-      cText := "falha de comunicacao; verifique DNS/SSL/proxy"
-   ENDIF
-
-RETURN cText
-
-
-
-
-
-STATIC FUNCTION SaveQRCodeImage( cBase64 )
-   LOCAL cDir := "QRCodePIX"
-   LOCAL cFile := ""
-   LOCAL cBin := ""
-   LOCAL nHandle := -1
-   LOCAL nWritten := 0
-
-   IF Empty( cBase64 )
-      RETURN ""
-   ENDIF
-
-
-   IF ! IsDirectory( cDir )
-      IF MakeDir( cDir ) <> 0
-         RETURN "Falha ao criar pasta " + cDir
-      ENDIF
-   ENDIF
-
-
-   cBin := hb_base64Decode( cBase64 )
-   IF Empty( cBin )
-      RETURN "Falha ao decodificar Base64 do QRCode"
-   ENDIF
-
-
-   cFile := cDir + "\\QRCode_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".jpg"
-
-   nHandle := FCreate( cFile )
-   IF nHandle < 0
-      RETURN "Falha ao criar arquivo " + cFile
-   ENDIF
-
-   nWritten := FWrite( nHandle, cBin )
-   FClose( nHandle )
-   IF nWritten <> Len( cBin )
-      RETURN "Falha ao gravar arquivo " + cFile
-   ENDIF
-RETURN ""
-
-
-STATIC FUNCTION DateToIso( dDate )
-   LOCAL cDate := DToS( dDate )
-
-   IF Empty( cDate ) .OR. Len( cDate ) < 8
-      RETURN ""
-   ENDIF
-RETURN SubStr( cDate, 1, 4 ) + "-" + SubStr( cDate, 5, 2 ) + "-" + SubStr( cDate, 7, 2 )

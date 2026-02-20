@@ -81,7 +81,7 @@ STATIC FUNCTION GeraPIX()
 
    IF ValType( hPix ) == "H"
       IF HHasKey( hPix, "QRCodeImage" )
-         QOut( "QRCodeImage:" )
+         QOut( "Base64 QRCodeImage:" )
          QOut( hPix[ "QRCodeImage" ] )
          QOut( )
          QOut( "QRCodePIX retornado em Base64 pela API foi salvo como arquivo/imagem na subpasta QRCodePIX." )
@@ -90,8 +90,7 @@ STATIC FUNCTION GeraPIX()
       ENDIF
 
       IF HHasKey( hPix, "pixCopiaECola" )
-         QOut( "pixCopiaECola:" )
-         QOut( hPix[ "pixCopiaECola" ] )
+         QOut( "pixCopiaECola: " + hPix[ "pixCopiaECola" ] )
          QOut( )
       ENDIF
 

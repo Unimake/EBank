@@ -33,7 +33,6 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL nAmbiente := NIL
    LOCAL cConfigurationID := NIL
    LOCAL cUrl := ""
-   // Monta o JSON da cobranca antes da chamada HTTP.
    LOCAL cJson := CriarJSONCobrancaPIX()
    LOCAL oHttp := NIL
    LOCAL cResp := ""
@@ -48,11 +47,6 @@ FUNCTION ConsumirAPICobranca( cToken )
    LOCAL CRLF := CHR(13) + CHR(10)
    LOCAL cHttpErr := ""
    LOCAL cStatusText := ""
-
-   // Exibe o payload para facilitar suporte e validacao do exemplo.
-   ? cJson
-   ?
-   Wait
 
    BEGIN SEQUENCE
       // ==============================
@@ -93,6 +87,8 @@ FUNCTION ConsumirAPICobranca( cToken )
       cUrl := IF( nAmbiente == 1, ;
          "https://unimake.app/ebank/api/v1/pix/Cobranca?configurationId=", ;
          "https://ebank.sandbox.unimake.software/api/v1/pix/Cobranca?configurationId=" ) + cConfigurationID
+
+      *cUrl := "http://209.14.24.178:58200/api/v1/pix/Cobranca?configurationId=" + cConfigurationID
 
       // ==============================
       // WinHTTP
@@ -173,7 +169,6 @@ FUNCTION ConsumirAPICobranca( cToken )
    // ==============================
    // Tratamento de erros
    // ==============================
-
    IF Empty( cConfigRaw )
       RETURN ErrorNew( "", 1, 2009, "Falha ao ler " + cConfigPath )
    ENDIF
@@ -219,7 +214,7 @@ FUNCTION ConsumirAPICobranca( cToken )
 
    // Salva o QRCode somente quando vier preenchido.
    IF ValType( cQRCodeImage ) == "C" .AND. ! Empty( AllTrim( cQRCodeImage ) )
-      cSaveErr := SaveQRCodeImage( cQRCodeImage )
+      cSaveErr := SaveBase64ToFileEx( cQRCodeImage, "", "QRCodePIX", "QRCode_", "jpg", .T. )
       IF ValType( cSaveErr ) == "C" .AND. ! Empty( cSaveErr )
          RETURN ErrorNew( "", 1, 2013, cSaveErr )
       ENDIF
@@ -263,89 +258,3 @@ FUNCTION CriarJSONCobrancaPIX()
    hValor[ "original" ] := 10
    hJson[ "valor" ] := hValor
 RETURN hb_jsonEncode( hJson, .F. )
-
-// Summary: Extrai texto amigavel de um erro COM/Harbour.
-// Params:
-//   oErr -> objeto de erro
-// Return: texto descritivo
-STATIC FUNCTION ErrText( oErr )
-   LOCAL cText := ""
-   LOCAL xVal
-   LOCAL bOldError
-
-   IF oErr == NIL
-      RETURN ""
-   ENDIF
-
-   bOldError := ErrorBlock( { |e| Break( e ) } )
-   BEGIN SEQUENCE
-      xVal := __objSendMsg( oErr, "Description" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText := xVal
-      ENDIF
-
-      xVal := __objSendMsg( oErr, "Operation" )
-      IF ValType( xVal ) == "C" .AND. ! Empty( xVal )
-         cText += IIF( Empty( cText ), "", " (" ) + xVal + IIF( Empty( cText ), "", ")" )
-      ENDIF
-   RECOVER
-   END SEQUENCE
-   ErrorBlock( bOldError )
-
-   IF Empty( cText )
-      cText := "falha de comunicacao; verifique DNS/SSL/proxy"
-   ENDIF
-
-RETURN cText
-
-// Summary: Salva o QRCode em Base64 como imagem em disco.
-// Params:
-//   cBase64 -> imagem em Base64
-// Return: string de erro ou vazio em caso de sucesso
-STATIC FUNCTION SaveQRCodeImage( cBase64 )
-   LOCAL cDir := "QRCodePIX"
-   LOCAL cFile := ""
-   LOCAL cBin := ""
-   LOCAL nHandle := -1
-   LOCAL nWritten := 0
-
-   IF Empty( cBase64 )
-      RETURN ""
-   ENDIF
-
-   // Cria a pasta se ainda nao existir.
-   IF ! IsDirectory( cDir )
-      IF MakeDir( cDir ) <> 0
-         RETURN "Falha ao criar pasta " + cDir
-      ENDIF
-   ENDIF
-
-   // Decodifica o Base64 para binario (imagem).
-   cBin := hb_base64Decode( cBase64 )
-   IF Empty( cBin )
-      RETURN "Falha ao decodificar Base64 do QRCode"
-   ENDIF
-
-   // Nome de arquivo unico baseado em data/hora.
-   cFile := cDir + "\\QRCode_" + DToS( Date() ) + "_" + StrTran( Time(), ":", "" ) + ".jpg"
-
-   nHandle := FCreate( cFile )
-   IF nHandle < 0
-      RETURN "Falha ao criar arquivo " + cFile
-   ENDIF
-
-   nWritten := FWrite( nHandle, cBin )
-   FClose( nHandle )
-   IF nWritten <> Len( cBin )
-      RETURN "Falha ao gravar arquivo " + cFile
-   ENDIF
-RETURN ""
-
-// Summary: Converte data para ISO (YYYY-MM-DD).
-STATIC FUNCTION DateToIso( dDate )
-   LOCAL cDate := DToS( dDate )
-
-   IF Empty( cDate ) .OR. Len( cDate ) < 8
-      RETURN ""
-   ENDIF
-RETURN SubStr( cDate, 1, 4 ) + "-" + SubStr( cDate, 5, 2 ) + "-" + SubStr( cDate, 7, 2 )

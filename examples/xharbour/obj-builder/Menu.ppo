@@ -13,6 +13,7 @@ FUNCTION Main()
    AAdd(aOpcoes, "Gerar PIX")
    AAdd(aOpcoes, "Consultar PIX")
    AAdd(aOpcoes, "Registrar Boleto")
+   AAdd(aOpcoes, "Consultar Boleto")
 
 
    while .T.
@@ -38,6 +39,9 @@ FUNCTION Main()
 
          CASE nOpcao == 4
             RegistraBoleto()
+
+         CASE nOpcao == 5
+            ConsultaBoleto()
       ENDCASE
    ENDDO
 RETURN
@@ -113,6 +117,20 @@ STATIC FUNCTION RegistraBoleto()
       QOut( hb_jsonEncode( hBoleto ) )
    ELSEIF ValType( hBoleto ) == "O"
       QOut( FormatError( hBoleto ) )
+   ELSE
+      QOut( "Erro: retorno inesperado" )
+   ENDIF
+   __Wait( )
+RETURN
+
+STATIC FUNCTION ConsultaBoleto()
+   LOCAL xBoleto := ConsultarBoleto()
+
+   IF ValType( xBoleto ) == "H" .OR. ValType( xBoleto ) == "A"
+      QOut( "Consulta de boleto concluida:" )
+      QOut( hb_jsonEncode( xBoleto ) )
+   ELSEIF ValType( xBoleto ) == "O"
+      QOut( FormatError( xBoleto ) )
    ELSE
       QOut( "Erro: retorno inesperado" )
    ENDIF

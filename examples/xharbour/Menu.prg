@@ -13,6 +13,7 @@ FUNCTION Main()
    AAdd(aOpcoes, "Gerar PIX")
    AAdd(aOpcoes, "Consultar PIX")
    AAdd(aOpcoes, "Registrar Boleto")
+   AAdd(aOpcoes, "Consultar Boleto")
   
    // Loop principal do menu.
    DO WHILE .T.
@@ -38,6 +39,9 @@ FUNCTION Main()
 
          CASE nOpcao == 4
             RegistraBoleto()
+
+         CASE nOpcao == 5
+            ConsultaBoleto()
       ENDCASE        
    ENDDO
 RETURN
@@ -113,6 +117,20 @@ STATIC FUNCTION RegistraBoleto()
       ? hb_jsonEncode( hBoleto )
    ELSEIF ValType( hBoleto ) == "O"
       ? FormatError( hBoleto )
+   ELSE
+      ? "Erro: retorno inesperado"
+   ENDIF
+   Wait
+RETURN
+
+STATIC FUNCTION ConsultaBoleto()
+   LOCAL xBoleto := ConsultarBoleto()
+
+   IF ValType( xBoleto ) == "H" .OR. ValType( xBoleto ) == "A"
+      ? "Consulta de boleto concluida:" 
+      ? hb_jsonEncode( xBoleto )
+   ELSEIF ValType( xBoleto ) == "O"
+      ? FormatError( xBoleto )
    ELSE
       ? "Erro: retorno inesperado"
    ENDIF

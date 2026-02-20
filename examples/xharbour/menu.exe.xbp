@@ -56,6 +56,11 @@ MYC_FLAGS =
 MYDEFINES = 
 MYPRG_FLAGS = 
 
+[ConsultarBoleto.prg]
+MYC_FLAGS = 
+MYDEFINES = 
+MYPRG_FLAGS = 
+
 [C:\xHB\Lib\TipSSL.lib]
 
 [C:\xHB\Lib\libeay32.lib]

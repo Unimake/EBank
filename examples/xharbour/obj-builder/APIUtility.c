@@ -2,7 +2,7 @@
  * xHarbour build 1.2.1 Intl. (SimpLex) (Rev. 9592)
  * Generated C source code from <APIUtility.prg>
  * Command: -oobj-builder\APIUtility.c -m -n -pOobj-builder\ -q -gc0 -B -IC:\xHB\include -IC:\xHB\include\w32 APIUtility.prg 
- * Created: 2026.02.20 10:12:11 (XCC ISO C Compiler 2.70)
+ * Created: 2026.02.20 10:32:39 (XCC ISO C Compiler 2.70)
  */
 
 #include "hbvmpub.h"

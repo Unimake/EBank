@@ -1,0 +1,300 @@
+#line 14 "ConsultarBoleto.prg"
+FUNCTION ConsultarBoleto()
+    LOCAL hAuth := AutenticarAPI()
+    LOCAL cToken := ""
+
+
+    IF ValType( hAuth ) == "H"
+        IF HHasKey( hAuth, "token" )
+            cToken := hAuth[ "token" ]
+        ELSE
+            RETURN ErrorNew( "", 1, 4001, "Campo 'token' nao encontrado na autenticacao" )
+        ENDIF
+    ELSEIF ValType( hAuth ) == "O"
+        RETURN hAuth
+    ELSE
+        RETURN ErrorNew( "", 1, 4002, "Retorno inesperado na autenticacao" )
+    ENDIF
+RETURN ConsumirAPIConsultarBoleto( cToken )
+
+
+
+
+
+FUNCTION ConsumirAPIConsultarBoleto( cToken )
+    LOCAL cConfigPath := "config.json"
+    LOCAL cConfigRaw := ""
+    LOCAL hConfig := {=>}
+    LOCAL nConfigDecoded := 0
+    LOCAL xAmbiente := NIL
+    LOCAL nAmbiente := NIL
+    LOCAL cConfigurationID := NIL
+    LOCAL cUrl := ""
+    LOCAL cJson := CriarJSONConsultaBoleto()
+    LOCAL oHttp := NIL
+    LOCAL cResp := ""
+    LOCAL hJson := NIL
+    LOCAL nStatus := 0
+    LOCAL nDecoded := 0
+    LOCAL oErr := NIL
+    LOCAL bOldError
+    LOCAL CRLF := CHR(13) + CHR(10)
+    LOCAL cHttpErr := ""
+    LOCAL cStatusText := ""
+    LOCAL cProcErr := ""
+
+    BEGIN SEQUENCE
+
+
+
+        cConfigRaw := MemoRead( cConfigPath )
+        IF Empty( cConfigRaw )
+            BREAK
+        ENDIF
+
+        nConfigDecoded := hb_jsonDecode( cConfigRaw, @hConfig )
+        IF nConfigDecoded == 0 .OR. ValType( hConfig ) <> "H"
+            hConfig := hb_jsonDecode( cConfigRaw )
+            IF ValType( hConfig ) <> "H"
+                hConfig := JsonToHash( hConfig )
+            ENDIF
+        ENDIF
+
+        IF ValType( hConfig ) <> "H"
+            BREAK
+        ENDIF
+
+        xAmbiente := JsonGet( hConfig, "Ambiente" )
+        cConfigurationID := JsonGet( hConfig, "ConfigurationID" )
+
+        IF ValType( xAmbiente ) == "C"
+            nAmbiente := Val( xAmbiente )
+        ELSEIF ValType( xAmbiente ) == "N"
+            nAmbiente := xAmbiente
+        ENDIF
+
+        IF nAmbiente == NIL .OR. Empty( cConfigurationID )
+            BREAK
+        ENDIF
+
+
+
+
+
+
+        cUrl := IF( nAmbiente == 1,     "https://unimake.app/ebank/api/v1/boleto/consultar?configurationId=",     "https://ebank.sandbox.unimake.software/api/v1/boleto/consultar?configurationId=" ) + cConfigurationID
+
+
+
+
+        oErr := NIL
+        bOldError := ErrorBlock( { |e| oErr := e, Break( e ) } )
+
+        BEGIN SEQUENCE
+            oHttp := CreateObject( "WinHttp.WinHttpRequest.5.1" )
+            IF oHttp == NIL
+                BREAK
+            ENDIF
+
+
+            oHttp:Open( "POST", cUrl, .F. )
+
+
+            oHttp:SetRequestHeader( "Authorization", "Bearer " + cToken )
+            oHttp:SetRequestHeader( "Content-Type", "application/json" )
+            oHttp:SetRequestHeader( "Accept", "application/json" )
+
+
+            oHttp:Send( cJson )
+
+            nStatus := oHttp:Status
+            cResp := oHttp:ResponseText
+
+            BEGIN SEQUENCE
+                cStatusText := oHttp:StatusText
+            RECOVER
+            end
+        RECOVER
+        end
+
+        ErrorBlock( bOldError )
+
+        IF oErr <> NIL
+            cHttpErr := CRLF + "Erro WinHTTP: " + ErrText( oErr )
+            BREAK
+        ENDIF
+
+        IF oHttp == NIL
+            BREAK
+        ENDIF
+
+
+        IF nStatus <> 200
+            BREAK
+        ENDIF
+    RECOVER
+
+    end
+
+
+
+
+    hJson := NIL
+    nDecoded := hb_jsonDecode( cResp, @hJson )
+
+    IF nDecoded == 0 .OR. ( ValType( hJson ) <> "H" .AND. ValType( hJson ) <> "A" )
+        hJson := hb_jsonDecode( cResp )
+        IF ValType( hJson ) == "A"
+
+        ELSEIF ValType( hJson ) == "H"
+
+        ELSE
+            hJson := JsonToHash( hJson )
+        ENDIF
+    ENDIF
+
+
+
+
+    IF Empty( cConfigRaw )
+        RETURN ErrorNew( "", 1, 4009, "Falha ao ler " + cConfigPath )
+    ENDIF
+
+    IF ValType( hConfig ) <> "H"
+        RETURN ErrorNew( "", 1, 4010, "Erro ao decodificar JSON de configuracao" )
+    ENDIF
+
+    IF nAmbiente == NIL
+        RETURN ErrorNew( "", 1, 4011, "Campo 'Ambiente' invalido" )
+    ENDIF
+
+    IF Empty( cConfigurationID )
+        RETURN ErrorNew( "", 1, 4012, "Campo 'ConfigurationID' nao encontrado" )
+    ENDIF
+
+    IF oHttp == NIL
+        RETURN ErrorNew( "", 1, 4003, "Falha ao criar WinHTTP" + cHttpErr )
+    ENDIF
+
+    IF nStatus <> 200
+        IF Empty( cHttpErr ) .AND. nStatus == 0
+            cHttpErr := CRLF + "Erro WinHTTP: sem resposta HTTP; verifique URL/DNS/SSL/proxy"
+        ENDIF
+
+
+
+
+        RETURN ErrorNew( "", 1, 4005,     "Falha HTTP: " + LTrim( Str( nStatus ) ) +     IIF( Empty( cStatusText ), "", " " + cStatusText ) +     CRLF + "URL: " + cUrl +     IIF( Empty( cResp ), "", CRLF + cResp ) + cHttpErr )
+    ENDIF
+
+    IF ValType( hJson ) <> "H" .AND. ValType( hJson ) <> "A"
+        RETURN ErrorNew( "", 1, 4006, "Erro ao decodificar o JSON de resposta" )
+    ENDIF
+
+
+
+
+    cProcErr := ProcessarRetornoConsultaBoleto( hJson )
+    IF ValType( cProcErr ) == "C" .AND. ! Empty( cProcErr )
+        RETURN ErrorNew( "", 1, 4013, cProcErr )
+    ENDIF
+RETURN hJson
+
+
+FUNCTION CriarJSONConsultaBoleto()
+    LOCAL hRoot := {=>}
+    LOCAL aNumeroNoBanco := {}
+
+    hRoot[ "testing" ] := .T.
+    AAdd( aNumeroNoBanco, "00000001" )
+    AAdd( aNumeroNoBanco, "00000002" )
+    AAdd( aNumeroNoBanco, "00000003" )
+    hRoot[ "numeroNoBanco" ] := aNumeroNoBanco
+RETURN hb_jsonEncode( hRoot, .F. )
+
+
+STATIC FUNCTION ProcessarRetornoConsultaBoleto( xJson )
+    LOCAL aBoletos := {}
+    LOCAL xBoletos := NIL
+    LOCAL nI := 0
+    LOCAL hBoleto := {=>}
+    LOCAL xVal := NIL
+    LOCAL cCodigoBarras := ""
+    LOCAL cSituacao := ""
+    LOCAL cTipoLiquidacao := ""
+    LOCAL cLinhaDigitavel := ""
+    LOCAL cValor := ""
+    LOCAL cValorDesconto := ""
+    LOCAL cValorJuros := ""
+    LOCAL cValorLiquidado := ""
+    LOCAL CRLF := CHR(13) + CHR(10)
+    LOCAL cInfo := ""
+
+    IF ValType( xJson ) == "A"
+        aBoletos := xJson
+    ELSEIF ValType( xJson ) == "H"
+        xBoletos := JsonGet( xJson, "boletos" )
+        IF ValType( xBoletos ) <> "A"
+            xBoletos := JsonGet( xJson, "Boletos" )
+        ENDIF
+        IF ValType( xBoletos ) == "A"
+            aBoletos := xBoletos
+        ELSE
+            aBoletos := { xJson }
+        ENDIF
+    ELSE
+        RETURN "Resposta JSON invalida"
+    ENDIF
+
+    IF Len( aBoletos ) == 0
+        RETURN "Nenhum boleto encontrado na resposta"
+    ENDIF
+
+    FOR nI := 1 TO Len( aBoletos )
+        hBoleto := aBoletos[ nI ]
+        IF ValType( hBoleto ) == "A"
+            hBoleto := JsonToHash( hBoleto )
+        ENDIF
+        IF ValType( hBoleto ) <> "H"
+            LOOP
+        ENDIF
+
+        xVal := JsonGet( hBoleto, "CodigoBarras" )
+        cCodigoBarras := IIF( ValType( xVal ) == "C", xVal, "" )
+
+        xVal := JsonGet( hBoleto, "Situacao" )
+        cSituacao := IIF( ValType( xVal ) == "C", xVal, ValorToString( xVal ) )
+
+        xVal := JsonGet( hBoleto, "TipoLiquidacao" )
+        cTipoLiquidacao := IIF( ValType( xVal ) == "C", xVal, ValorToString( xVal ) )
+
+        xVal := JsonGet( hBoleto, "LinhaDigitavel" )
+        cLinhaDigitavel := IIF( ValType( xVal ) == "C", xVal, "" )
+
+        cValor := ValorToString( JsonGet( hBoleto, "Valor" ) )
+        cValorDesconto := ValorToString( JsonGet( hBoleto, "ValorDesconto" ) )
+        cValorJuros := ValorToString( JsonGet( hBoleto, "ValorJuros" ) )
+        cValorLiquidado := ValorToString( JsonGet( hBoleto, "ValorLiquidado" ) )
+
+
+
+
+
+
+
+
+
+        cInfo := "Boleto #" + LTrim( Str( nI ) ) + CRLF +     "Codigo de Barras: " + cCodigoBarras + CRLF +     "Situacao: " + cSituacao + CRLF +     "Tipo de Liquidacao: " + cTipoLiquidacao + CRLF +     "Linha Digitavel: " + cLinhaDigitavel + CRLF +     "Valor: R$ " + cValor + CRLF +     "Desconto: R$ " + cValorDesconto + CRLF +     "Juros: R$ " + cValorJuros + CRLF +     "Valor Liquidado: R$ " + cValorLiquidado
+
+        QOut( cInfo )
+    NEXT
+RETURN ""
+
+
+STATIC FUNCTION ValorToString( xVal )
+    IF ValType( xVal ) == "C"
+        RETURN xVal
+    ELSEIF ValType( xVal ) == "N"
+        RETURN LTrim( Str( xVal, 15, 2 ) )
+    ENDIF
+RETURN ""

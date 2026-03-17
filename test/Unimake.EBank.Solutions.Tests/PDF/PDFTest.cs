@@ -16,7 +16,7 @@ namespace Unimake.EBank.Solutions.Tests.PDF
         #region Private Fields
 
         // exemplo de inicialização manual — ajuste nomes/propriedades conforme a definição real de PDFRequest
-        private static readonly PDFRequest Request = new PDFRequest
+        private static readonly PDFRequest Request = new()
         {
             Boleto = new Boleto
             {

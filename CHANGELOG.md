@@ -1,6 +1,37 @@
 ﻿# 🔖 Changelog
 
 
+## Versão : 20260316.1928.07
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260316.1928.07_
+
+### Correção
+
+Tratamento de datas com timezone.
+
+Foi corrigido um problema onde valores datetime contendo informação de timezone ou UTC offset poderiam ser interpretados como o dia anterior durante o processamento de boletos.
+
+Exemplo de entrada afetada:
+
+`2026-03-31T00:00:00.000Z`
+
+Em alguns cenários este valor poderia ser processado como:
+
+`2026-03-30`
+
+A lógica de processamento de datas foi ajustada para desconsiderar componentes de hora e timezone, passando a considerar exclusivamente a data civil (formato yyyy-MM-dd).
+
+### Impacto
+
+Esta correção evita cálculo incorreto da data de vencimento, inconsistências na geração do código de barras, linha digitável e fator de vencimento FEBRABAN na emissão de boletos.
+
+### Nota de migração
+
+Recomenda-se que os integradores atualizem para esta versão para evitar problemas relacionados a conversão de timezone.  
+Como boa prática, datas de boletos devem sempre ser tratadas como datas civis, sem informação de hora ou fuso horário.
+
+---
+
 ## Versão : 20260204.0622.06
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20260204.0622.06_

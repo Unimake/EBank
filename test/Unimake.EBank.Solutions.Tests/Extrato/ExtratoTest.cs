@@ -3,10 +3,10 @@ using System;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Extrato
 {
+    [Trait("Category", "Publish")]
     public class ExtratoTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods

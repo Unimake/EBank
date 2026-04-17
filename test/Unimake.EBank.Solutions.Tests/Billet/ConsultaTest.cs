@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Billet
 {
+    [Trait("Category", "Publish")]
     public class ConsultaTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods
@@ -39,7 +40,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             try
             {
                 // Envia a requisição POST
-                var response = await client.PostAsync(url, content);
+                var response = await client.PostAsync(url, content, CancellationTokenSource.CreateLinkedTokenSource().Token);
                 var responseBody = await response.ReadAsJsonAsync();
 
                 // Verifica se a resposta foi bem-sucedida

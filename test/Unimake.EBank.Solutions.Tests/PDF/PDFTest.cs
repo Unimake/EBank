@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.PDF
 {
+    [Trait("Category", "Publish")]
     public class PDFTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Fields
@@ -47,13 +47,12 @@ namespace Unimake.EBank.Solutions.Tests.PDF
                     }
                 }
             },
-            
+
             // Todos os campos abaixo são opcionais
 
             PixContent = new global::EBank.Solutions.Primitives.PIX.Models.PixContent
             {
                 Text = "6d5sd6sad6sadsad6s4d6s4d5ad64asd64sad646d4sa6d4as6d4s6a54d5s6a4d65s4d65a4d64as6d4sa6d4s6a5d"
-
             }
             //+ opcionais
             // ExibirDemonstrativo = false,
@@ -74,15 +73,23 @@ namespace Unimake.EBank.Solutions.Tests.PDF
 
         private static void OpenFile(byte[] bytes, FileInfo filePath)
         {
-            filePath.Directory.Create();
-
-            File.WriteAllBytes(filePath.FullName, bytes);
-
-            Process.Start(new ProcessStartInfo
+            // se não abrir o arquivo, sem problemas.
+            try
             {
-                UseShellExecute = true,
-                FileName = filePath.FullName
-            });
+                filePath.Directory.Create();
+
+                File.WriteAllBytes(filePath.FullName, bytes);
+
+                Process.Start(new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    FileName = filePath.FullName
+                });
+            }
+            catch
+            {
+                // ignorar erros de abertura de arquivo
+            }
         }
 
         #endregion Private Methods

@@ -10,6 +10,7 @@ using STJJsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
+    [Trait("Category", "Publish")]
     public class Bug181897
     {
         #region Private Classes

@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>VBScript</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
-    <Configurations>Debug;Release;Debug-Unimake</Configurations>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
 </Project>

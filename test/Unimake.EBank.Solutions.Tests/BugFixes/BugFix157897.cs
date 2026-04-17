@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.PIX;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.BugFixes
 {
+    [Trait("Category", "Publish")]
     public class BugFix157897(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods

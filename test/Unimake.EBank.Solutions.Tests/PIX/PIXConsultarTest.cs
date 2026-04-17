@@ -6,10 +6,10 @@ using Unimake.EBank.Solutions.Services.PIX;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Unimake.Primitives.Collections.Page;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.PIX
 {
+    [Trait("Category", "Publish")]
     public class PIXConsultarTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods

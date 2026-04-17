@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Unimake.EBank.Solutions.Services.PIX;
 using Unimake.EBank.Solutions.Tests.Abstractions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.PIX
 {
+    [Trait("Category", "Publish")]
     public class PIXCriarCobrancaTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Private Fields

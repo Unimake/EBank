@@ -8,7 +8,7 @@ using Unimake.AuthServer.Security.Scope;
 using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
 using Xunit;
-using Xunit.Abstractions;
+
 using static Newtonsoft.Json.JsonConvert;
 
 namespace Unimake.EBank.Solutions.Tests.Abstractions
@@ -98,7 +98,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
         {
             var t = builder();
 
-            t.ConfigurationId = "ZCKWGQ55LTDXKYYC";
+            t.ConfigurationId = "TESTE-55LTDXKYYC";
             t.Testing = true;
 
             var pi = t.GetType().GetProperty(nameof(Beneficiario));

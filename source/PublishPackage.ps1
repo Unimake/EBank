@@ -13,6 +13,11 @@ $projectFilePath = "Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj"
 $testProjectPath = "..\test\Unimake.EBank.Solutions.Tests\Unimake.EBank.Solutions.Tests.csproj"
 $nugetSource = "https://api.nuget.org/v3/index.json" 
 
+# Filtro de testes por Trait (xUnit)
+# Padrão: executa apenas testes marcados para publicação
+# Para executar todos os testes, deixe vazio: $testTraitFilter = ""
+$testTraitFilter = "Category=Publish"
+
 # Gera os números de versão com base na data/hora atual
 $dataAtual = Get-Date -Format "yyyy.MM.dd.HHmm"
 $dataVersao = Get-Date -Format "yyyyMMdd.HHmm"
@@ -82,14 +87,21 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# Neste projeto ainda não é possível rodar 100% dos testes de unidade ¯\(°_o)/¯
-# # Executa os testes
-# Write-Host "Executando testes unitários..."
-# & dotnet test $testProjectPath /p:Configuration=Debug-Unimake --no-build --verbosity normal
-# if ($LASTEXITCODE -ne 0) {
-#     Write-Host "Os testes falharam! O pacote não será publicado." -ForegroundColor Red
-#     exit 1
-# }
+# Executa os testes
+Write-Host "Executando testes unitários..."
+
+if ([string]::IsNullOrWhiteSpace($testTraitFilter)) {
+    Write-Host "Sem filtro de Trait. Executando todos os testes."
+    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal
+} else {
+    Write-Host "Executando testes com filtro de Trait: $testTraitFilter"
+    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal --filter "$testTraitFilter"
+}
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Os testes falharam! O pacote não será publicado." -ForegroundColor Red
+    exit 1
+}
 
 # Empacota o projeto
 Write-Host "Empacotando o projeto..."

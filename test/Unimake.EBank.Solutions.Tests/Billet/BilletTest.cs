@@ -15,10 +15,11 @@ using Unimake.EBank.Solutions.Tests.Abstractions;
 using Unimake.Primitives.Security.Credentials;
 using Unimake.Primitives.UDebug;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Unimake.EBank.Solutions.Tests.Billet
 {
+    [Trait("Category", "Publish")]
+    [Collection("e-Bank Tests")]
     public class BilletTest(ITestOutputHelper output) : TestBase(output)
     {
         #region Public Methods
@@ -71,21 +72,21 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
         [Fact]
         public void JustASimpleDebugScopeTest() => Assert.Throws<ArgumentNullException>("scope", () =>
-        {
-            using(new DebugScope<DebugStateObject>(new DebugStateObject
-            {
-                AuthServerUrl = "invalid e-bank uri",
-                AnotherServerUrl = "invalid authserver uri"
-            }))
-            {
-                var service = new BilletService();
-                var response = service.RegisterAsync(new RegisterRequest
                 {
-                    Testing = true
-                }, null).GetAwaiter().GetResult();
-                DumpAsJson(response);
-            }
-        });
+                    using(new DebugScope<DebugStateObject>(new DebugStateObject
+                    {
+                        AuthServerUrl = "invalid e-bank uri",
+                        AnotherServerUrl = "invalid authserver uri"
+                    }))
+                    {
+                        var service = new BilletService();
+                        var response = service.RegisterAsync(new RegisterRequest
+                        {
+                            Testing = true
+                        }, null).GetAwaiter().GetResult();
+                        DumpAsJson(response);
+                    }
+                });
 
         [Fact]
         public async Task Query()
@@ -117,7 +118,7 @@ namespace Unimake.EBank.Solutions.Tests.Billet
             {
                 DataEmissaoInicial = DateTime.Parse("2023-06-30"),
                 DataEmissaoFinal = DateTime.Parse("2023-07-05"),
-                ConfigurationId = "ZCKWGQ55LTDXKYYC"
+                ConfigurationId = "TESTE-55LTDXKYYC"
             });
 
             try
@@ -225,14 +226,14 @@ namespace Unimake.EBank.Solutions.Tests.Billet
 
         [Fact]
         public void WrongKey() => Assert.Throws<AuthenticationServiceException>(() =>
-                        {
-                            var x = new AuthenticationToken
-                            {
-                                AppId = "<<?>>",
-                                Secret = "<<?>>"
-                            };
-                            _ = new AuthenticatedScope(x);
-                        });
+                                {
+                                    var x = new AuthenticationToken
+                                    {
+                                        AppId = "<<?>>",
+                                        Secret = "<<?>>"
+                                    };
+                                    _ = new AuthenticatedScope(x);
+                                });
 
         #endregion Public Methods
     }

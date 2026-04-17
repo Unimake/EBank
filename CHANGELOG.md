@@ -1,6 +1,16 @@
 ﻿# 🔖 Changelog
 
 
+## Versão : 20260416.1947.46
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260416.1947.46_
+
+
+Apenas atualizações de pacotes.
+Melhorias em testes e Script de `Publish`
+
+---
+
 ## Versão : 20260316.1928.07
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20260316.1928.07_

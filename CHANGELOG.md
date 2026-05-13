@@ -1,5 +1,13 @@
 ﻿# 🔖 Changelog
 
+## Versão : 20260512.1611.01
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260512.1611.01_
+
+fix: Não foi possível converter o valor '.G' em inteiro par leitura do PIX Copia e Cola banco Inter.
+
+---
+
 
 ## Versão : 20260416.1947.46
 

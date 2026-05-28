@@ -1,5 +1,14 @@
 ﻿# 🔖 Changelog
 
+
+## Versão : 20260528.1541.27
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260528.1541.27_
+
+feta: Implementação de leitura de arquivo de retorno varredura/CNAB Bradesco.
+
+---
+
 ## Versão : 20260512.1611.01
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20260512.1611.01_

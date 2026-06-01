@@ -12,7 +12,7 @@ FUNCTION EnviarMensagemUMessenger()
     cInstanceName = "??????????????????????????" && Este item tem que pegar com o DEV do uMessenger, é gerado por ele.
     
   * Endpoint de produção do uMessenger
-  * cEndPointAPI = "https://unimake.app/umessenger/"
+   *cEndPointAPI = "https://unimake.app/umessenger/"
 
   * Endpoint de homologação do uMessenger (SANDBOX)
     cEndPointAPI = "https://umessenger.sandbox.unimake.software/"
@@ -38,19 +38,25 @@ RETURN
 FUNCTION BuildJsonMessagesPublish()
    LOCAL cJson, cDestination, cText, existFile
 
+ * Informe o numero do whatsapp do destinatário para quem será enviada a mensagem no formato: 5544999999999 (55 = Codigo Pais + 44 = DDD + 999999999 = Número whatsapp com 9 digitos)
    cDestination = "5544111111111"
-   cText = "Teste de envio de mensagens via umessenger"
    
+ * Texto da mensagem a ser enviada para o destinatário
+   cText = "Teste de envio de mensagens via umessenger"
+
+ * Agora vou montar o JSON a ser enviado para a API
    cJson = '{'
    
    existFile = .T.
    IF existFile
+     * Aqui é a parte do JSON onde inserimos so arquivos que serão enviados nas mensagens
       cJson = cJson + BuildJsonFilesMessagensPublish()
    ENDIF
    
+ * Finalizando o JSON
    cJson = cJson + '"to": {"destination": "' + cDestination + '"},'
    cJson = cJson + '"text": "' + cText + '",'
-   cJson = cJson + '"testing": false'
+   cJson = cJson + '"testing": true'
    cJson = cJson + '}'
 RETURN cJson
 
@@ -73,18 +79,14 @@ FUNCTION BuildJsonFilesMessagensPublish()
    cCaption = "Boleto para pagamento"
    cFileJson = cFileJson + MontaFileJson(cFileName, cMediaType, cFileBase64, cCaption) 
    
-   lEnviarDoisArquivos = .T.
-   IF lEnviarDoisArquivos
-      cFileJson = cFileJson + ',' &&Tem que somar a virgula para separar os arquivos dentro da Array do Json
-      
-    * Segundo arquivo que vou enviar (Pode enviar vários em uma mesma mensagem)
-      cFileName = "nfsenacional_retornoconsultapdf.pdf" && Nome do arquivo mas sem caminho de pasta para não gerar erro no Json
-      lcData   = FILETOSTR("D:\testenfe\pdf\nfsenacional_retornoconsultapdf.pdf")  && binário
-      cFileBase64 = STRCONV(lcData, 13)
-      cMediaType  = "2"
-      cCaption = "NFSe modelo nacional"
-      cFileJson = cFileJson + MontaFileJson(cFileName, cMediaType, cFileBase64, cCaption)
-   ENDIF
+ * Segundo arquivo que vou enviar (Pode enviar vários em uma mesma mensagem)
+   cFileJson = cFileJson + ',' &&Tem que somar a virgula para separar os arquivos dentro da Array do Json
+   cFileName = "nfsenacional_retornoconsultapdf.pdf" && Nome do arquivo mas sem caminho de pasta para não gerar erro no Json
+   lcData   = FILETOSTR("D:\testenfe\pdf\nfsenacional_retornoconsultapdf.pdf")  && binário
+   cFileBase64 = STRCONV(lcData, 13)
+   cMediaType  = "2"
+   cCaption = "NFSe modelo nacional"
+   cFileJson = cFileJson + MontaFileJson(cFileName, cMediaType, cFileBase64, cCaption)
    
  * Fechar o Json dos arquivos
    cFileJson = cFileJson + '],'
@@ -168,6 +170,9 @@ FUNCTION HttpPostMessagePublish(cURL, cJson)
       MESSAGEBOX("Resposta da API:" + CHR(13) + lcResponse)
    ELSE && Ocorreu falha no envio da mensagem
       lOk = .F.
+      DELETE FILE 'd:\testenfe\umessengererror.txt'
+      StrToFile(TRANSFORM(loHttp.Status) + " " + loHttp.ResponseText, 'd:\testenfe\umessengererror.txt', 0)
+      
       MESSAGEBOX("Falha na requisição: " + TRANSFORM(loHttp.Status) + " " + loHttp.ResponseText)
    ENDIF
 RETURN lOk

@@ -1,5 +1,28 @@
 ﻿# 🔖 Changelog
 
+## Versão : 20260629.1822.51
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260629.1822.51_
+
+feat: Implementar PagamentoService. ID #185186
+- Adicionado o PagamentoService com métodos para operações de pagamento (autorizar, cancelar, consultar).
+- Introduzido o PagamentoTest com testes para fluxos de pagamento.
+- Atualizadas as versões dos pacotes NuGet EBank.Primitives e Primitives.
+- Aprimorado o TestBase para suportar novos tipos de requisição e melhorar a configuração dos testes.
+
+### 🚨 Breaking Changes
+
+⚠️ A partir desta versão [20260629.1822.51](https://www.nuget.org/packages/Unimake.EBank.Solutions/20260629.1822.51), aplicações que utilizam o módulo de **pagamentos** poderão precisar de ajustes.
+
+### Namespace renomeado
+
+| Antes      | Agora       |
+| ---------- | ----------- |
+| `Payments` | `Pagamento` |
+
+Caso o compilador informe que o namespace `Payments` não existe, substitua todas as referências por `Pagamento`.
+
+---
 
 ## Versão : 20260528.1541.27
 

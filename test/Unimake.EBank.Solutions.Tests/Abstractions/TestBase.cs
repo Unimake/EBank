@@ -1,4 +1,5 @@
-﻿using EBank.Solutions.Primitives.Billet.Models;
+﻿using EBank.Solutions.Primitives.Abstractions.Request;
+using EBank.Solutions.Primitives.Billet.Models;
 using EBank.Solutions.Primitives.Contract.Request;
 using EBank.Solutions.Primitives.Extrato.Request;
 using Newtonsoft.Json;
@@ -93,7 +94,7 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
             Secret = Environment.GetEnvironmentVariable("UNIMAKE_SECRET")
         }));
 
-        protected T CreateRequest<T>(Func<T> builder)
+        protected virtual T CreateRequest<T>(Func<T> builder)
                     where T : class, IRequest, new()
         {
             var t = builder();
@@ -109,7 +110,13 @@ namespace Unimake.EBank.Solutions.Tests.Abstractions
                 pi.SetValue(t, BeneficiarioDefault);
             }
 
-            if(t is ExtratoRequest extratoRequest)
+            if(t is BancoAgenciaContaRouteRequestBase bacRequest)
+            {
+                bacRequest.Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob;
+                bacRequest.Agencia = "4340";
+                bacRequest.Conta = "00001";
+            }
+            else if(t is ExtratoRequest extratoRequest)
             {
                 extratoRequest.Banco = global::EBank.Solutions.Primitives.Enumerations.Banco.Sicoob;
                 extratoRequest.Agencia = "4340";

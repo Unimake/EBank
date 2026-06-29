@@ -35,6 +35,22 @@ Write-Host "Atualizando versões no arquivo do projeto..."
     -replace "<Version>.*?</Version>", "<Version>$packageVersion</Version>" |
 Set-Content $projectFilePath
 
+# Executa os testes
+Write-Host "Executando testes unitários..."
+
+if ([string]::IsNullOrWhiteSpace($testTraitFilter)) {
+    Write-Host "Sem filtro de Trait. Executando todos os testes."
+    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal
+} else {
+    Write-Host "Executando testes com filtro de Trait: $testTraitFilter"
+    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal --filter "$testTraitFilter"
+}
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Os testes falharam! O pacote não será publicado." -ForegroundColor Red
+    exit 1
+}
+
 # Atualiza o arquivo changelog.md com a nova versão
 
 # Caminho do README
@@ -84,22 +100,6 @@ Write-Host "Compilando o projeto..."
 & dotnet build $projectFilePath /p:Configuration=Release
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Erro na compilação!" -ForegroundColor Red
-    exit 1
-}
-
-# Executa os testes
-Write-Host "Executando testes unitários..."
-
-if ([string]::IsNullOrWhiteSpace($testTraitFilter)) {
-    Write-Host "Sem filtro de Trait. Executando todos os testes."
-    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal
-} else {
-    Write-Host "Executando testes com filtro de Trait: $testTraitFilter"
-    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal --filter "$testTraitFilter"
-}
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Os testes falharam! O pacote não será publicado." -ForegroundColor Red
     exit 1
 }
 

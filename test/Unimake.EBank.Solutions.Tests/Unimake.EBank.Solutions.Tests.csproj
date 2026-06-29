@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj" />
+    <ProjectReference Include="..\..\source\Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj"  />
   </ItemGroup>
 
 

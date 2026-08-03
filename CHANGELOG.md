@@ -1,5 +1,14 @@
 ﻿# 🔖 Changelog
 
+## Versão : 20260803.1706.20
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20260803.1706.20_
+
+fix: Atualizar versão para 20260803.1706.20; adicionar data de vencimento ao teste. ID #186220
+- Aprimorado PagamentoTest.cs: definido DataVencimento (para 15 dias à frente) em LancamentoBoletoRequest.
+
+---
+
 ## Versão : 20260629.1822.51
 
 _https://www.nuget.org/packages/Unimake.EBank.Solutions/20260629.1822.51_

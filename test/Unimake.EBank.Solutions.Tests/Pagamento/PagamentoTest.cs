@@ -48,7 +48,8 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
                         {
                             ValorPagamento = 100.00m,
                             CodigoBarras = "00190500954014481606906809350314337370000000100",
-                            IdentificadorPagamento = "202309141234567890"
+                            IdentificadorPagamento = "202309141234567890",
+                            DataVencimento = DateTime.Now.AddDays(15)
                         }
                     ]
                 }), scope);

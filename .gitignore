@@ -358,3 +358,9 @@ examples/VFP.zip
 /examples/xharbour/tmp
 /source/.review
 *.BAK
+/source/.ai
+/source/.claude
+/source/.codex
+/source/.github
+/source/.scripts
+/source/CodeMaid.config

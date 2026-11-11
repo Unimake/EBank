@@ -70,7 +70,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
             {
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PagamentoService();
-                var response = await service.CancelarPagamentoAsync(CreateRequest(() => new MultiplosPagamentosRequest
+                var response = await service.CancelarPagamentoAsync(CreateRequest(() => new MultiplosPagamentosCancelRequest
                 {
                     Pagamentos = [
                         new IdentificadorPagamentoItem
@@ -97,7 +97,7 @@ namespace Unimake.EBank.Solutions.Tests.Pagamento
             {
                 using var scope = await CreateAuthenticatedScopeAsync();
                 var service = new PagamentoService();
-                var response = await service.ConsultarPagamentosAsync(CreateRequest(() => new MultiplosPagamentosRequest
+                var response = await service.ConsultarPagamentosAsync(CreateRequest(() => new MultiplosPagamentosQueryRequest
                 {
                     Pagamentos = [
                         new IdentificadorPagamentoItem

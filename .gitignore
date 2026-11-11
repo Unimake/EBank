@@ -364,3 +364,5 @@ examples/VFP.zip
 /source/.github
 /source/.scripts
 /source/CodeMaid.config
+/source/.cursor/rules
+/source/.project

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <!-- Ativa a análise de regras de estilo (IDE) durante o dotnet build para TODOS os projetos -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    
+    <!-- (Opcional, mas recomendado) Garante que a análise de código geral do .NET está ativa -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+</Project>

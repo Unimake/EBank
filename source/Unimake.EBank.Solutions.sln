@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11709.129 insiders
+VisualStudioVersion = 18.6.11709.129
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unimake.EBank.Solutions", "Unimake.EBank.Solutions\Unimake.EBank.Solutions.csproj", "{006EEC71-4E9E-4571-A76A-B0076283DA17}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F70B2EAC-DAC7-44B3-87AE-3DDD82E48E6A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\BREAKING_CHANGES.md = ..\BREAKING_CHANGES.md
+		..\CHANGELOG.md = ..\CHANGELOG.md
 		PublishPackage.ps1 = PublishPackage.ps1
 		readme.md = readme.md
 	EndProjectSection

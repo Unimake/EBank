@@ -1,4 +1,33 @@
-﻿# 🔖 Changelog
+# 🔖 Changelog
+
+## Versão : 20261111.1206.39
+
+_https://www.nuget.org/packages/Unimake.EBank.Solutions/20261111.1206.39_
+
+feat!: Atualizar `Unimake.EBank.Primitives` para 20261111.1123.46 e separar as requisições de consulta e cancelamento de pagamentos.
+- `PagamentoService.CancelarPagamentoAsync` passa a receber `MultiplosPagamentosCancelRequest`.
+- `PagamentoService.ConsultarPagamentosAsync` passa a receber `MultiplosPagamentosQueryRequest`.
+- Atualizadas as dependências: `Unimake.EBank.Primitives` 20261111.1123.46, `Unimake.Primitives` 20260918.1832.16 e `System.IdentityModel.Tokens.Jwt` 8.23.0.
+- O `ConfigurationId` informado nas requisições passa a ser enviado no corpo da chamada à API. Se ele não existir para o cliente, ou a configuração estiver incompleta, a API responde HTTP 400.
+- Se a requisição informar `ConfigurationId` diferentes (na query string e no corpo, ou em itens distintos do corpo), a API responde HTTP 400 com a nova exceção `ConfigurationIdMismatchException`.
+- Com o novo Primitives, o cliente passa a ter acesso a: segunda via de boleto (`SegundaViaRequest`/`SegundaViaResponse`), histórico do boleto na consulta (`Historico`), transferência entre contas (`TransferenciaRequest`/`TransferenciaResponse`), Pix por QR Code em pagamentos (`LancamentoPIXQRCodeRequest`), ocorrências do banco no lançamento (`Ocorrencias`), o banco `Banestes` e novas instruções de boleto.
+
+### 🚨 Breaking Changes
+
+⚠️ Esta versão tem mudanças que quebram a compilação. Consulte o [BREAKING_CHANGES.md](BREAKING_CHANGES.md) para ver a lista completa e como migrar.
+
+| Antes                                                                   | Agora                                                                        |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `MultiplosPagamentosRequest` (cancelar)                                 | `MultiplosPagamentosCancelRequest`                                           |
+| `MultiplosPagamentosRequest` (consultar)                                | `MultiplosPagamentosQueryRequest`                                            |
+| `new InvalidBankCredentialsException(configurationId)`                  | `ConfigurationIdNotFoundException`                                           |
+| `RequestBase.ShouldSerializeConfigurationId()`                          | Removido. O `ConfigurationId` sempre é serializado                           |
+| `ExtendPaymentRequest.DataVencimento` (`DateTime`)                      | `BankDate`                                                                   |
+| `PIXGetRequest.LocationId` / `LocationIdPresent`                        | Removidos                                                                    |
+| `BankDateJsonConverter`                                                 | `TextJsonBankDateJsonConverter` (e o novo `NewtonsoftBankDateJsonConverter`) |
+| `CodigoHistoricoExtrato.AplicacaoFundoEmpresarialDi60` / `ResgateCDBDi` | `AplicacaoFundoEmpresarialDI60` / `ResgateCDBDI`                             |
+
+---
 
 ## Versão : 20260803.1706.20
 

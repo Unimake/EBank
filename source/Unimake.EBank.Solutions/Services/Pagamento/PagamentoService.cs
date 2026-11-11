@@ -29,7 +29,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
         /// <param name="request">Requisição contendo os dados do pagamento a ser cancelado.</param>
         /// <param name="authenticatedScope">Escopo autenticado utilizado para autorizar a requisição à API.</param>
         /// <returns>Resposta contendo o resultado do cancelamento do pagamento.</returns>
-        public async Task<List<LancamentoResponse>> CancelarPagamentoAsync(MultiplosPagamentosRequest request, AuthenticatedScope authenticatedScope) =>
+        public async Task<List<LancamentoResponse>> CancelarPagamentoAsync(MultiplosPagamentosCancelRequest request, AuthenticatedScope authenticatedScope) =>
             await new APIClient(authenticatedScope, $"pagamento/{request.Banco}/{request.Agencia}/{request.Conta}/cancelar").PostAsync<List<LancamentoResponse>>(request);
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Unimake.EBank.Solutions.Services.Pagamento
         /// <param name="request">Requisição contendo os dados para consulta do pagamento.</param>
         /// <param name="authenticatedScope">Escopo autenticado utilizado para autorizar a requisição à API.</param>
         /// <returns>Resposta contendo os detalhes do pagamento.</returns>
-        public async Task<List<LancamentoResponse>> ConsultarPagamentosAsync(MultiplosPagamentosRequest request, AuthenticatedScope authenticatedScope) =>
+        public async Task<List<LancamentoResponse>> ConsultarPagamentosAsync(MultiplosPagamentosQueryRequest request, AuthenticatedScope authenticatedScope) =>
             await new APIClient(authenticatedScope, $"pagamento/{request.Banco}/{request.Agencia}/{request.Conta}/consultar").PostAsync<List<LancamentoResponse>>(request);
 
         #endregion Public Methods

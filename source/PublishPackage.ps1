@@ -38,13 +38,19 @@ Set-Content $projectFilePath
 # Executa os testes
 Write-Host "Executando testes unitários..."
 
+# O dotnet test usa o Microsoft.Testing.Platform (habilitado no global.json da raiz do repositório),
+# exigido pelo xunit.v3 a partir do SDK do .NET 10. Nesse modo, o projeto é informado com --project
+# e o filtro de Trait do xUnit com --filter-trait.
+$testArgs = @("--project", $testProjectPath, "--configuration", "Debug")
+
 if ([string]::IsNullOrWhiteSpace($testTraitFilter)) {
     Write-Host "Sem filtro de Trait. Executando todos os testes."
-    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal
 } else {
     Write-Host "Executando testes com filtro de Trait: $testTraitFilter"
-    & dotnet test $testProjectPath /p:Configuration=Debug --verbosity normal --filter "$testTraitFilter"
+    $testArgs += @("--filter-trait", $testTraitFilter)
 }
+
+& dotnet test @testArgs
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Os testes falharam! O pacote não será publicado." -ForegroundColor Red

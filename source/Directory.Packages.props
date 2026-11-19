@@ -1,0 +1,26 @@
+﻿<Project>
+  <!--
+    Central Package Management: todas as versões de pacotes NuGet da solução ficam aqui.
+    Nos .csproj use apenas <PackageReference Include="Pacote" /> (sem Version).
+    Para atualizar um pacote, altere somente a linha correspondente neste arquivo.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!--
+      NU1507: o NuGet recomenda "package source mapping" quando há mais de um feed (nuget.org + Unimake).
+      Os feeds são definidos fora do repositório (NuGet.Config do usuário / pipeline), então o mapeamento
+      deve ser configurado lá. Até isso acontecer, o aviso é suprimido para não quebrar projetos com
+      TreatWarningsAsErrors.
+    -->
+    <NoWarn>$(NoWarn);NU1507</NoWarn>
+  </PropertyGroup>
+  <ItemGroup Label="Unimake">
+    <PackageVersion Include="Unimake.AuthServer" Version="20250707.1650.48" />
+    <PackageVersion Include="Unimake.EBank.Primitives" Version="20261111.1123.46" />
+    <PackageVersion Include="Unimake.Primitives" Version="20261111.1051.53" />
+  </ItemGroup>
+  <ItemGroup Label="Terceiros">
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
+  </ItemGroup>
+</Project>
